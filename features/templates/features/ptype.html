@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>property type</title>
+  </head>
+  <body>
+<h1>property type</h1>
+
+    {% for propertytype in propertytype_list  %}
+            <li>{{ propertytype }}</li>
+            <a href="{%url 'features:featuresfrom' pk=propertytype.id%}"> add feature</a>
+            <a href="{%url 'features:featureupdate' pk=propertytype.id%}">update feature</a>
+
+    {% endfor %}
+<hr>
+    {%for feature in features_list%}
+      <li>{{feature}}</li>
+
+      <a href="{%url 'features:featureupdate' pk=feature.id%}">update feature</a>
+<br>
+    {%endfor%}
+
+
+
+  </body>
+</html>

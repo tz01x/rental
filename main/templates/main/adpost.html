@@ -1,0 +1,212 @@
+{%extends 'index.html' %}
+
+{%block body%}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+<div class="">
+  current user : {{request.user.username}}
+</div>
+<div class="container">
+  <form method="post" novalidate>
+
+    <h1>create post</h1>
+    {% load widget_tweaks %}
+    {% csrf_token %}
+
+    {% for hidden_field in form.hidden_fields %}
+    {{ hidden_field }}
+    {% endfor %}
+
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+      {% for error in form.non_field_errors %}
+      {{ error }}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% for field in form.visible_fields %}
+    <div class="form-group">
+
+
+
+      <label class="form-label" for="{{ field.id_for_label }}">{{field.label}}</label>
+
+
+
+      {% if field.errors %}
+      <!-- if error happend show the error  -->
+
+
+      {% render_field field class="form-control  is-invalid" %}
+      <!-- after error checking invalid field render hrere -->
+      {% for error in field.errors %}
+      <div class="invalid-feedback">
+        {{ error }}
+      </div>
+      {% endfor %}
+
+
+
+      <!-- if no error  -->
+      {% else %}
+
+      <!-- if the field is checkbox type then  -->
+      {%if field.field.widget.input_type == 'checkbox'  %}
+      {%if field|length > 1%}
+
+      <div class="selector-groups">
+        {%for checkboxfield in field%}
+        <div class="selector">
+          {{checkboxfield}}
+          <!-- here we cant access the the lable or other property of the  nested field   -->
+        </div>
+        {%endfor%}
+      </div>
+
+      {%else%}
+      {{field}}
+      {%endif%}
+
+
+      <!-- if field type not an checkbox type  -->
+      {%else%}
+      <!-- if its select type  -->
+      {%if field.field.widget.input_type == "select"%}
+      {% render_field field class="form-select"  %}
+      {%else%}
+      <!-- other wise --> 
+      {%if field.name == 'latlong'%}
+      <div id="mapid" style=" height: 256px;"></div>
+      <div onclick="setMarker()">set Marker</div>
+      <div hidden>
+        {{field}}
+      </div>
+      {%else%}
+      {% render_field field class="form-control"  %}
+      {%endif%}
+      {%endif%}
+
+      {%endif%}
+
+
+      {% endif %}
+      <!-- check error/no error condition  end -->
+
+      {% if field.help_text %}
+      <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+      {% endif %}
+
+    </div>
+    {% endfor %}
+
+    <br>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+  </form>
+
+</div>
+
+
+{%endblock%}
+
+{%block script%}
+
+<script type="text/javascript">
+  $(function () {
+    $("#datepicker").datepicker();
+  });
+</script>
+<script>
+  let city_seclector = document.getElementById('selected_city');
+  featch_Districts(city_seclector.value, false);
+  city_seclector.addEventListener("change", (e) => {
+
+    // console.log(city_seclector.value.length);
+    featch_Districts(city_seclector.value, true);
+  });
+
+  function featch_Districts(value, eventcall) {
+
+    if (value.length == 0) {
+      return;
+    }
+    let areaSeclector = document.getElementById('selected_area');
+    // console.log(areaSeclector.value.length);
+    area_selected_value = areaSeclector.value;
+    // console.log(areaSeclector.value==null?'yes':"no");
+    //area selector alrealdy been selected 
+    if (areaSeclector.value.length == 0 && eventcall == false) {
+      gofatch();
+      return;
+    } else if (areaSeclector.value.length > 0 && eventcall == false) {
+      gofatch(true);
+    }
+    if (eventcall == true) {
+      gofatch();
+    }
+
+
+
+    function gofatch(update_previousSeclector_value = false) {
+
+      let previous_value = update_previousSeclector_value ? areaSeclector.value : "";
+
+      fetch(`${window.location.origin}/api/district/?city=${value}`).then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+      }).then(body => {
+        areaSeclector.innerHTML = `<option value>None</option>`;
+        for (const iterator of body) {
+          areaSeclector.innerHTML += `<option value="${iterator.name}">${iterator.name}</option>`
+        }
+        if (update_previousSeclector_value) {
+          areaSeclector.value = previous_value;
+        }
+
+      });
+
+
+
+
+
+    }
+
+  }
+
+  // const thana = document.getElementById('id_thana');
+
+  var mymap = L.map('mapid').setView([23.6850, 90.3563], 10);
+  const my_cnter = [23.6850, 90.3563];
+  const marker = L.marker([23.6850, 90.3563]).addTo(mymap);
+  let my_marker=null;
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+  }).addTo(mymap);
+  mymap.on('move', function (e) {
+    // console.log(mymap.getCenter());
+    marker.setLatLng(mymap.getCenter())
+  });
+  function setMarker(){
+    console.log(marker.getLatLng());
+    if(my_marker!=null){
+      mymap.removeLayer(my_marker);
+    }
+    my_marker=L.marker(marker.getLatLng());
+    mymap.addLayer(my_marker);
+    ele=document.getElementById("id_latlong");
+    const {lat,lng}=marker.getLatLng();
+    ele.value=`${lat},${lng}`;
+    console.log(ele);
+
+  }
+
+</script>
+
+{%endblock script%}

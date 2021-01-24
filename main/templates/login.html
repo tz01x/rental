@@ -1,0 +1,93 @@
+{% extends 'home.html' %}
+{%load static%}
+
+
+{%block body%}
+
+
+<!--Slider -->
+<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{%static 'img/slider.jpg'%} " class="d-block w-100 " alt="....">
+    </div>
+  </div>
+</div>
+
+<!-- Form-->
+<div class="container mb-5">
+  <div class="form-heading text-center mt-5  mb-2">
+    <h4>Login To Your Account</h4>
+    <span>Don't have an account?</span>
+    <a href="{%url 'user:signup'%}" id="signup-page">Sign Up</a>
+  </div>
+
+
+
+  <form method="post" novalidate class="from">
+    {% load widget_tweaks %}
+    {% csrf_token %}
+
+    {% for hidden_field in form.hidden_fields %}
+    {{ hidden_field }}
+    {% endfor %}
+
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+      {% for error in form.non_field_errors %}
+      {{ error }}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% for field in form.visible_fields %}
+    <div class="form-group">
+
+
+      {% if form.is_bound %}
+      {% if field.errors %}
+      <div class="row">
+        <div class="form-group col-lg-5 mb-3 mx-auto">
+
+          {% render_field field class="form-control is-invalid" placeholder=field.label %}
+        </div>
+      </div>
+      {% for error in field.errors %}
+      <div class="invalid-feedback">
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="row">
+        <div class="form-group col-lg-5 mb-3 mx-auto">
+
+          {% render_field field class="form-control is-valid" placeholder=field.label %}
+        </div>
+      </div>
+      {% endif %}
+      {% else %}
+      <div class="row">
+        <div class="form-group col-lg-5 mb-3 mx-auto">
+
+          {% render_field field class="form-control" placeholder=field.label %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if field.help_text %}
+      <small class="form-text text-muted">{{ field.help_text }}</small>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="row">
+      <button class="d-grid col-4 mx-auto login-btn mb-3 mx-auto" id="register-btn">Login</button>
+      <!-- <div class="d-grid col-4 mx-auto login-btn mb-3">
+        <button class="mx-auto" id="login-btn">Login</button>
+      </div> -->
+    </div>
+
+  </form>
+</div>
+
+{%endblock%}

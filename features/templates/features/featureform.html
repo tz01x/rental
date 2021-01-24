@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <form class="" action="" method="post">
+    {%csrf_token%}
+    {{form.types}}
+    {%if form.types|length != 0%}
+
+    {{form.types.label}}
+    <br>
+    {%for type in form.types%}
+      {{type}}
+
+    {%endfor%}
+      {%if form.errors%}
+        {{form.errors}}
+      {%endif%}
+    {%endif%}
+    <br>
+    <input type="submit" name="" value="submit">
+  </form>
+</body>
+
+</html>

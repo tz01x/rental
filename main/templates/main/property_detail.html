@@ -1,0 +1,159 @@
+{%extends 'index.html'%}
+{%block head%}
+<!-- Demo styles -->
+<style>
+  
+  .swiper-container {
+    /* width: 100%; */
+    height: 80vh !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .swiper-slide {
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .gallery-top {
+    height: 80%;
+    width: 100%;
+  }
+
+  .gallery-thumbs {
+    height: 20vh !important;
+    box-sizing: border-box;
+    padding: 10px 0;
+  }
+
+  .gallery-thumbs .swiper-slide {
+    height: 100%;
+    opacity: 0.4;
+  }
+
+  .gallery-thumbs .swiper-slide-thumb-active {
+    opacity: 1;
+  }
+</style>
+
+
+{%endblock%}
+{%block body%}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+        
+
+
+<div class="container">
+    <div class="display-4">
+        {{property.title}}
+    </div>
+</div>
+<div>
+   
+
+    <div class="swiper-container gallery-top">
+      <div class="swiper-wrapper">
+        {%for im in property.img.all%}
+        <img class="swiper-slide"  src="{{im.baseimage.url}}" alt="" srcset="">
+        <!-- <div class="swiper-slide" style="background-image:url({{im.timage.url}})"></div> -->
+        {%endfor%}
+      </div>
+      <!-- Add Arrows -->
+      <div class="swiper-button-next swiper-button-white"></div>
+      <div class="swiper-button-prev swiper-button-white"></div>
+    </div>
+    <div class="swiper-container gallery-thumbs">
+      <div class="swiper-wrapper">
+        <!-- <div class="swiper-slide" style="background-image:url(./images/nature-1.jpg)"></div> -->
+        {%for im in property.img.all%}
+        <img class="swiper-slide" src="{{im.timage.url}}" alt="" srcset="">
+        <!-- <div class="swiper-slide" style="background-image:url({{im.timage.url}})"></div> -->
+        {%endfor%}
+      </div>
+    </div>
+  
+</div>
+<div class="container mt-5 ">
+<h3>Details</h3>
+<dl class="row">
+    <dt class="col-sm-3">Description</dt>
+    <dd class="col-sm-9">{{property.description}}</dd>
+  
+    <!-- <dt class="col-sm-3">AD for </dt>
+    <dd class="col-sm-9">
+      <p>{{property.getAdfor}}</p>
+      
+    </dd> -->
+  
+    <dt class="col-sm-3">Price</dt>
+    <dd class="col-sm-9">  <strong>{{property.price}}</strong> </dd>
+  
+    <dt class="col-sm-3 text-truncate">Available From</dt>
+    <dd class="col-sm-9">{{property.available_from}}</dd>
+    <dt class="col-sm-3 text-truncate">Type</dt>
+    <dd class="col-sm-9">{{property.property_types}}</dd>
+  <div class="mt-5" id="mapid" style=" height: 512px;"></div>
+    <!-- <dt class="col-sm-3">Nesting</dt>
+    <dd class="col-sm-9">
+      <dl class="row">
+        <dt class="col-sm-4">Nested definition list</dt>
+        <dd class="col-sm-8">Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc.</dd>
+      </dl>
+    </dd> -->
+  </dl>
+
+</div>
+<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+  const latlng=JSON.parse('{{property.getLatLong| safe }}');
+
+//todo : set a defualt center 
+
+  const my_cnter = [parseFloat(latlng.lat), parseFloat(latlng.lng)];
+  var mymap = L.map('mapid').setView(my_cnter, 18);
+  // todo: dont add amrker if my_center array 2 parameter is empty 
+        const marker = L.marker(my_cnter).addTo(mymap);
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
+
+</script>
+
+
+
+<script>
+  var galleryThumbs = new Swiper('.gallery-thumbs', {
+    spaceBetween: 10,
+    slidesPerView: 4,
+    loop: true,
+    freeMode: true,
+    loopedSlides: 5, //looped slides should be the same
+    watchSlidesVisibility: true,
+    watchSlidesProgress: true,
+  });
+  var galleryTop = new Swiper('.gallery-top', {
+    spaceBetween: 10,
+    loop: true,
+    loopedSlides: 5, //looped slides should be the same
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    thumbs: {
+      swiper: galleryThumbs,
+    },
+  });
+</script>
+
+{%endblock%}

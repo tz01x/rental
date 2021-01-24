@@ -1,0 +1,192 @@
+{%extends 'home.html' %}
+{%load static%}
+
+{%block body%}
+    <!--Slider -->
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{%static 'img/slider.jpg'%}" class="d-block w-100 " alt="....">
+        </div>
+      </div>
+    </div>
+      <!-- Form-->
+    <div class="container mb-5">
+          <div class="form-heading text-center mt-5  mb-2">
+            <h4>Create Your Account</h4>
+            <span>Already have an account?</span>
+             <a href="{%url 'user:login'%}" id="login-page">Log in</a>
+          </div>
+       
+        <form role="form" method="post" action=".">
+          {%csrf_token%}
+          {% load widget_tweaks %}
+
+          {% for hidden_field in form.hidden_fields %}
+          {{ hidden_field }}
+        {% endfor %}
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+            <div class="row">
+                <div class="form-group col-lg-5 mb-3 mx-auto">
+                    <!-- <input type="text" class="form-control" placeholder="User Name" id="user-name"/> -->
+                    <!-- {{form.username}} -->
+
+                    {% if form.is_bound %}
+                      {% if form.username.errors %}
+                        {% render_field form.username class="form-control is-invalid" id="user-name"%}
+                        {% for error in form.username.errors %}
+                          <div class="invalid-feedback">
+                          {{ error }}
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                        {% render_field form.username class="form-control is-valid" id="user-name" %}
+                      {% endif %}
+                    {% else %}
+                      {% render_field form.username class="form-control" placeholder=form.username.label  id="user-name"  %}
+                    {%endif%}
+                    {% if form.username.help_text %}
+                    <small class="form-text text-muted">{{ form.username.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-5 mb-3 mx-auto">
+                  <!-- {{form.phone}} -->
+                    <!-- <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}-[0-9]{2}" class="form-control" placeholder="01X-XXX-XXX-XX" id="user-mobilenumber"/> -->
+                    {% if form.is_bound %}
+                      {% if form.phone.errors %}
+                        {% render_field form.phone class="form-control is-invalid" id="user-mobilenumber"%}
+                        {% for error in form.phone.errors %}
+                          <div class="invalid-feedback">
+                          {{ error }}
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                        {% render_field form.phone class="form-control is-valid" id="user-mobilenumber" %}
+                      {% endif %}
+                    {% else %}
+                      {% render_field form.phone class="form-control" placeholder=form.phone.label  id="user-mobilenumber"  %}
+                    {%endif%}
+                    {% if form.phone.help_text %}
+                    <small class="form-text text-muted">{{ form.phone.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-5 mb-3 mx-auto">
+                  <!-- {{form.city}} -->
+                    <!-- <input type="text" class="form-control" placeholder="Address" id="user-address"/> -->
+                    {% if form.is_bound %}
+                      {% if form.city.errors %}
+                        {% render_field form.city class="form-control is-invalid" id="user-address"%}
+                        {% for error in form.city.errors %}
+                          <div class="invalid-feedback">
+                          {{ error }}
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                        {% render_field form.city class="form-control is-valid" id="user-address" %}
+                      {% endif %}
+                    {% else %}
+                      {% render_field form.city class="form-control" placeholder=form.city.label  id="user-address"  %}
+                    {%endif%}
+                    {% if form.city.help_text %}
+                    <small class="form-text text-muted">{{ form.city.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-5 mb-3 mx-auto">
+                  <!-- {{form.email}} -->
+                    <!-- <input type="text" class="form-control" placeholder="Email Address" id="user-email"/> -->
+                    {% if form.is_bound %}
+                      {% if form.email.errors %}
+                        {% render_field form.email class="form-control is-invalid" id="user-email"%}
+                        {% for error in form.email.errors %}
+                          <div class="invalid-feedback">
+                          {{ error }}
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                        {% render_field form.email class="form-control is-valid" id="user-email" %}
+                      {% endif %}
+                    {% else %}
+                      {% render_field form.email class="form-control" placeholder=form.email.label  id="user-email"  %}
+                    {%endif%}
+                    {% if form.email.help_text %}
+                    <small class="form-text text-muted">{{ form.email.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="form-group col-lg-5 mb-3 mx-auto">
+                    <!-- {{form.password1}} -->
+                    <!-- <input type="password" class="form-control" placeholder="Password" id="user-password"/> -->
+
+                    {% if form.is_bound %}
+                    {% if form.password1.errors %}
+                      {% render_field form.password1 class="form-control is-invalid" id="user-password"%}
+                      {% for error in form.password1.errors %}
+                        <div class="invalid-feedback">
+                        {{ error }}
+                        </div>
+                      {% endfor %}
+                    {% else %}
+                      {% render_field form.password1 class="form-control is-valid" id="user-password" %}
+                    {% endif %}
+                  {% else %}
+                    {% render_field form.password1 class="form-control" placeholder=form.password1.label  id="user-password"  %}
+                  {%endif%}
+                  {% if form.password1.help_text %}
+                  <small class="form-text text-muted">{{ form.password1.help_text|safe }}</small>
+                  {% endif %}
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-5 mb-3 mx-auto">
+                  <!-- {{form.password2}} -->
+                    <!-- <input type="password" class="form-control" placeholder="Confirm Password" id="user-password-confirm"/> -->
+                    {% if form.is_bound %}
+                    {% if form.password2.errors %}
+                      {% render_field form.password2 class="form-control is-invalid" id="user-password-confirm"%}
+                      {% for error in form.password2.errors %}
+                        <div class="invalid-feedback">
+                        {{ error }}
+                        </div>
+                      {% endfor %}
+                    {% else %}
+                      {% render_field form.password2 class="form-control is-valid" id="user-password-confirm" %}
+                    {% endif %}
+                  {% else %}
+                    {% render_field form.password2 class="form-control" placeholder=form.password2.label  id="user-password-confirm"  %}
+                  {%endif%}
+                  {% if form.password2.help_text %}
+                  <small class="form-text text-muted">{{ form.password2.help_text|safe }}</small>
+                  {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- <div class="d-grid col-4 mx-auto login-btn mb-3"> -->
+                    <button class="d-grid col-4 mx-auto login-btn mb-3 mx-auto" id="register-btn">Register</button>
+                <!-- </div> -->
+            </div>
+           
+        </form>
+    </div>
+
+{%endblock%}

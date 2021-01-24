@@ -1,0 +1,175 @@
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  background-color: #fafafa;
+}
+
+.nav-item a {
+  color: black;
+  text-decoration: none;
+  margin: auto;
+  padding: 5px;
+}
+.nav-item :hover {
+  color: #f44f2e;
+}
+
+/* Login Page & Register Page*/
+.nav-btn {
+  border-radius: 20px;
+  border: none;
+  color: #ffffff;
+  background-color: #ff653d;
+  text-decoration: none;
+  text-align: center;
+}
+
+.nav-btn a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.login-btn {
+  border-radius: 20px;
+  border: none;
+  background-color: #ff653d;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.login-btn a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.login-btn:hover {
+  background-color: #f44f2e;
+}
+
+.nav-btn:hover {
+  background-color: #f44f2e;
+}
+
+.form-heading a {
+  font-weight: bold;
+}
+
+.footer-upper-section {
+  height: 67px;
+  background-color: #fd643d;
+}
+
+.footer-upper-section p {
+  display: inline-block;
+  color: white;
+  font-size: large;
+}
+
+.reg-btn {
+  border-radius: 15px;
+  border: none;
+  background-color: #ffffff;
+  color: #ff653d;
+  text-decoration: none;
+  padding-bottom: 5px;
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-top: 5px;
+  margin-left: 10px;
+}
+
+.reg-btn:hover {
+  color: #ffffff;
+  background-color: #f44f2e;
+}
+
+.footer-lower-section {
+  background-color: #202020;
+  color: #ffffff;
+  padding: 15px;
+}
+
+.footer-link {
+  float: left;
+  color: white;
+  text-decoration: none;
+}
+#subscribe-btn {
+  color: white;
+  text-decoration: none;
+}
+
+#subscribe-btn :hover {
+  color: #f44f2e;
+}
+
+.footer-link :hover {
+  color: #f44f2e;
+}
+
+/** Home page**/
+
+.home-slider {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.home-slider-input {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.rent-btn {
+  border-radius: 15px;
+  border: none;
+  background-color: #ffffff;
+  color: #ff653d;
+
+  cursor: pointer;
+}
+
+.rent-btn:hover {
+  color: #ffffff;
+  background-color: #f44f2e;
+}
+
+.buy-btn {
+  border-radius: 15px;
+  border: none;
+  background-color: #f44f2e;
+  color: #ffff;
+  cursor: pointer;
+}
+
+.buy-btn:hover {
+  background-color: #ffffff;
+  color: #f44f2e;
+}
+
+.search-menu {
+  background-color: #ffffff;
+  color: black;
+  border-radius: 10px;
+  width: 800px;
+}
+.search-menu-dropdown {
+  background-color: #ffffff;
+  border-radius: 10px;
+  color: #202020;
+  border: 1px solid black;
+  width: max-content;
+}
+
+.search-menu-searchbtn {
+  background-color: #f44f2e;
+  border-radius: 10px;
+  color: #ffffff;
+}
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
+}

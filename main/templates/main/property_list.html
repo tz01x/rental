@@ -1,0 +1,28 @@
+{%extends 'home.html' %}
+
+{%block head%}
+
+{%endblock head%}
+{%block body%}
+
+
+<div class="container mt-5 ">
+  <h1>Property List view</h1>
+  <hr>
+  {%for property in property_list%}
+  <h3>{{property.title}}</h3>
+  <a href="{%url 'main:property_details' pk=property.pk %}">details</a>
+  {%endfor%}
+
+</div>
+<div style="width: 640px; height: 480px" id="mapContainer"></div>
+
+
+<script>
+
+</script>
+
+{%endblock%}
+<!-- E:\programing_____\Django\djngoproj\rental\gdal-3.1.4\data -->
+<!-- appid:ErmeO39vLVjKH4G4YVBZ
+key=OUgTDcV2trC1t-QEMRdm-9_qb4RKUysFADJhwKTUr2g -->
