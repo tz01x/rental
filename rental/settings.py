@@ -39,14 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'user',
     'main',
     'features',
-    'user',
     'imguploading',
     # 3d party
     'widget_tweaks',
     'rest_framework',
-    
+
 
 
 ]
@@ -155,11 +155,11 @@ STATIC_ROOT = os.path.join(BASE_DIR,'./static')
 from .rest_setting import  *
 from .cors_header import  *
 
-# socal login 
+# socal login
 # first install this app
 # pip install  social-auth-app-django
 INSTALLED_APPS+=['social_django']
-# fb loign 
+# fb loign
 SOCIAL_AUTH_FACEBOOK_KEY = '672452203475296'        # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET =  '5ea038e5e0b4737bf47357e396d042bb' # App Secret
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']#, 'user_link'] # add this
