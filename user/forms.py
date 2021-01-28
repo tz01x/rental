@@ -3,7 +3,7 @@
 from django.contrib.auth.models import User
 
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext as gt 
+from django.utils.translation import gettext as gt
 
 
 from django.core.exceptions import ValidationError
@@ -64,7 +64,7 @@ The clean_password2() method checks whether the password entered in both the fie
 #             raise ValidationError("Password don't match")
 #
 #         return password2
-allcitys=[('','-----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+# allcitys=[('','-----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
 
 class CustomUserCreationForm(forms.ModelForm):
     username = forms.CharField( min_length=4, label= _('Username'),max_length=150, help_text=gt('Please fill the form with valid info'))
@@ -79,6 +79,7 @@ class CustomUserCreationForm(forms.ModelForm):
     class Meta:
         model=User
         fields=('username','email','phone','password1', 'password2','city','gender')
+    city.choices=[('','-----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
         # labels = {
         #     'username': _('Unsername'),
         #     "phone":_('PhoneNumber'),
@@ -123,4 +124,3 @@ class  MyLoginForm(AuthenticationForm):
 
 
 # Notice that CustomUserCreationForm inherits from forms.Form class rather than forms.ModelForm.
-
