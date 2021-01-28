@@ -79,7 +79,7 @@ class CustomUserCreationForm(forms.ModelForm):
     class Meta:
         model=User
         fields=('username','email','phone','password1', 'password2','city','gender')
-    city.choices=[('','-----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+    city.choices=[('','-----')]#+[(city.name,_(city.name))for city in Citys.objects.all()]
         # labels = {
         #     'username': _('Unsername'),
         #     "phone":_('PhoneNumber'),
