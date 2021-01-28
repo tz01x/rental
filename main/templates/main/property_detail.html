@@ -4,16 +4,20 @@
 <style>
   
   .swiper-container {
-    /* width: 100%; */
-    height: 80vh !important;
+    width: 85% !important;
+    height: 60vh !important;
     margin-left: auto;
     margin-right: auto;
+
+  
   }
 
   .swiper-slide {
+    
     height: 100px;
     background-size: cover;
     background-position: center;
+    /* background-color:black; */
   }
 
   .gallery-top {
@@ -35,6 +39,10 @@
   .gallery-thumbs .swiper-slide-thumb-active {
     opacity: 1;
   }
+  .slider_img{
+  
+  }
+ 
 </style>
 
 
@@ -62,19 +70,21 @@
     <div class="swiper-container gallery-top">
       <div class="swiper-wrapper">
         {%for im in property.img.all%}
-        <img class="swiper-slide"  src="{{im.baseimage.url}}" alt="" srcset="">
+        <div class="swiper-slide" style="display:flex; justify-content: center;">
+          <img class="slider_img" src="{{im.baseimage.url}}" alt="" srcset="">
+        </div>
         <!-- <div class="swiper-slide" style="background-image:url({{im.timage.url}})"></div> -->
         {%endfor%}
       </div>
       <!-- Add Arrows -->
-      <div class="swiper-button-next swiper-button-white"></div>
-      <div class="swiper-button-prev swiper-button-white"></div>
+      <div class="swiper-button-next swiper-button-black"></div>
+      <div class="swiper-button-prev swiper-button-black"></div>
     </div>
     <div class="swiper-container gallery-thumbs">
       <div class="swiper-wrapper">
         <!-- <div class="swiper-slide" style="background-image:url(./images/nature-1.jpg)"></div> -->
         {%for im in property.img.all%}
-        <img class="swiper-slide" src="{{im.timage.url}}" alt="" srcset="">
+        <!-- <img class="swiper-slide" src="{{im.timage.url}}" alt="" srcset=""> -->
         <!-- <div class="swiper-slide" style="background-image:url({{im.timage.url}})"></div> -->
         {%endfor%}
       </div>
@@ -133,25 +143,14 @@
 
 
 <script>
-  var galleryThumbs = new Swiper('.gallery-thumbs', {
-    spaceBetween: 10,
-    slidesPerView: 4,
-    loop: true,
-    freeMode: true,
-    loopedSlides: 5, //looped slides should be the same
-    watchSlidesVisibility: true,
-    watchSlidesProgress: true,
-  });
+
   var galleryTop = new Swiper('.gallery-top', {
-    spaceBetween: 10,
+    // spaceBetween: 10,
     loop: true,
-    loopedSlides: 5, //looped slides should be the same
+    // loopedSlides: 5, //looped slides should be the same
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
-    },
-    thumbs: {
-      swiper: galleryThumbs,
     },
   });
 </script>

@@ -32,33 +32,33 @@ class Citys(models.Model):
     name=models.CharField(max_length=150,blank=True)
     bn_name=models.CharField(max_length=150,blank=True,null=True)
     lat=models.CharField(max_length=50,blank=True)
-    lon=models.CharField(max_length=50,blank=True)
+    lng=models.CharField(max_length=50,blank=True)
     def __str__(self):
         return f'{self.id} {self.name}'
     def bn(self):
         return self.bn_name
 
-class Districts(models.Model):
-    city=models.ForeignKey('Citys',on_delete=models.CASCADE,related_name='district')
-    name=models.CharField(max_length=150,blank=True)
-    bn_name=models.CharField(max_length=150,blank=True,null=True)
-    lat=models.CharField(max_length=50,blank=True)
-    lon=models.CharField(max_length=50,blank=True)
-    def __str__(self):
-        return f'{self.name}'
-    def bn(self):
-        return self.bn_name
-class Thana(models.Model):
-    city=models.ForeignKey('Citys',on_delete=models.CASCADE,related_name='thana',null=True,blank=True)
-    districts=models.ForeignKey('Districts',on_delete=models.CASCADE,related_name='thana')
-    name=models.CharField(max_length=150,blank=True)
-    bn_name=models.CharField(max_length=150,blank=True,null=True)
-    lat=models.CharField(max_length=50,blank=True)
-    lon=models.CharField(max_length=50,blank=True)
-    def __str__(self):
-        return f'{self.name}'
-    def bn(self):
-        return self.bn_name
+# class Districts(models.Model):
+#     city=models.ForeignKey('Citys',on_delete=models.CASCADE,related_name='district')
+#     name=models.CharField(max_length=150,blank=True)
+#     bn_name=models.CharField(max_length=150,blank=True,null=True)
+#     lat=models.CharField(max_length=50,blank=True)
+#     lon=models.CharField(max_length=50,blank=True)
+#     def __str__(self):
+#         return f'{self.name}'
+#     def bn(self):
+#         return self.bn_name
+# class Thana(models.Model):
+#     city=models.ForeignKey('Citys',on_delete=models.CASCADE,related_name='thana',null=True,blank=True)
+#     districts=models.ForeignKey('Districts',on_delete=models.CASCADE,related_name='thana')
+#     name=models.CharField(max_length=150,blank=True)
+#     bn_name=models.CharField(max_length=150,blank=True,null=True)
+#     lat=models.CharField(max_length=50,blank=True)
+#     lon=models.CharField(max_length=50,blank=True)
+#     def __str__(self):
+#         return f'{self.name}'
+#     def bn(self):
+#         return self.bn_name
     
     
 

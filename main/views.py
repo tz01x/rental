@@ -37,6 +37,7 @@ class  adPost(LoginRequiredMixin,CreateView):
         # initial the user to current user
         init['user']=self.request.user
         init['city']=self.request.user.profile.city
+        init['contact_person']=self.request.user.profile.phone
         return init
 
     def form_valid(self,form):
@@ -48,6 +49,12 @@ class  adPost(LoginRequiredMixin,CreateView):
         # this function get call when form save the data into db
         # which view we want to send it to user
         return reverse('main:createAndupdate_adpost_p2',kwargs={'pk':self.object.pk})
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['submit_btn_value'] = "Create"
+        return context
 
 class  PostUpdate(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     form_class=PropertyForm
@@ -61,6 +68,13 @@ class  PostUpdate(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         
         instance=self.get_object()
         return instance.user==self.request.user
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['submit_btn_value'] = "Update"
+        return context
+
 
 @login_required
 @checkPropertyPermission
@@ -84,7 +98,7 @@ def  adPostDelete(request,pk):
 @checkPropertyPermission
 def adPostpart2(request,pk):
     '''
-    create and update 2nd part of the AD post of property  
+    create or update 2nd part of the AD post of property  
     '''
     obj=get_object_or_404(Property,pk=int(pk))
     form=PropertyFormPart2(instance=obj,property_type_id=obj.property_types.id)
@@ -97,7 +111,8 @@ def adPostpart2(request,pk):
             # return reverse('main:createAndupdate_adpost_images',kwargs={'pk':pk})
             return redirect('main:createAndupdate_adpost_images',pk=pk)
     ctx={
-    'form':form
+    'form':form,
+    'submit_btn_value':"Update/Next"
     }
 
     return render(request,'main/adpost.html',ctx)
@@ -106,14 +121,14 @@ def adPostpart2(request,pk):
 @checkPropertyPermission
 def imageUpload(request,pk):
     obj=get_object_or_404(Property,pk=pk)
-    form=PropertyImgForm(initial={'youtube_link':obj.youtube_link})
+    form=PropertyImgForm()
 
     if request.method=='POST':
         form=PropertyImgForm(request.POST,request.FILES)
         files=request.FILES.getlist('images')#from field name 'Images'
         # print(files)
         if form.is_valid():
-            obj.youtube_link=form.cleaned_data['youtube_link']
+            # obj.youtube_link=form.cleaned_data['youtube_link']
             for file in files:
                 imgobj=Images(baseimage=file)
                 imgobj.save()
@@ -136,9 +151,12 @@ class PropertyDetailsView(DetailView):
     # template_name="main/property_detail.html"
 
 def homeView(request):
-
-    return render(request,"home.html")
+    
+    
+    context={
+        'property_list':Property.objects.all()
+    }
+    return render(request,"home.html",context=context)
 
 def ContactView(request):
-
     return render(request,"contact.html")

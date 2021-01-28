@@ -3,14 +3,14 @@
 {%load static%}
 <h1>image upload </h1>
 <div class="container">
-  
+
   <form class="form-control" action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    
+
     {% for hidden_field in form.hidden_fields %}
     {{ hidden_field }}
     {% endfor %}
-    
+
     {% if form.non_field_errors %}
     <div class="alert alert-danger" role="alert">
       {% for error in form.non_field_errors %}
@@ -18,92 +18,100 @@
       {% endfor %}
     </div>
     {% endif %}
-    
+
     <div class="form-file">
       <!-- <input type="file" class="form-file-input" id="customFileDisabled" > -->
       {{form.images}}
       <label class="form-file-label" for="{{form.images.id_for_label}}">
         <span class="form-file-text">Choose file...</span>
         <span class="form-file-button">Browse</span>
-      </div>
-      
-      {%if form.youtube_link.errors%}
-      <div class="mb-3">
-        <label for="{{form.youtube_link.id_for_label}}" class="form-label invalid">{{form.youtube_link.label}}</label>
-        <!-- <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
-        {{form.youtube_link}}
-      </div>
-      {%for error in form.youtube_link.errors%}
-      <div class="invalid-feedback">
-        {{error}}
-      </div>
-      {%endfor%}
-      {%else%}
-      <div class="mb-3">
-        <label for="{{form.youtube_link.id_for_label}}" class="form-label">{{form.youtube_link.label}}</label>
-        <!-- <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
-        {{form.youtube_link}}
-      </div>
-      {%endif%}
-      
-      <input type="submit" name="" value="submit">
-    </form>
-    <div class="">
-      {%for im in obj.img.all %}
-      <div class="input-group mb-3" id="{{im.pk}}-img">
-        
-        <img src="{{ im.timage.url }}" class="img-thumbnail" alt="..." width="200" height="200">
-        <input type="text" class="form-control" value="{{im.timage.name}}" aria-label="Recipient's username" aria-describedby="button-addon2" disabled>
-        <!-- <form class="" action="{%url 'imguploading:del_img' pk=im.pk objpk=obj.pk%}" method="post">
-          {%csrf_token%} -->
-          <button class="btn btn-outline-danger" type="submit" id="button-addon2" onclick="delete_img({{im.pk}})">Delete</button>
-          <!-- </form> -->
-        </div>
-        {%endfor%}
-      </div>
+    </div>
+    <div id="selected_images">
       
     </div>
-    
 
-    <script type="text/javascript">
-    function delete_img(pk) {
-      console.log(pk);
-      
-      fetch(`${window.location.origin}/api/image/delete/${pk}/`, {
-        'method': 'DELETE',
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8', // Indicates the content
-          'X-CSRFToken':getCookie('csrftoken')
-        },
-        body: {
-          'pk':pk
-        }
-      })
-      .then(response=>{
-        if(response.ok){
-          document.getElementById(`${pk}-img`).innerHTML="";
+    <input type="submit" name="" value="Upload">
+  </form>
+  <div class="">
+    {%for im in obj.img.all %}
+    <div class="input-group mb-3" id="{{im.pk}}-img">
+
+      <img src="{{ im.timage.url }}" class="img-thumbnail" alt="..." width="200" height="200">
+      <input type="text" class="form-control" value="{{im.timage.name}}" aria-label="Recipient's username"
+        aria-describedby="button-addon2" disabled>
+      <!-- <form class="" action="{%url 'imguploading:del_img' pk=im.pk objpk=obj.pk%}" method="post">
+          {%csrf_token%} -->
+      <button class="btn btn-outline-danger" type="submit" id="button-addon2"
+        onclick="delete_img({{im.pk}})">Delete</button>
+      <!-- </form> -->
+    </div>
+    {%endfor%}
+  </div>
+
+</div>
+
+
+<script type="text/javascript">
+  ///priview img file 
+  document.getElementById('id_images').addEventListener('change', (e) => {
+    console.log(e);
+    selected_images_ele = document.getElementById('selected_images');
+    selected_images_ele.innerHTML='';
+    for (let index = 0; index < e.srcElement.files.length; index++) {
+      const file = e.srcElement.files[index];
+      let reader = new FileReader();
+      reader.addEventListener("load", function () {
+      // convert image file to base64 string
+      console.log(reader);
+     selected_images_ele.innerHTML += `<img src="${reader.result}" alt="" width="100" height="100" srcset="">`;
+    }, false);
+      reader.readAsDataURL(file);
+    }
+
+
+    
+  });
+
+
+
+  function delete_img(pk) {
+    console.log(pk);
+
+    fetch(`${window.location.origin}/api/image/delete/${pk}/`, {
+      'method': 'DELETE',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8', // Indicates the content
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      body: {
+        'pk': pk
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          document.getElementById(`${pk}-img`).innerHTML = "";
         }
       });
-      
-    }
-    
-    
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
+
+  }
+
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
         }
       }
-      return cookieValue;
     }
-    </script>
+    return cookieValue;
+  }
+</script>
 
 
 {%endblock body%}
