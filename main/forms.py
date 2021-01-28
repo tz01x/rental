@@ -45,7 +45,7 @@ class PropertyForm(forms.ModelForm):
 
     available_from.widget.attrs.update({"id":"datepicker"})
     city.widget.attrs.update({'id':'selected_city'})
-    city.choices=[('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+    city.choices=[('','----')]#+[(city.name,_(city.name))for city in Citys.objects.all()]
     area.widget.attrs.update({'id':'selected_area'})
 
     # def clean_area(self):
