@@ -11,17 +11,17 @@ class FeatureForm(forms.ModelForm):
     class Meta:
         model=FeatureType
         fields='__all__'
-        
 
-allcitys=[('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+
 class PropertyForm(forms.ModelForm):
+    # allcitys=[('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
     user=forms.ModelChoiceField(widget=forms.HiddenInput,queryset=get_user_model().objects.all(),disabled=True)
     description=forms.CharField(widget=forms.Textarea(attrs={"rows":"2"}))
 
     # advance_payment=forms.DecimalField(min_value=0)
     price=forms.DecimalField(min_value=0,label="Rent Price per month")
     available_from=forms.DateField(widget=forms.DateInput(attrs={'autocomplete':"off"}))
-    city=forms.ChoiceField(choices=allcitys)
+    city=forms.ChoiceField(choices=[])
     area=forms.CharField()
     address=forms.CharField(widget=forms.Textarea(attrs={'rows':'2'}))
     latlong=forms.CharField(required=False)
@@ -45,6 +45,7 @@ class PropertyForm(forms.ModelForm):
 
     available_from.widget.attrs.update({"id":"datepicker"})
     city.widget.attrs.update({'id':'selected_city'})
+    city.choices=[('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
     area.widget.attrs.update({'id':'selected_area'})
 
     # def clean_area(self):
@@ -68,7 +69,7 @@ class PropertyForm(forms.ModelForm):
         # self.area._set_choices((value,value))
 
 
-        
+
 
 Set_Available_choices=[(str(i),f'{i} set') for i in range(1,10)]
 class PropertyFormPart2(forms.ModelForm):
@@ -152,7 +153,7 @@ class PropertyFormPart2(forms.ModelForm):
                 self.hideAndDisabled('roommate_type')
                 self.hideAndDisabled('hostal_type')
                 self.hideAndDisabled('people_per_room')
-                
+
 
     def hideAndDisabled(self,fieldName):
         self.fields[fieldName].widget=forms.HiddenInput()
