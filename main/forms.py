@@ -2,7 +2,7 @@ from django import  forms
 from django.utils.translation import gettext_lazy as _
 from .models import Property,PropertyType,FeatureType,Utilities,Preference
 from django.contrib.auth import get_user_model
-from user.models import Citys,Districts
+from user.models import Citys
 class FeatureForm(forms.ModelForm):
     ptype=forms.ModelMultipleChoiceField(
     queryset=PropertyType.objects.all(),
