@@ -64,8 +64,8 @@ The clean_password2() method checks whether the password entered in both the fie
 #             raise ValidationError("Password don't match")
 #
 #         return password2
-allcitys=[(city.name,_(city.name))for city in Citys.objects.all()]
-allcitys.insert(0,('','-----'))
+allcitys=[('','-----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+
 class CustomUserCreationForm(forms.ModelForm):
     username = forms.CharField( min_length=4, label= _('Username'),max_length=150, help_text=gt('Please fill the form with valid info'))
     email = forms.EmailField(label=_('Email'),help_text='please file the form with valid email id ')

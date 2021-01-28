@@ -8,14 +8,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
+        crossorigin=""></script> -->
 
 
 
@@ -25,41 +24,55 @@
 
 
 
-    <div id="mapid" style=" height: 512px;"></div>
-    <script>
-        var mymap = L.map('mapid').setView([23.6850, 90.3563], 10);
-        const my_cnter = [23.6850, 90.3563];
-        const marker = L.marker([23.6850, 90.3563]).addTo(mymap);
+    <div id="mapid" style=" height: 256px; width:256px; margin-left: auto; margin-right: auto;"></div>
 
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-        }).addTo(mymap);
-        mymap.on('move', function (e) {
-            // console.log(mymap.getCenter());
-            marker.setLatLng(mymap.getCenter())
+
+    <div id="render_form">
+
+        
+
+
+    </div>
+
+
+    <script>
+
+        fetch(`${window.location.origin}/adpost/create/`).then(res=>res.text()).then(htmls=>{
+            document.getElementById('render_form').innerHTML=htmls;
         });
-        function dolittleAnimeiton(){
-            setInterval(function () {
-            mymap.setView(my_cnter, mymap.getZoom(), {
-                    "animate": true,
-                    "pan": {
-                        "duration": 1
-                    }
-                });
-            setTimeout(function () {
-                // mymap.setView([60, 0]);
-                // console.log(data);
-                // mymap.setView(my_cnter);
-            const data = mymap.getCenter()
-                mymap.setView([data.lat + 0.5, data.lng], mymap.getZoom(), {
-                    "animate": true,
-                    "pan": {
-                        "duration": 2
-                    }
-                });
-            }, 5000);
-        }, 4000);
-        }
+        // var mymap = L.map('mapid').setView([23.6850, 90.3563], 10);
+        // const my_cnter = [23.6850, 90.3563];
+        // const marker = L.marker([23.6850, 90.3563]).addTo(mymap);
+
+        // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        //     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        // }).addTo(mymap);
+        // mymap.on('move', function (e) {
+        //     // console.log(mymap.getCenter());
+        //     marker.setLatLng(mymap.getCenter())
+        // });
+        // function dolittleAnimeiton(){
+        //     setInterval(function () {
+        //     mymap.setView(my_cnter, mymap.getZoom(), {
+        //             "animate": true,
+        //             "pan": {
+        //                 "duration": 1
+        //             }
+        //         });
+        //     setTimeout(function () {
+        //         // mymap.setView([60, 0]);
+        //         // console.log(data);
+        //         // mymap.setView(my_cnter);
+        //     const data = mymap.getCenter()
+        //         mymap.setView([data.lat + 0.5, data.lng], mymap.getZoom(), {
+        //             "animate": true,
+        //             "pan": {
+        //                 "duration": 2
+        //             }
+        //         });
+        //     }, 5000);
+        // }, 4000);
+        // }
         
 
 

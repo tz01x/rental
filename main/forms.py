@@ -11,17 +11,19 @@ class FeatureForm(forms.ModelForm):
     class Meta:
         model=FeatureType
         fields='__all__'
+        
 
-allcitys=[(None,None)]+[(city.name,_(city.name))for city in Citys.objects.all()]
+allcitys=[('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
 class PropertyForm(forms.ModelForm):
     user=forms.ModelChoiceField(widget=forms.HiddenInput,queryset=get_user_model().objects.all(),disabled=True)
-
+    description=forms.CharField(widget=forms.Textarea(attrs={"rows":"2"}))
 
     # advance_payment=forms.DecimalField(min_value=0)
     price=forms.DecimalField(min_value=0,label="Rent Price per month")
     available_from=forms.DateField(widget=forms.DateInput(attrs={'autocomplete':"off"}))
     city=forms.ChoiceField(choices=allcitys)
-    area=forms.ChoiceField(choices=[(None,None)]+[(obj.name,obj.name) for obj in Districts.objects.all()])
+    area=forms.CharField()
+    address=forms.CharField(widget=forms.Textarea(attrs={'rows':'2'}))
     latlong=forms.CharField(required=False)
     class Meta:
         model=Property
@@ -31,10 +33,10 @@ class PropertyForm(forms.ModelForm):
                 'description',
                 'available_from',
                 'city',
+                'latlong',
                 'area',
                 # 'thana',
-                'latlong',
-                'adress',
+                'address',
                 'contact_person',
                 # 'advance_payment',
                 'price',
@@ -80,13 +82,15 @@ class PropertyFormPart2(forms.ModelForm):
     widget=forms.CheckboxSelectMultiple,
     queryset=Utilities.objects.all(),
     )
-    preference=forms.ModelMultipleChoiceField(
-    required=False,
-    widget=forms.CheckboxSelectMultiple,
-    queryset=Preference.objects.all(),
-    )
+    # preference=forms.ModelMultipleChoiceField(
+    # required=False,
+    # widget=forms.CheckboxSelectMultiple,
+    # queryset=Preference.objects.all(),
+    # )
     set_available=forms.ChoiceField(choices=Set_Available_choices,required=False)
     parking_space=forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-check-input'}),required=False)
+    youtube_link=forms.URLField(widget=forms.URLInput(attrs={'class':'form-control'}),required=False)
+
     class  Meta:
         model=Property
         fields=[
@@ -103,10 +107,11 @@ class PropertyFormPart2(forms.ModelForm):
             'drawing_room',
             'kitchen',
             'balcony',
+            'youtube_link',
             'parking_space',
             'feature_types',
             'utility_bill',
-            'preference'
+            # 'preference'
             ]
         # exclude=['id']
         # widgets ={
@@ -114,7 +119,7 @@ class PropertyFormPart2(forms.ModelForm):
         # }
     feature_types.widget.attrs.update({'class':'form-check-input'})
     utility_bill.widget.attrs.update({'class':'form-check-input'})
-    preference.widget.attrs.update({'class':'form-check-input'})
+    # preference.widget.attrs.update({'class':'form-check-input'})
 
 
 
@@ -155,6 +160,5 @@ class PropertyFormPart2(forms.ModelForm):
 
 class PropertyImgForm(forms.Form):
     images=forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True,"class":'form-file-input'}),required=False)
-    youtube_link=forms.URLField(widget=forms.URLInput(attrs={'class':'form-control'}),required=False)
     def save(self,*args,**kwargs):
         super(PropertyImg,self).save(*args,**kwargs)

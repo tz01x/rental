@@ -31,7 +31,7 @@ class Images(models.Model):
     def save(self):
         self.timage=self.baseimage
         baseimage = Image.open(self.baseimage).convert("RGBA")
-        baseimage=baseimage.resize((400,400))
+        
         # make a blank image for the text, initialized to transparent text color
         txt = Image.new('RGBA', baseimage.size, (255,255,255,0))
 
@@ -46,29 +46,30 @@ class Images(models.Model):
         # draw.text((x, y),"Sample Text",(r,g,b))
         draw.text(((baseimage.width//2)-(txt_width//2), baseimage.height-50),"rental.bd.com","rgba(255,255,255,128)",font=font)
         outimg = Image.alpha_composite(baseimage, txt)
+        outimg2=outimg.resize((400,400))
 
         output = BytesIO()
+        output2 = BytesIO()
 
         #Resize/modify the image
         # im = im.resize( (200,200) )
 
 
-        f={
-        'jpeg':'JPEG',
-        'png':'PNG',
-        'jpg':'JPEG',
-        }
+        
         #filename , .jpg
         name, extension = os.path.splitext(self.baseimage.name)
         # print(name,extension[1:])
 
         #after modifications, save it to the output
-        outimg.save(output,'png', quality=60)
+        outimg.save(output,'png', quality=85)
         output.seek(0)
+        outimg2.save(output2,'png', quality=60)
+        output2.seek(0)
         #change the imagefield value to be the newley modifed image value
         imgname="img-%s%s"%(str(datetime.datetime.now().timestamp()).split('.')[0],'.png')
         # print(imgname)
-        self.timage = InMemoryUploadedFile(output,'ImageField', imgname, 'png', sys.getsizeof(output), None)
+        self.baseimage = InMemoryUploadedFile(output,'ImageField', imgname, 'png', sys.getsizeof(output), None)
+        self.timage = InMemoryUploadedFile(output2,'ImageField', imgname, 'png', sys.getsizeof(output2), None)
 
         super(Images,self).save()
     def delete(self, using=None, keep_parents=False):

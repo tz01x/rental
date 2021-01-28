@@ -1,116 +1,133 @@
-{%extends 'index.html' %}
+{%extends 'home.html' %}
 
 {%block body%}
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
   crossorigin="" />
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
-<div class="">
-  current user : {{request.user.username}}
-</div>
-<div class="container">
-  <form method="post" novalidate>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
-    <h1>create post</h1>
-    {% load widget_tweaks %}
-    {% csrf_token %}
+<!-- Fengyuan Chen's Datepicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+<style>
 
-    {% for hidden_field in form.hidden_fields %}
-    {{ hidden_field }}
-    {% endfor %}
+  .form-group{
+    padding:10px;
+  }
+  input,select,optgroup,textarea,button{
+    box-shadow: 1px 1px 2px #0000004f;
+  }
+</style>
 
-    {% if form.non_field_errors %}
-    <div class="alert alert-danger" role="alert">
-      {% for error in form.non_field_errors %}
-      {{ error }}
+<div class="" style="margin-top:69px">
+  <div class="container">
+    <h1>Create post</h1>
+    <form method="post" novalidate>
+
+      {% load widget_tweaks %}
+      {% csrf_token %}
+
+      {% for hidden_field in form.hidden_fields %}
+      {{ hidden_field }}
       {% endfor %}
-    </div>
-    {% endif %}
 
-    {% for field in form.visible_fields %}
-    <div class="form-group">
-
-
-
-      <label class="form-label" for="{{ field.id_for_label }}">{{field.label}}</label>
-
-
-
-      {% if field.errors %}
-      <!-- if error happend show the error  -->
-
-
-      {% render_field field class="form-control  is-invalid" %}
-      <!-- after error checking invalid field render hrere -->
-      {% for error in field.errors %}
-      <div class="invalid-feedback">
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        {% for error in form.non_field_errors %}
         {{ error }}
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% for field in form.visible_fields %}
+      <div class="form-group">
+
+
+
+        <label class="form-label" for="{{ field.id_for_label }}">{{field.label}}</label>
+
+
+
+        {% if field.errors %}
+        <!-- if error happend show the error  -->
+
+
+        {% render_field field class="form-control is-invalid" %}
+        <!-- after error checking invalid field render hrere -->
+        {% for error in field.errors %}
+        <div class="invalid-feedback">
+          {{ error }}
+        </div>
+        {% endfor %}
+
+
+
+        {% else %}
+        <!-- if no error  -->
+
+        <!-- if the field is checkbox type then  -->
+        {%if field.field.widget.input_type == 'checkbox' %}
+        {%if field|length > 1%}
+
+        <div class="selector-groups">
+          {%for checkboxfield in field%}
+          <div class="selector">
+            {{checkboxfield}}
+            <!-- here we cant access the the lable or other property of the  nested field   -->
+          </div>
+          {%endfor%}
+        </div>
+
+        {%else%}
+        {{field}}
+        {%endif%}
+
+
+        <!-- if field type not an checkbox type  -->
+        {%else%}
+        <!-- if its select type  -->
+        {%if field.field.widget.input_type == "select"%}
+        {% render_field field class="form-select" %}
+        {%else%}
+        <!-- other wise -->
+        {%if field.name == 'latlong'%}
+        <div id="mapid" style=" height: 256px;"></div>
+        <div class="btn btn-primary mt-1" onclick="setMarker()">set Marker</div>
+        <div hidden>
+          {{field}}
+        </div>
+        {%else%}
+        {% render_field field class="form-control" %}
+        {%endif%}
+        {%endif%}
+
+        {%endif%}
+
+
+        {% endif %}
+        <!-- check error/no error condition  end -->
+
+        {% if field.help_text %}
+        <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+        {% endif %}
+
       </div>
       {% endfor %}
 
+      <br>
 
+      <button type="submit" style="background-color:rgb(255, 89, 0);color:white" class="btn ">{%if submit_btn_value%}{{submit_btn_value}}{%else%}Submit{%endif%}</button>
 
-      <!-- if no error  -->
-      {% else %}
+    </form>
 
-      <!-- if the field is checkbox type then  -->
-      {%if field.field.widget.input_type == 'checkbox'  %}
-      {%if field|length > 1%}
-
-      <div class="selector-groups">
-        {%for checkboxfield in field%}
-        <div class="selector">
-          {{checkboxfield}}
-          <!-- here we cant access the the lable or other property of the  nested field   -->
-        </div>
-        {%endfor%}
-      </div>
-
-      {%else%}
-      {{field}}
-      {%endif%}
-
-
-      <!-- if field type not an checkbox type  -->
-      {%else%}
-      <!-- if its select type  -->
-      {%if field.field.widget.input_type == "select"%}
-      {% render_field field class="form-select"  %}
-      {%else%}
-      <!-- other wise --> 
-      {%if field.name == 'latlong'%}
-      <div id="mapid" style=" height: 256px;"></div>
-      <div onclick="setMarker()">set Marker</div>
-      <div hidden>
-        {{field}}
-      </div>
-      {%else%}
-      {% render_field field class="form-control"  %}
-      {%endif%}
-      {%endif%}
-
-      {%endif%}
-
-
-      {% endif %}
-      <!-- check error/no error condition  end -->
-
-      {% if field.help_text %}
-      <small class="form-text text-muted">{{ field.help_text|safe }}</small>
-      {% endif %}
-
-    </div>
-    {% endfor %}
-
-    <br>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-
-  </form>
-
+  </div>
 </div>
+
 
 
 {%endblock%}
@@ -122,90 +139,192 @@
     $("#datepicker").datepicker();
   });
 </script>
+
+
 <script>
-  let city_seclector = document.getElementById('selected_city');
-  featch_Districts(city_seclector.value, false);
-  city_seclector.addEventListener("change", (e) => {
+  // map 
+  let mylng =null;
+  let mylat=null;
+  let is_updateing=false;
+  let latlng_ele=document.getElementById("id_latlong");
 
-    // console.log(city_seclector.value.length);
-    featch_Districts(city_seclector.value, true);
-  });
-
-  function featch_Districts(value, eventcall) {
-
-    if (value.length == 0) {
-      return;
-    }
-    let areaSeclector = document.getElementById('selected_area');
-    // console.log(areaSeclector.value.length);
-    area_selected_value = areaSeclector.value;
-    // console.log(areaSeclector.value==null?'yes':"no");
-    //area selector alrealdy been selected 
-    if (areaSeclector.value.length == 0 && eventcall == false) {
-      gofatch();
-      return;
-    } else if (areaSeclector.value.length > 0 && eventcall == false) {
-      gofatch(true);
-    }
-    if (eventcall == true) {
-      gofatch();
-    }
-
-
-
-    function gofatch(update_previousSeclector_value = false) {
-
-      let previous_value = update_previousSeclector_value ? areaSeclector.value : "";
-
-      fetch(`${window.location.origin}/api/district/?city=${value}`).then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-      }).then(body => {
-        areaSeclector.innerHTML = `<option value>None</option>`;
-        for (const iterator of body) {
-          areaSeclector.innerHTML += `<option value="${iterator.name}">${iterator.name}</option>`
-        }
-        if (update_previousSeclector_value) {
-          areaSeclector.value = previous_value;
-        }
-
-      });
-
-
-
-
-
-    }
+  //check if we ar post update page or not , 
+  if(latlng_ele.value==null || latlng_ele.value.length==0){
+    // console.log('creating an form');
+    //if we are create a new post page , which mean input field latlng has a no value 
+    mylat=23.6850;
+    mylng=90.3563;
+  }else{
+    // console.log('updating a form');
+    [mylat,mylng]=latlng_ele.value.split(',');
+    mylat=parseFloat(mylat);
+    mylng=parseFloat(mylng);
+    is_updateing=true;
 
   }
-
-  // const thana = document.getElementById('id_thana');
-
-  var mymap = L.map('mapid').setView([23.6850, 90.3563], 10);
-  const my_cnter = [23.6850, 90.3563];
-  const marker = L.marker([23.6850, 90.3563]).addTo(mymap);
-  let my_marker=null;
+  var mymap = L.map('mapid').setView([mylat,mylng ], 10);
+  const my_cnter = [mylat, mylng];
+  const marker = L.marker([mylat, mylng]).addTo(mymap);
+  let my_marker = null;
+  if(is_updateing){
+    my_marker = L.marker([mylat, mylng]);
+    mymap.addLayer(my_marker);
+  }
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
   }).addTo(mymap);
+
   mymap.on('move', function (e) {
     // console.log(mymap.getCenter());
     marker.setLatLng(mymap.getCenter())
   });
-  function setMarker(){
-    console.log(marker.getLatLng());
-    if(my_marker!=null){
+  function setMarker() {
+    // console.log(marker.getLatLng());
+
+    //remove old marker on the map layer 
+    if (my_marker != null) {
       mymap.removeLayer(my_marker);
     }
-    my_marker=L.marker(marker.getLatLng());
+    //add a new marker on the map layer 
+    my_marker = L.marker(marker.getLatLng());
     mymap.addLayer(my_marker);
-    ele=document.getElementById("id_latlong");
-    const {lat,lng}=marker.getLatLng();
-    ele.value=`${lat},${lng}`;
-    console.log(ele);
+    ele = document.getElementById("id_latlong");
+    const { lat, lng } = marker.getLatLng();
+    ele.value = `${lat},${lng}`;
+    // console.log(ele);
+  //convart lat lng to address ->
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`).then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+    }).then(data => {
+      // console.log(data.address);
+      document.getElementById("id_address").value = data.display_name;
+
+      if(data.address.hasOwnProperty('suburb')){
+        document.getElementById("selected_area").value = data.address.suburb;
+      }
+      else if(data.address.hasOwnProperty('neighbourhood')){
+        document.getElementById("selected_area").value = data.address.neighbourhood;
+      }else if(data.address.hasOwnProperty('village')){
+        document.getElementById("selected_area").value = data.address.village;
+      }else if(data.address.hasOwnProperty('town')){
+        document.getElementById("selected_area").value = data.address.town;
+      }
+      else if(data.address.hasOwnProperty('city')){
+        document.getElementById("selected_area").value = data.address.city;
+      }else{
+        document.getElementById("selected_area").value = data.address.state;
+      }
+
+      //if the city input is empty then populate with fatch data value 
+      let city_seclector = document.getElementById('selected_city');
+      if(city_seclector.value.length==0){
+        if(data.address.hasOwnProperty('town')){
+          
+            for (let index = 0; index < city_seclector.options.length; index++) {
+
+                if(city_seclector.options[index]==data.address.town){
+                  city_seclector.value=data.address.city;
+                  break;
+                }
+              
+            }
+        }else{
+
+          city_seclector.value=data.address.state.split(' ')[0];
+
+        }
+      }else{
+          let curr_city=data.address.state.split(' ')[0];
+          if(curr_city!=city_seclector.value){
+            city_seclector.value=curr_city;
+          }
+
+      }
+    
+    });
 
   }
+
+  // map end 
+
+  //city lat long patch 
+  let city_seclector = document.getElementById('selected_city');
+  // featch_Districts(city_seclector.value, false);
+  city_seclector.addEventListener("change", (e) => {
+    console.log(city_seclector.value);
+    if (city_seclector.value.length == 0) { return; }
+    // featch_Districts(city_seclector.value, true);
+
+    fetch(`${window.location.origin}/api/city/${city_seclector.value}/`).then(res => {
+      if (res.ok) {
+        return res.json()
+      }
+    }).then(data => {
+      let lat = data[0].lat;
+      let lng = data[0].lng;
+      mymap.setView([lat, lng], mymap.getZoom(), {
+        "animate": true,
+        "pan": {
+          "duration": 1
+        }
+      });
+    });
+  });
+
+  // function featch_Districts(value, eventcall) {
+
+  //   if (value.length == 0) {
+  //     return;
+  //   }
+  //   let areaSeclector = document.getElementById('selected_area');
+  //   // console.log(areaSeclector.value.length);
+  //   area_selected_value = areaSeclector.value;
+  //   // console.log(areaSeclector.value==null?'yes':"no");
+  //   //area selector alrealdy been selected 
+  //   if (areaSeclector.value.length == 0 && eventcall == false) {
+  //     gofatch();
+  //     return;
+  //   } else if (areaSeclector.value.length > 0 && eventcall == false) {
+  //     gofatch(true);
+  //   }
+  //   if (eventcall == true) {
+  //     gofatch();
+  //   }
+
+
+
+  //   function gofatch(update_previousSeclector_value = false) {
+
+  //     let previous_value = update_previousSeclector_value ? areaSeclector.value : "";
+
+  //     fetch(`${window.location.origin}/api/district/?city=${value}`).then(res => {
+  //       if (res.ok) {
+  //         return res.json();
+  //       }
+  //     }).then(body => {
+  //       areaSeclector.innerHTML = `<option value>None</option>`;
+  //       for (const iterator of body) {
+  //         areaSeclector.innerHTML += `<option value="${iterator.name}">${iterator.name}</option>`
+  //       }
+  //       if (update_previousSeclector_value) {
+  //         areaSeclector.value = previous_value;
+  //       }
+
+  //     });
+
+
+
+
+
+  //   }
+
+  // }
+
+  // const thana = document.getElementById('id_thana');
+
+
 
 </script>
 

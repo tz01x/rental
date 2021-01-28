@@ -30,7 +30,7 @@ class Property(models.Model):
     area=models.CharField(max_length=400,blank=True,null=True,verbose_name='District')
     thana=models.CharField(max_length=400,blank=True,null=True,verbose_name='Thana')
     latlong=models.CharField(max_length=100,blank=True,null=True)
-    adress=models.CharField(max_length=400,blank=True,null=True)
+    address=models.CharField(max_length=400,blank=True,null=True)
     created=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     # post_status 
     publish=models.BooleanField(choices=[(True,'Publish'),(False,'Arcive')],default=False,verbose_name="Post Status")
