@@ -74,7 +74,7 @@ class CustomUserCreationForm(forms.ModelForm):
     # phone = PhoneNumberField(max_length=14,min_length=11,label=_("Phone"),help_text=_('Use this forment +8801*******'))
     phone = forms.CharField(max_length=14,min_length=11,label=_("Mobile number"),help_text=_(''))
     # address=forms.CharField(max_length=200,label=_("Address"),widget=forms.Textarea(attrs={'rows':"2"}))
-    city=forms.ChoiceField(choices=allcitys,required=True)
+    city=forms.ChoiceField(choices=[],required=True)
     gender=forms.ChoiceField(choices=[('m',"Male"),('f','Female'),('o',"Other")],required=True)
     class Meta:
         model=User
