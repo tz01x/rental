@@ -64,7 +64,7 @@ The clean_password2() method checks whether the password entered in both the fie
 #             raise ValidationError("Password don't match")
 #
 #         return password2
-# allcitys=[('','-----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+allcitys= lambda : [('','-----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
 
 class CustomUserCreationForm(forms.ModelForm):
     username = forms.CharField( min_length=4, label= _('Username'),max_length=150, help_text=gt('Please fill the form with valid info'))
@@ -74,12 +74,12 @@ class CustomUserCreationForm(forms.ModelForm):
     # phone = PhoneNumberField(max_length=14,min_length=11,label=_("Phone"),help_text=_('Use this forment +8801*******'))
     phone = forms.CharField(max_length=14,min_length=11,label=_("Mobile number"),help_text=_(''))
     # address=forms.CharField(max_length=200,label=_("Address"),widget=forms.Textarea(attrs={'rows':"2"}))
-    city=forms.ChoiceField(choices=[],required=True)
+    city=forms.ChoiceField(choices=allcitys(),required=True)
     gender=forms.ChoiceField(choices=[('m',"Male"),('f','Female'),('o',"Other")],required=True)
     class Meta:
         model=User
         fields=('username','email','phone','password1', 'password2','city','gender')
-    city.choices=[('','-----')]#+[(city.name,_(city.name))for city in Citys.objects.all()]
+    # city.choices=[('','-----')]#+[(city.name,_(city.name))for city in Citys.objects.all()]
         # labels = {
         #     'username': _('Unsername'),
         #     "phone":_('PhoneNumber'),
