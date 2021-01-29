@@ -13,7 +13,7 @@ class FeatureForm(forms.ModelForm):
         fields='__all__'
 
 
-allcitys=lambda : [('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+# allcitys=lambda : [('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
 class PropertyForm(forms.ModelForm):
     user=forms.ModelChoiceField(widget=forms.HiddenInput,queryset=get_user_model().objects.all(),disabled=True)
     description=forms.CharField(widget=forms.Textarea(attrs={"rows":"2"}))
@@ -21,7 +21,7 @@ class PropertyForm(forms.ModelForm):
     # advance_payment=forms.DecimalField(min_value=0)
     price=forms.DecimalField(min_value=0,label="Rent Price per month")
     available_from=forms.DateField(widget=forms.DateInput(attrs={'autocomplete':"off"}))
-    city=forms.ChoiceField(choices=allcitys())
+    city=forms.ChoiceField(choices=[])
     area=forms.CharField()
     address=forms.CharField(widget=forms.Textarea(attrs={'rows':'2'}))
     latlong=forms.CharField(required=False)
@@ -45,8 +45,13 @@ class PropertyForm(forms.ModelForm):
 
     available_from.widget.attrs.update({"id":"datepicker"})
     city.widget.attrs.update({'id':'selected_city'})
-    # city.choices=[('','----')]#+[(city.name,_(city.name))for city in Citys.objects.all()]
+    # city.choices=[('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
     area.widget.attrs.update({'id':'selected_area'})
+    def __inti__(self,args,**kwargs):
+        super(PropertyForm, self).__init__(args,kwargs)
+        self.fields['city'].choices=[('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+        
+
 
     # def clean_area(self):
     #     super(PropertyForm,self).clean_area()

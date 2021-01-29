@@ -75,8 +75,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends', # add this
-                'social_django.context_processors.login_redirect', # add this
+                # 'social_django.context_processors.backends', # add this
+                # 'social_django.context_processors.login_redirect', # add this
             ],
         },
     },
@@ -99,7 +99,7 @@ DATABASES = {
 AUTHENTICATION_BACKENDS = [
     # 'social_core.backends.linkedin.LinkedinOAuth2',
     # 'social_core.backends.instagram.InstagramOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
+    # 'social_core.backends.facebook.FacebookOAuth2',
     'user.backends.EmailBackend',
     # 'django.contrib.auth.backends.ModelBackend',
     ]
