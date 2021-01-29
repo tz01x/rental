@@ -74,7 +74,7 @@ class CustomUserCreationForm(forms.ModelForm):
     # phone = PhoneNumberField(max_length=14,min_length=11,label=_("Phone"),help_text=_('Use this forment +8801*******'))
     phone = forms.CharField(max_length=14,min_length=11,label=_("Mobile number"),help_text=_(''))
     # address=forms.CharField(max_length=200,label=_("Address"),widget=forms.Textarea(attrs={'rows':"2"}))
-    city=forms.ChoiceField(choices=[],required=True)
+    city=forms.ChoiceField(required=True)
     gender=forms.ChoiceField(choices=[('m',"Male"),('f','Female'),('o',"Other")],required=True)
     class Meta:
         model=User
@@ -82,18 +82,19 @@ class CustomUserCreationForm(forms.ModelForm):
     # city.choices=[('','-----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
         # labels = {
         #     'username': _('Unsername'),
-        #     "phone":_('PhoneNumber'),
-        #     "password1":_('Password'),
-        #     "password2":_('Confirm Password'),
+        #
         # }
         # help_texts = {
         #
         #     'phone': _('Use this forment +8801777777777'),
         #     "password1":_('Password mast be 8 chareture'),
         # }
-    def __inti__(self,args,**kwargs):
-        super(CustomUserCreationForm, self).__init__(args,kwargs)
-        self.fields['city']=[('','-----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+    def __init__(self,*args,**kwargs):
+
+        super(CustomUserCreationForm, self).__init__(*args,**kwargs)
+        # print(dir(self.fields['city']))
+
+        self.fields['city']._set_choices([('','-----')]+[(city.name,_(city.name))for city in Citys.objects.all()])
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
         r = User.objects.filter(username=username)

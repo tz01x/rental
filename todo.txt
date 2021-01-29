@@ -1,0 +1,5 @@
+TOdo
+
+1. add : logout button
+2. add : progress indicator of the creating a post
+3. css fix : form in register page

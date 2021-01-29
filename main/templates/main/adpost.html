@@ -142,16 +142,16 @@
 
 
 <script>
-  // map 
+  // map
   let mylng =null;
   let mylat=null;
   let is_updateing=false;
   let latlng_ele=document.getElementById("id_latlong");
 
-  //check if we ar post update page or not , 
+  //check if we ar post update page or not ,
   if(latlng_ele.value==null || latlng_ele.value.length==0){
     // console.log('creating an form');
-    //if we are create a new post page , which mean input field latlng has a no value 
+    //if we are create a new post page , which mean input field latlng has a no value
     mylat=23.6850;
     mylng=90.3563;
   }else{
@@ -181,11 +181,11 @@
   function setMarker() {
     // console.log(marker.getLatLng());
 
-    //remove old marker on the map layer 
+    //remove old marker on the map layer
     if (my_marker != null) {
       mymap.removeLayer(my_marker);
     }
-    //add a new marker on the map layer 
+    //add a new marker on the map layer
     my_marker = L.marker(marker.getLatLng());
     mymap.addLayer(my_marker);
     ele = document.getElementById("id_latlong");
@@ -217,18 +217,18 @@
         document.getElementById("selected_area").value = data.address.state;
       }
 
-      //if the city input is empty then populate with fatch data value 
+      //if the city input is empty then populate with fatch data value
       let city_seclector = document.getElementById('selected_city');
       if(city_seclector.value.length==0){
         if(data.address.hasOwnProperty('town')){
-          
+
             for (let index = 0; index < city_seclector.options.length; index++) {
 
                 if(city_seclector.options[index]==data.address.town){
                   city_seclector.value=data.address.city;
                   break;
                 }
-              
+
             }
         }else{
 
@@ -242,14 +242,14 @@
           }
 
       }
-    
+
     });
 
   }
 
-  // map end 
+  // map end
 
-  //city lat long patch 
+  //city lat long patch
   let city_seclector = document.getElementById('selected_city');
   // featch_Districts(city_seclector.value, false);
   city_seclector.addEventListener("change", (e) => {
@@ -282,7 +282,7 @@
   //   // console.log(areaSeclector.value.length);
   //   area_selected_value = areaSeclector.value;
   //   // console.log(areaSeclector.value==null?'yes':"no");
-  //   //area selector alrealdy been selected 
+  //   //area selector alrealdy been selected
   //   if (areaSeclector.value.length == 0 && eventcall == false) {
   //     gofatch();
   //     return;

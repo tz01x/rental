@@ -21,7 +21,7 @@ class PropertyForm(forms.ModelForm):
     # advance_payment=forms.DecimalField(min_value=0)
     price=forms.DecimalField(min_value=0,label="Rent Price per month")
     available_from=forms.DateField(widget=forms.DateInput(attrs={'autocomplete':"off"}))
-    city=forms.ChoiceField(choices=[])
+    city=forms.ChoiceField()
     area=forms.CharField()
     address=forms.CharField(widget=forms.Textarea(attrs={'rows':'2'}))
     latlong=forms.CharField(required=False)
@@ -47,10 +47,12 @@ class PropertyForm(forms.ModelForm):
     city.widget.attrs.update({'id':'selected_city'})
     # city.choices=[('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
     area.widget.attrs.update({'id':'selected_area'})
-    def __inti__(self,args,**kwargs):
-        super(PropertyForm, self).__init__(args,kwargs)
-        self.fields['city'].choices=[('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+    def __init__(self,*args,**kwargs):
+
+        super(PropertyForm, self).__init__(*args,**kwargs)
         
+        self.fields['city'].choices=[('','----')]+[(city.name,_(city.name))for city in Citys.objects.all()]
+
 
 
     # def clean_area(self):
