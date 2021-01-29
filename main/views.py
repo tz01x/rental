@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import user_passes_test,login_required
 # decorators
 def checkPropertyPermission(callBackFunction):
     '''
-    check an user has permission over a particular obj 
+    check an user has permission over a particular obj
     '''
     def innerFunction(request,pk):
         try:
@@ -54,6 +54,7 @@ class  adPost(LoginRequiredMixin,CreateView):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         context['submit_btn_value'] = "Create"
+        context['progress_step']=1
         return context
 
 class  PostUpdate(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
@@ -65,7 +66,7 @@ class  PostUpdate(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         # which view we want to send it to user
         return reverse('main:createAndupdate_adpost_p2',kwargs={'pk':self.object.pk})
     def test_func(self):
-        
+
         instance=self.get_object()
         return instance.user==self.request.user
     def get_context_data(self, **kwargs):
@@ -73,6 +74,9 @@ class  PostUpdate(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         context['submit_btn_value'] = "Update"
+        context['progress_step']=1
+        context['is_updatable']=True
+        context['mypk']=self.kwargs['pk']
         return context
 
 
@@ -98,7 +102,7 @@ def  adPostDelete(request,pk):
 @checkPropertyPermission
 def adPostpart2(request,pk):
     '''
-    create or update 2nd part of the AD post of property  
+    create or update 2nd part of the AD post of property
     '''
     obj=get_object_or_404(Property,pk=int(pk))
     form=PropertyFormPart2(instance=obj,property_type_id=obj.property_types.id)
@@ -112,7 +116,10 @@ def adPostpart2(request,pk):
             return redirect('main:createAndupdate_adpost_images',pk=pk)
     ctx={
     'form':form,
-    'submit_btn_value':"Update/Next"
+    'submit_btn_value':"Update/Next",
+    'progress_step':2,
+    'is_updatable':True,
+    'mypk':pk,
     }
 
     return render(request,'main/adpost.html',ctx)
@@ -136,7 +143,7 @@ def imageUpload(request,pk):
             obj.save()
             return redirect('main:createAndupdate_adpost_images',pk=int(pk))
 
-    return render(request,'main/adpostImgupload.html',{'form':form,'obj':obj})
+    return render(request,'main/adpostImgupload.html',{'form':form,'obj':obj,'progress_step':3,'is_updatable':True,'mypk':pk})
 
 
 
@@ -151,8 +158,8 @@ class PropertyDetailsView(DetailView):
     # template_name="main/property_detail.html"
 
 def homeView(request):
-    
-    
+
+
     context={
         'property_list':Property.objects.all()
     }

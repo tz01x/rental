@@ -1,11 +1,46 @@
-{%extends 'index.html' %}
-{%block body%}
+{%extends 'home.html' %}
 {%load static%}
+{%block body%}
+<link rel="stylesheet" href="{%static './css/progress_indicators.css'%}">
 <h1>image upload </h1>
-<div class="container">
 
-  <form class="form-control" action="" method="post" enctype="multipart/form-data">
+<div class="container mt-5">
+
+  <div class="progress_indicator">
+    <div class="progress_stage progress-active ">
+      <div class="progress_stage_inner  {%if progress_step <= 1%} progress-inner-active{%endif%}  {%if progress_step > 1 or is_updatable %} progress_stage_complect{%endif%}">
+        {%if progress_step > 1 or is_updatable %}
+        <a style="color:inherit" href="{%url 'main:update_adpost' pk=mypk%}">1</a>
+        {%else%}
+        1
+        {%endif%}
+      </div>
+    </div>
+    <div class="progress_stage {%if progress_step >= 2 %} progress-active{%endif%}">
+      <div class="progress_stage_inner {%if progress_step == 2 %} progress-inner-active{%endif%}  {%if progress_step > 2 or is_updatable%} progress_stage_complect{%endif%}">
+
+        {%if progress_step > 2 or is_updatable %}
+        <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_p2' pk=mypk%}">2</a>
+        {%else%}
+        2
+        {%endif%}
+
+      </div>
+    </div>
+    <div class="progress_stage {%if progress_step >= 3 %} progress-active{%endif%} ">
+      <div class="progress_stage_inner  {%if progress_step >= 3 or is_updatable%} progress_stage_complect{%endif%} {%if  progress_step == 3 %} progress-inner-active{%endif%}">
+        {%if progress_step > 3 or is_updatable %}
+        <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_images' pk=mypk%}">3</a>
+        {%else%}
+        3
+        {%endif%}
+      </div>
+    </div>
+  </div>
+
+  <form class="form-group" action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    {% load widget_tweaks %}
 
     {% for hidden_field in form.hidden_fields %}
     {{ hidden_field }}
@@ -21,16 +56,15 @@
 
     <div class="form-file">
       <!-- <input type="file" class="form-file-input" id="customFileDisabled" > -->
-      {{form.images}}
-      <label class="form-file-label" for="{{form.images.id_for_label}}">
-        <span class="form-file-text">Choose file...</span>
-        <span class="form-file-button">Browse</span>
+
+      <label for="{{form.images.id_for_label}}" class="form-label">Upload images</label>
+      <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->
+        {% render_field form.images class="form-control" %}
     </div>
-    <div id="selected_images">
-      
+    <div id="selected_images" class="mt-2">
     </div>
 
-    <input type="submit" name="" value="Upload">
+    <input type="submit" class="btn create_AD_btn mt-2 " name="" value="Upload">
   </form>
   <div class="">
     {%for im in obj.img.all %}
@@ -52,7 +86,7 @@
 
 
 <script type="text/javascript">
-  ///priview img file 
+  ///priview img file
   document.getElementById('id_images').addEventListener('change', (e) => {
     console.log(e);
     selected_images_ele = document.getElementById('selected_images');
@@ -69,7 +103,7 @@
     }
 
 
-    
+
   });
 
 

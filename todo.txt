@@ -1,5 +1,6 @@
 TOdo
 
 1. add : logout button
-2. add : progress indicator of the creating a post
+2. add : progress indicator for the creating AD ------- X
 3. css fix : form in register page
+4. css fix: image uploading page
