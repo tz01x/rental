@@ -185,3 +185,20 @@ body {
 .mapAddress {
   width: 100%;
 }
+
+::-webkit-input-placeholder {
+  text-align: center;
+}
+
+.sidebarsearchbtn {
+  color: #fff;
+  background-color: #fd643d;
+  /*set the color you want here*/
+  width: 100%;
+}
+
+.sidebarsearchbtn:hover {
+  color: #fff;
+  background-color: #f44f2e;
+  /*set the color you want here*/
+}
