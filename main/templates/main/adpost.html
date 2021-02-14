@@ -20,7 +20,7 @@
       <div class="progress_stage progress-active ">
         <div class="progress_stage_inner  {%if progress_step <= 1%} progress-inner-active{%endif%}  {%if progress_step > 1 or is_updatable %} progress_stage_complect{%endif%}">
           {%if progress_step > 1 or is_updatable %}
-          <a style="color:inherit" href="{%url 'main:update_adpost' pk=mypk%}">1</a>
+          <a style="color:inherit" href="{%url 'main:update_adpost' slug=myslug%}">1</a>
           {%else%}
           1
           {%endif%}
@@ -30,7 +30,7 @@
         <div class="progress_stage_inner {%if progress_step == 2 %} progress-inner-active{%endif%}  {%if progress_step > 2 or is_updatable%} progress_stage_complect{%endif%}">
 
           {%if progress_step > 2 or is_updatable %}
-          <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_p2' pk=mypk%}">2</a>
+          <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_p2' slug=myslug%}">2</a>
           {%else%}
           2
           {%endif%}
@@ -40,7 +40,7 @@
       <div class="progress_stage {%if progress_step >= 3 %} progress-active{%endif%} ">
         <div class="progress_stage_inner  {%if progress_step >= 3 or is_updatable%} progress_stage_complect{%endif%} {%if  progress_step == 3 %} progress-inner-active{%endif%}">
           {%if progress_step > 3 or is_updatable %}
-          <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_images' pk=mypk%}">3</a>
+          <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_images' slug=myslug%}">3</a>
           {%else%}
           3
           {%endif%}
@@ -116,7 +116,7 @@
         {% render_field field class="form-select" %}
         {%else%}
         <!-- other wise -->
-        {%if field.name == 'latlong'%}
+        {%if field.name == 'mymap' %}
         <div id="mapid" style=" height: 256px;"></div>
         <div class="btn btn-primary mt-1" onclick="setMarker()">set Marker</div>
         <div hidden>
@@ -167,20 +167,23 @@
   let mylng = null;
   let mylat = null;
   let is_updateing = false;
-  let latlng_ele = document.getElementById("id_latlong");
+  let lat_ele = document.getElementById("id_lat");
+  let lng_ele = document.getElementById("id_lng");
 
   //check if we ar post update page or not ,
-  if (latlng_ele.value == null || latlng_ele.value.length == 0) {
+  if ((lat_ele.value == null || lat_ele.value.length == 0)&&(lng_ele.value == null || lng_ele.value.length == 0)) {
     // console.log('creating an form');
     //if we are create a new post page , which mean input field latlng has a no value
     mylat = 23.6850;
     mylng = 90.3563;
   } else {
-    // console.log('updating a form');
-    [mylat, mylng] = latlng_ele.value.split(',');
+    //  console.log('updating a form');
+    [mylat, mylng] = [lat_ele.value,lng_ele.value];
     mylat = parseFloat(mylat);
     mylng = parseFloat(mylng);
+    document.getElementById("id_mymap").value=`${mylat}${mylng}`;
     is_updateing = true;
+
 
   }
   var mymap = L.map('mapid').setView([mylat, mylng], 10);
@@ -200,6 +203,7 @@
     marker.setLatLng(mymap.getCenter())
   });
 
+  //WHEN USER SET A ENW MARKER 
   function setMarker() {
     // console.log(marker.getLatLng());
 
@@ -210,12 +214,18 @@
     //add a new marker on the map layer
     my_marker = L.marker(marker.getLatLng());
     mymap.addLayer(my_marker);
-    ele = document.getElementById("id_latlong");
+    elelat = document.getElementById("id_lat");
+    elelng = document.getElementById("id_lng");
+    elemymap = document.getElementById("id_mymap");
+    
     const {
       lat,
       lng
     } = marker.getLatLng();
-    ele.value = `${lat},${lng}`;
+
+    elelat.value = `${lat}`;
+    elelng.value = `${lng}`;
+    elemymap.value = `${lat},${lng}`;
     // console.log(ele);
     //convart lat lng to address ->
     fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`).then(res => {
@@ -281,7 +291,7 @@
       return;
     }
     // featch_Districts(city_seclector.value, true);
-
+    //FETACH LAT LNG OF THE CITY , AND MAKE ANIMEITON 
     fetch(`${window.location.origin}/api/city/${city_seclector.value}/`).then(res => {
       if (res.ok) {
         return res.json()

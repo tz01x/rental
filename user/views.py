@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.urls import reverse
 
 from django.views.generic import TemplateView
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse,HttpResponseBadRequest
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from .forms import CustomUserCreationForm
@@ -16,8 +16,8 @@ from django.utils.http import urlsafe_base64_encode
 from django.template.loader import render_to_string
 
 from .tokens import account_activation_token
-
 from main.models import Property
+import json 
 
 class ProfileView(TemplateView):
     template_name="user/profile.html"
@@ -159,3 +159,25 @@ class PasswordResetConfirmViewCoustom(PasswordResetConfirmView):
     template_name='user/password_reset_confirm.html'
     def get_success_url(self):
         return reverse('user:password_reset_complete')
+
+from .forms import  MessageForm
+
+def sendMessagesTo(request):
+    if  request.method=="POST":
+        form=MessageForm(request.POST)
+        print(request.POST)
+        print(form.changed_data)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("{\"details\":\"done\",\"status\":200}")
+        else:
+            error_data={}
+            for field in form:
+                if field.errors:
+                    error_data["id_"+field.name]=True
+                    # print(form.errors)
+            return HttpResponse(content='{"status":400,"details":'+json.dumps(error_data)+'}')
+        
+        
+    return HttpResponseBadRequest
+

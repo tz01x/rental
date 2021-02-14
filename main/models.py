@@ -1,7 +1,10 @@
 from django.db import models
 from django.conf import settings
 from imguploading.models import Images
+from django.dispatch import receiver
+from .slugify import unique_slug_generator
 import json
+import re
 class PropertyType(models.Model):
     name=models.CharField(max_length=100)
     def __str__(self):
@@ -20,7 +23,7 @@ class Property(models.Model):
     ('sale','Sale'),
     ]
     user=models.ForeignKey(to=settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=True)
-    
+    slug=models.SlugField(blank=True,null=True,unique=True,db_index=True)
     title=models.CharField(max_length=10000)
     description=models.CharField(max_length=15000,blank=True,null=True)
     # propertry_built
@@ -29,7 +32,8 @@ class Property(models.Model):
     city=models.CharField(max_length=400,blank=True,null=True)
     area=models.CharField(max_length=400,blank=True,null=True,verbose_name='District')
     thana=models.CharField(max_length=400,blank=True,null=True,verbose_name='Thana')
-    latlong=models.CharField(max_length=100,blank=True,null=True)
+    lat=models.CharField(max_length=100,blank=True,null=True)
+    lng=models.CharField(max_length=100,blank=True,null=True)
     address=models.CharField(max_length=400,blank=True,null=True)
     created=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     # post_status 
@@ -76,25 +80,42 @@ class Property(models.Model):
             return self.ad_for.title
         except:
             return ''
-    def getLatLong(self):
+    # def getLatLong(self):
 
-        if self.latlong!=None or len(self.latlong)>1:
-            latlng=self.latlong.split(',')
-            # print(latlng)
-            try:
-                data={
-                    'lat':latlng[0],
-                    'lng':latlng[1]
-                }
-                return json.dumps(data)
+    #     if self.latlong!=None or len(self.latlong)>1:
+    #         latlng=self.latlong.split(',')
+    #         # print(latlng)
+    #         try:
+    #             data={
+    #                 'lat':latlng[0],
+    #                 'lng':latlng[1]
+    #             }
+    #             return json.dumps(data)
                 
-            except:
-                pass
+    #         except:
+    #             pass
         
         return '{"lat":"","lng":""}'
+    def youtube_link_embed(self):
+        if self.youtube_link:
+            try:
+
+                txt=self.youtube_link
+                x = re.search("v=.{11}", txt)
+                return txt[x.start()+2:x.start()+13]
+            except:
+                return None
 
 
+        return None
 
+@receiver(models.signals.pre_save, sender=Property)
+def auto_slug_generator(sender, instance, **kwargs):
+    """
+    Creates a slug if there is no slug.
+    """
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
 
 class FeatureType(models.Model):
     ptype=models.ManyToManyField(PropertyType,related_name="feature_type")

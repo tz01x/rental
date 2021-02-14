@@ -24,7 +24,13 @@ class PropertyForm(forms.ModelForm):
     city=forms.ChoiceField()
     area=forms.CharField()
     address=forms.CharField(widget=forms.Textarea(attrs={'rows':'2'}))
-    latlong=forms.CharField(required=False)
+
+    # if the field is disable then you django wont be retrive thos data if you put the value of the form field manually , 
+    lat=forms.CharField(required=False,widget=forms.HiddenInput)
+    lng=forms.CharField(required=False,widget=forms.HiddenInput)
+
+
+    mymap=forms.CharField(required=False)
     class Meta:
         model=Property
         fields=['user',
@@ -33,7 +39,9 @@ class PropertyForm(forms.ModelForm):
                 'description',
                 'available_from',
                 'city',
-                'latlong',
+                'lat',
+                'lng',
+                'mymap',
                 'area',
                 # 'thana',
                 'address',
@@ -104,7 +112,7 @@ class PropertyFormPart2(forms.ModelForm):
         fields=[
             'property_size',
             # 'ad_for',
-            'hostal_type',
+            # 'hostal_type',
             'roommate_type',
             'people_per_room',
             'set_available',
@@ -146,7 +154,7 @@ class PropertyFormPart2(forms.ModelForm):
             # del self.fields['set_available'].widget
 
 
-            if ptype_obj.name.lower() in ['bachelor','hostel','room/sublate']:
+            if ptype_obj.name.lower() in ['bachelor','hostel']:
                 # self.fields['ad_for'].choices=[('rb','Loking for Boy roommate'),('rs','Loking for Girl roommate')]
                 self.hideAndDisabled('property_size')
                 self.hideAndDisabled('bedroom')
@@ -158,7 +166,7 @@ class PropertyFormPart2(forms.ModelForm):
                 # self.fields['ad_for'].choices=[('re','Rent'),('sa','Sale'),]
                 self.hideAndDisabled('set_available')
                 self.hideAndDisabled('roommate_type')
-                self.hideAndDisabled('hostal_type')
+                # self.hideAndDisabled('hostal_type')
                 self.hideAndDisabled('people_per_room')
 
 

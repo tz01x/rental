@@ -173,3 +173,35 @@ body {
   padding: 0 !important;
   margin: 0 !important;
 }
+
+/** Details Page***/
+
+/**Carousel**/
+.fixed-height {
+  max-height: 400px;
+  max-width: 100%;
+}
+
+.mapAddress {
+  width: 100%;
+}
+
+::-webkit-input-placeholder {
+  text-align: center;
+}
+
+.sidebarsearchbtn {
+  color: #fff;
+  background-color: #fd643d;
+  /*set the color you want here*/
+  width: 100%;
+}
+
+.sidebarsearchbtn:hover {
+  color: #fff;
+  background-color: #f44f2e;
+  /*set the color you want here*/
+}
+
+
+

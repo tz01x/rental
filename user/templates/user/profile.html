@@ -9,8 +9,8 @@ My post
 <br>
 {%for property in myproperty_list%}
 <p>{{ forloop.counter }} <strong>{{property.title}}</strong></p>
-<a href="{%url 'main:property_details' pk=property.pk %}">details</a>
-<a href="{%url 'main:update_adpost' pk=property.pk %}">Edit</a>
+<a href="{%url 'main:property_details' slug=property.slug %}">details</a>
+<a href="{%url 'main:update_adpost' slug=property.slug %}">Edit</a>
 {%empty%}
 <p>opps ! you haved not make any post</p>
 {%endfor%}

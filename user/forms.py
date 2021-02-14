@@ -9,7 +9,7 @@ from django.utils.translation import gettext as gt
 from django.core.exceptions import ValidationError
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Citys
+from .models import Citys,Messages
 # from phonenumber_field.formfields import PhoneNumberField
 
 """
@@ -128,3 +128,11 @@ class  MyLoginForm(AuthenticationForm):
 
 
 # Notice that CustomUserCreationForm inherits from forms.Form class rather than forms.ModelForm.
+
+from django.contrib.auth import get_user_model
+
+class  MessageForm(forms.ModelForm):
+    user=forms.ModelChoiceField(widget=forms.HiddenInput,queryset=get_user_model().objects.all())
+    class Meta:
+        model=Messages
+        fields=['user','name','email','phone','msg']

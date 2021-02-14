@@ -6,7 +6,19 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 # from phonenumber_field.modelfields import PhoneNumberField #<---
 from django.conf import settings
-
+class Messages(models.Model):
+    user=models.ForeignKey(to=User,related_name="message",on_delete=models.CASCADE)
+    name=models.CharField(max_length=150)
+    email=models.EmailField()
+    phone=models.CharField(max_length=20)
+    msg=models.TextField(max_length=1000)
+    created=models.DateTimeField(auto_now_add=True)
+    viewed=models.BooleanField(default=False)
+    def __str__(self):
+        return self.name+", has send you a message "
+    class Meta:
+        ordering=('-created',)
+    
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     city = models.CharField(max_length=360, blank=True)

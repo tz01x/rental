@@ -3,6 +3,13 @@
 
 
 {%block body%}
+<style>
+.form-group {
+    padding: 5px !important;
+}
+</style>
+<link rel="stylesheet" href="{%static './css/progress_indicators.css'%}">
+
 
 
 <!--Slider -->
@@ -15,13 +22,13 @@
 </div>
 
 <!-- Form-->
-<div class="container mb-5">
-  <div class="form-heading text-center mt-5  mb-2">
-    <h4>Login To Your Account</h4>
-    <span>Don't have an account?</span>
-    <a href="{%url 'user:signup'%}" id="signup-page">Sign Up</a>
-  </div>
 
+  <main class="container mb-5">
+    <section class="form-heading text-center mt-5  mb-2">
+      <h4>Login To Your Account</h4>
+      <span>Don't have an account?</span>
+      <a href="{%url 'user:signup'%}" id="signup-page">Sign Up</a>
+    </section>
 
 
   <form method="post" novalidate class="from">
@@ -47,7 +54,7 @@
       {% if form.is_bound %}
       {% if field.errors %}
       <div class="row">
-        <div class="form-group col-lg-5 mb-3 mx-auto">
+        <div class="form-group col-lg-5 mx-auto">
 
           {% render_field field class="form-control is-invalid" placeholder=field.label %}
         </div>
@@ -59,7 +66,7 @@
       {% endfor %}
       {% else %}
       <div class="row">
-        <div class="form-group col-lg-5 mb-3 mx-auto">
+        <div class="form-group col-lg-5 mx-auto">
 
           {% render_field field class="form-control is-valid" placeholder=field.label %}
         </div>
@@ -67,7 +74,7 @@
       {% endif %}
       {% else %}
       <div class="row">
-        <div class="form-group col-lg-5 mb-3 mx-auto">
+        <div class="form-group col-lg-5  mx-auto">
 
           {% render_field field class="form-control" placeholder=field.label %}
         </div>
@@ -81,13 +88,19 @@
     {% endfor %}
 
     <div class="row">
-      <button class="d-grid col-4 mx-auto login-btn mb-3 mx-auto" id="register-btn">Login</button>
+      <button class="d-grid col-4 mx-auto login-btn  mx-auto " id="register-btn"  style="color:white">Login</button>
       <!-- <div class="d-grid col-4 mx-auto login-btn mb-3">
         <button class="mx-auto" id="login-btn">Login</button>
       </div> -->
     </div>
 
   </form>
-</div>
+</main>
+  <!--Pre Footer Section-->
+  <article class="footer-upper-section pt-3 text-center">
+    <p class="pt-1">Don't Have An Account?</p>
+    <a type="button" href="{%url 'user:signup'%}" class="btn reg-btn btn-sm mb-1" id="register-btn">Register Now!</a>
+  </article>
+
 
 {%endblock%}

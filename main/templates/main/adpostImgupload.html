@@ -2,25 +2,39 @@
 {%load static%}
 {%block body%}
 <link rel="stylesheet" href="{%static './css/progress_indicators.css'%}">
+<style>
+  .mybtn {
+    position: relative;
+    bottom: 50px;
+    left: 50px;
+    z-index: 2;
+  }
+
+  .carousel-item {
+    transition: transform .6s cubic-bezier(0.09, 0.77, 0.2, 1)
+  }
+</style>
 <h1>image upload </h1>
 
 <div class="container mt-5">
 
   <div class="progress_indicator">
     <div class="progress_stage progress-active ">
-      <div class="progress_stage_inner  {%if progress_step <= 1%} progress-inner-active{%endif%}  {%if progress_step > 1 or is_updatable %} progress_stage_complect{%endif%}">
+      <div
+        class="progress_stage_inner  {%if progress_step <= 1%} progress-inner-active{%endif%}  {%if progress_step > 1 or is_updatable %} progress_stage_complect{%endif%}">
         {%if progress_step > 1 or is_updatable %}
-        <a style="color:inherit" href="{%url 'main:update_adpost' pk=mypk%}">1</a>
+        <a style="color:inherit" href="{%url 'main:update_adpost' slug=myslug%}">1</a>
         {%else%}
         1
         {%endif%}
       </div>
     </div>
     <div class="progress_stage {%if progress_step >= 2 %} progress-active{%endif%}">
-      <div class="progress_stage_inner {%if progress_step == 2 %} progress-inner-active{%endif%}  {%if progress_step > 2 or is_updatable%} progress_stage_complect{%endif%}">
+      <div
+        class="progress_stage_inner {%if progress_step == 2 %} progress-inner-active{%endif%}  {%if progress_step > 2 or is_updatable%} progress_stage_complect{%endif%}">
 
         {%if progress_step > 2 or is_updatable %}
-        <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_p2' pk=mypk%}">2</a>
+        <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_p2' slug=myslug%}">2</a>
         {%else%}
         2
         {%endif%}
@@ -28,9 +42,10 @@
       </div>
     </div>
     <div class="progress_stage {%if progress_step >= 3 %} progress-active{%endif%} ">
-      <div class="progress_stage_inner  {%if progress_step >= 3 or is_updatable%} progress_stage_complect{%endif%} {%if  progress_step == 3 %} progress-inner-active{%endif%}">
+      <div
+        class="progress_stage_inner  {%if progress_step >= 3 or is_updatable%} progress_stage_complect{%endif%} {%if  progress_step == 3 %} progress-inner-active{%endif%}">
         {%if progress_step > 3 or is_updatable %}
-        <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_images' pk=mypk%}">3</a>
+        <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_images' slug=myslug%}">3</a>
         {%else%}
         3
         {%endif%}
@@ -59,7 +74,7 @@
 
       <label for="{{form.images.id_for_label}}" class="form-label">Upload images</label>
       <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->
-        {% render_field form.images class="form-control" %}
+      {% render_field form.images class="form-control" %}
     </div>
     <div id="selected_images" class="mt-2">
     </div>
@@ -67,20 +82,41 @@
     <input type="submit" class="btn create_AD_btn mt-2 " name="" value="Upload">
   </form>
   <div class="">
-    {%for im in obj.img.all %}
-    <div class="input-group mb-3" id="{{im.pk}}-img">
+    <!-- {%for im in obj.img.all %}
+    <div class="card" >
+      <div class="mb-1" id="{{im.slug}}-img">
 
-      <img src="{{ im.timage.url }}" class="img-thumbnail" alt="..." width="200" height="200">
-      <input type="text" class="form-control" value="{{im.timage.name}}" aria-label="Recipient's username"
-        aria-describedby="button-addon2" disabled>
-      <!-- <form class="" action="{%url 'imguploading:del_img' pk=im.pk objpk=obj.pk%}" method="post">
-          {%csrf_token%} -->
-      <button class="btn btn-outline-danger" type="submit" id="button-addon2"
-        onclick="delete_img({{im.pk}})">Delete</button>
-      <!-- </form> -->
+        <img src="{{ im.timage.url }}" class="" alt="..." width="200" height="200"> -->
+        <!-- <input type="text" class="form-control" value="{{im.timage.name}}" aria-label="Recipient's username"
+          aria-describedby="button-addon2" disabled> -->
+        <!-- <form class="" action="{%url 'imguploading:del_img' pk=im.pk objpk=obj.pk%}" method="post">
+            {%csrf_token%} -->
+
+        <!-- </form> -->
+        
+      <!-- </div>
+    
     </div>
-    {%endfor%}
+
+
+    {%endfor%} -->
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {%for im in obj.img.all %}
+      <div class="col" id="{{im.pk}}-img">
+        <div class="card h-90">
+
+          <img src="{{ im.timage.url }}" class="card-img-top" alt="..." width="200" height="200">
+          <div class="card-body">
+            <button class="btn btn-outline-danger" type="submit" id="button-addon2"onclick="delete_img({{im.pk}})">Delete</button>
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
   </div>
+
+
 
 </div>
 
@@ -90,15 +126,15 @@
   document.getElementById('id_images').addEventListener('change', (e) => {
     console.log(e);
     selected_images_ele = document.getElementById('selected_images');
-    selected_images_ele.innerHTML='';
+    selected_images_ele.innerHTML = '';
     for (let index = 0; index < e.srcElement.files.length; index++) {
       const file = e.srcElement.files[index];
       let reader = new FileReader();
       reader.addEventListener("load", function () {
-      // convert image file to base64 string
-      console.log(reader);
-     selected_images_ele.innerHTML += `<img src="${reader.result}" alt="" width="100" height="100" srcset="">`;
-    }, false);
+        // convert image file to base64 string
+        console.log(reader);
+        selected_images_ele.innerHTML += `<img src="${reader.result}" alt="" width="100" height="100" srcset="">`;
+      }, false);
       reader.readAsDataURL(file);
     }
 

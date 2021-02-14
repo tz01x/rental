@@ -2,6 +2,20 @@
 {%load static%}
 
 {%block body%}
+<link rel="stylesheet" href="{%static './css/progress_indicators.css'%}">
+
+<style>
+  .form-group {
+    padding: 5px !important;
+}
+  @media (min-width: 992px){
+    .col-lg-5 {
+    flex: 0 0 auto;
+    width: 41.6666666667% !important;
+}
+  }
+
+</style>
     <!--Slider -->
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
       <div class="carousel-inner">
@@ -208,7 +222,7 @@
 
             <div class="row">
                 <!-- <div class="d-grid col-4 mx-auto login-btn mb-3"> -->
-                    <button class="d-grid col-4 mx-auto login-btn mb-3 mx-auto" id="register-btn">Register</button>
+                    <button class="d-grid col-4 mx-auto login-btn mb-3 mx-auto" id="register-btn" style="color:white">Register</button>
                 <!-- </div> -->
             </div>
 

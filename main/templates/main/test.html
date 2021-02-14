@@ -1,86 +1,112 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Reverse Geocoding</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <style type="text/css">
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        width:60%;
+        height: 100vh;
+      }
 
-<head>
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
 
-    <title>- Leaflet</title>
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: "Roboto", "sans-serif";
+        line-height: 30px;
+        padding-left: 10px;
+      }
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      #floating-panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        width: 350px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
 
-
-    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script> -->
-
-
-
-</head>
-
-<body>
-
-
-
-    <div id="mapid" style=" height: 256px; width:256px; margin-left: auto; margin-right: auto;"></div>
-
-
-    <div id="render_form">
-
-        
-
-
-    </div>
-
-
+      #latlng {
+        width: 225px;
+      }
+    </style>
     <script>
-
-        fetch(`${window.location.origin}/adpost/create/`).then(res=>res.text()).then(htmls=>{
-            document.getElementById('render_form').innerHTML=htmls;
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 8,
+          center: { lat: 40.731, lng: -73.997 },
         });
-        // var mymap = L.map('mapid').setView([23.6850, 90.3563], 10);
-        // const my_cnter = [23.6850, 90.3563];
-        // const marker = L.marker([23.6850, 90.3563]).addTo(mymap);
+        const geocoder = new google.maps.Geocoder();
+        const infowindow = new google.maps.InfoWindow();
+        document.getElementById("submit").addEventListener("click", () => {
+          geocodeLatLng(geocoder, map, infowindow);
+        });
+      }
 
-        // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        //     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-        // }).addTo(mymap);
-        // mymap.on('move', function (e) {
-        //     // console.log(mymap.getCenter());
-        //     marker.setLatLng(mymap.getCenter())
-        // });
-        // function dolittleAnimeiton(){
-        //     setInterval(function () {
-        //     mymap.setView(my_cnter, mymap.getZoom(), {
-        //             "animate": true,
-        //             "pan": {
-        //                 "duration": 1
-        //             }
-        //         });
-        //     setTimeout(function () {
-        //         // mymap.setView([60, 0]);
-        //         // console.log(data);
-        //         // mymap.setView(my_cnter);
-        //     const data = mymap.getCenter()
-        //         mymap.setView([data.lat + 0.5, data.lng], mymap.getZoom(), {
-        //             "animate": true,
-        //             "pan": {
-        //                 "duration": 2
-        //             }
-        //         });
-        //     }, 5000);
-        // }, 4000);
-        // }
-        
-
-
-        // mymap.panTo(new L.LatLng(40.737, -73.923));
+      function geocodeLatLng(geocoder, map, infowindow) {
+        const input = document.getElementById("latlng").value;
+        const latlngStr = input.split(",", 2);
+        const latlng = {
+          lat: parseFloat(latlngStr[0]),
+          lng: parseFloat(latlngStr[1]),
+        };
+        geocoder.geocode({ location: latlng }, (results, status) => {
+          if (status === "OK") {
+            if (results[0]) {
+              map.setZoom(11);
+              const marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+              });
+              infowindow.setContent(results[0].formatted_address);
+              infowindow.open(map, marker);
+            } else {
+              window.alert("No results found");
+            }
+          } else {
+            window.alert("Geocoder failed due to: " + status);
+          }
+        });
+      }
     </script>
+  </head>
+  <body>
+    <div id="floating-panel">
+      <input id="latlng" type="text" value="40.714224,-73.961452" />
+      <input id="submit" type="button" value="Reverse Geocode" />
+    </div>
+    <div id="map"></div>
 
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <!-- <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0ZUffB_wsgX1UFihV0Sz0PXOJdCqLCM0&callback=initMap&libraries=&v=weekly"
+      async
+    ></script> -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0ZUffB_wsgX1UFihV0Sz0PXOJdCqLCM0&callback=initMap"
+    type="text/javascript"></script>
 
-
-</body>
-
+    <!-- <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7ApuIxKoVi91X6K4tjknpguK93Hx4wq8&callback=initMap">
+</script> -->
+  </body>
+  
 </html>
