@@ -12,9 +12,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="{%static './css/progress_indicators.css'%}">
 
-<div class="" style="margin-top:69px">
-  <div class="container">
-    <h1>Create post</h1>
+<!-- <div class="" style="margin-top:69px"> -->
+  <div class="container mt-5">
+    {%if is_updatable%}
+    <h1>Update your AD </h1>
+
+    {%else%}
+    <h1>Create an AD </h1>
+    {%endif%}
 
     <div class="progress_indicator">
       <div class="progress_stage progress-active ">
@@ -149,7 +154,8 @@
   </div>
 </div>
 
-
+<div class="mb-5"></div>
+<div class="mb-5"></div>
 
 {%endblock%}
 

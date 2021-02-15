@@ -11,7 +11,7 @@
   <hr>
   {%for property in property_list%}
   <h3>{{property.title}}</h3>
-  <a href="{%url 'main:property_details' pk=property.pk %}">details</a>
+  <a href="{%url 'main:property_details' slug=property.slug %}">details</a>
   {%endfor%}
 
 </div>

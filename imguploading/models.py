@@ -31,23 +31,24 @@ class Images(models.Model):
     def save(self):
         self.timage=self.baseimage
         baseimage = Image.open(self.baseimage).convert("RGBA")
+        baseimage=baseimage.resize((1080,566))
         
         # make a blank image for the text, initialized to transparent text color
         txt = Image.new('RGBA', baseimage.size, (255,255,255,0))
 
         # get a font
         # font = ImageFont.truetype(<font-file>, <font-size>)
-        font = ImageFont.truetype(os.path.join(settings.BASE_DIR,"./static/static_dir/font/Epilogue-BoldItalic.ttf"),16)
+        font = ImageFont.truetype(os.path.join(settings.BASE_DIR,"./static/static_dir/font/Epilogue-BoldItalic.ttf"),60)
         txt_width,txt_height=font.getsize('rental.bd.com')
         draw = ImageDraw.Draw(txt)
         # print(baseimage.size)
 
 
         # draw.text((x, y),"Sample Text",(r,g,b))
-        draw.text(((baseimage.width//2)-(txt_width//2), baseimage.height-50),"rental.bd.com","rgba(255,255,255,128)",font=font)
+        draw.text(((baseimage.width//2)-(txt_width//2), baseimage.height//2),"rental.bd.com","rgba(255,255,255,128)",font=font)
         outimg = Image.alpha_composite(baseimage, txt)
         outimg2=outimg.resize((256,256))
-        outimg=outimg.resize((1080,566))
+        # outimg=outimg.resize((1080,566))
 
         output = BytesIO()
         output2 = BytesIO()
@@ -62,9 +63,9 @@ class Images(models.Model):
         # print(name,extension[1:])
 
         #after modifications, save it to the output
-        outimg.save(output,'png', quality=90)
+        outimg.save(output,'png', quality=32)
         output.seek(0)
-        outimg2.save(output2,'png', quality=60)
+        outimg2.save(output2,'png', quality=16)
         output2.seek(0)
         #change the imagefield value to be the newley modifed image value
         imgname="img-%s%s"%(str(datetime.datetime.now().timestamp()).split('.')[0],'.png')

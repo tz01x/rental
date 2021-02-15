@@ -217,23 +217,23 @@
             {%if property.user == user%}
             <div class="editBtn-2">
 
-              <span  data-bs-toggle="tooltip" data-bs-placement="top"
-              title="{%if property.publish%}Publish{%else%}Arcive{%endif%}">
-                <svg xmlns="http://www.w3.org/2000/svg"  width="16" height="16" fill="currentColor"
-                class="bi bi-check2-circle {%if property.publish%}post_publish {%else%}post_arcive{%endif%}"
-                viewBox="0 0 16 16">
-                <path
-                  d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
-                <path
-                  d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
-              </svg>
+              <span data-bs-toggle="tooltip" data-bs-placement="top"
+                title="{%if property.publish%}Publish{%else%}Arcive{%endif%}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-check2-circle {%if property.publish%}post_publish {%else%}post_arcive{%endif%}"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+                  <path
+                    d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+                </svg>
               </span>
-              
-              
+
+
 
 
               <a href="{%url 'main:update_adpost' slug=property.slug%}" data-bs-toggle="tooltip" data-bs-placement="top"
-              title="Edit">
+                title="Edit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-pencil-square" viewBox="0 0 16 16">
                   <path
@@ -306,17 +306,17 @@
                 <p>Available From: <span class="fw-bold">March 1, 2021</span> </p>
                 <p>Lift: <span class="fw-bold">Available</span> </p> -->
                   {%if property.feature_types %}
-                <p>
+                  <p>
 
-                  <span class="fs-5">Facilties:</span>
-                  {%for feature in property.feature_types.all%}
+                    <span class="fs-5">Facilties:</span>
+                    {%for feature in property.feature_types.all%}
 
-                  <span class="badge rounded-pill bg-secondary badge-fs ">{{feature}}</span>
-                  <!-- <span class="badge bg-light text-dark">Light</span> -->
-                  {%endfor%}
+                    <span class="badge rounded-pill bg-secondary badge-fs ">{{feature}}</span>
+                    <!-- <span class="badge bg-light text-dark">Light</span> -->
+                    {%endfor%}
 
-                </p>
-                {%endif%}
+                  </p>
+                  {%endif%}
               </div>
               <div class="col-sm-6  mb-3">
                 {%if property.utility_bill %}
@@ -437,7 +437,7 @@
 
             <div class="form-floating">
               <textarea class="form-control" placeholder="" style="height: 120px" name="msg"
-                id="id_msg">I would like to inquire about your property {{random.random}} Please contact me at your earliest convenience.</textarea>
+                id="id_msg">I would like to inquire about your property P-{{property.pk}} Please contact me at your earliest convenience.</textarea>
               <label for="id_msg">Message</label>
             </div>
 
@@ -493,9 +493,8 @@
           </a>
 
           <!-- Sharingbutton WhatsApp -->
-          <a class="resp-sharing-button__link"
-            href="whatsapp://send?text={{request.build_absolute_uri}}" target="_blank"
-            rel="noopener" aria-label="">
+          <a class="resp-sharing-button__link" href="whatsapp://send?text={{request.build_absolute_uri}}"
+            target="_blank" rel="noopener" aria-label="">
             <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small">
               <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -607,13 +606,11 @@
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
   }).addTo(mymap);
-
 </script>
 
 
 
 <script>
-
   // var swiper = new Swiper('.swiper-container', {
   //   zoom: true,
   //   loop: true,
@@ -685,6 +682,7 @@
     //   ytfream.setAttribute('height', `${h}`);
     // }
   }
+
   function images_resize() {
     images = document.getElementsByClassName("mysliderimg");
     const cw = window.innerWidth > 1320 ? 1320 : window.innerWidth;
@@ -699,7 +697,6 @@
 
 
 <script>
-
   //SEND MESSAGE 
   let form_ele = document.getElementById("msgform");
   const field_ids = ["id_name", "id_email", "id_phone", "id_msg"];
@@ -731,9 +728,9 @@
       return;
     }
     fetch(`${window.location.origin}/send-messages/`, {
-      'method': 'POST',
-      body: msgformData,
-    })
+        'method': 'POST',
+        body: msgformData,
+      })
       .then(response => {
         if (response.ok) {
           return response.json()
@@ -745,8 +742,13 @@
         if (s == 200) {
           // done scessusfully 
           console.log("good RESPONCE");
-          alert("message send");
-
+          // alert("message send");
+          var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+            keyboard: true,
+            focus: true
+          });
+          // myModal.show();
+          
           for (let i = 0; i < field_ids.length; i++) {
             //restoring inital value and class of input field 
             const ele = document.getElementById(field_ids[i]);
@@ -777,12 +779,6 @@
 
     //endof event listener 
   });
-
-
-
- 
-
-
 </script>
 
 {%endblock%}
