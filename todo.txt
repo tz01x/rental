@@ -1,6 +1,13 @@
 TOdo
 
-1. add : logout button
-2. add : progress indicator for the creating AD ------- X
-3. css fix : form in register page
-4. css fix: image uploading page
+1.style  search ber in home page (main/home.html)
+2 . create list page (main/templates/main/property_list.html)
+3. style share button in details page (main/templates/main/property_details.html)
+***note**
+style.css in > static/static_dir/style.css
+
+
+>python manage.py runserver
+#for migration 
+>python manage.py makemigration 
+>python manage.py migrate 

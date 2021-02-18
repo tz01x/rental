@@ -17,6 +17,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Custom CSS-->
   <link rel="stylesheet" href="{%static 'style.css'%}">
+
+  <!-- Compiled and minified CSS -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+
+  <!-- Compiled and minified JavaScript -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+
   <title>
     {%block title%}{%endblock%}
   </title>
@@ -51,6 +58,23 @@
         margin-left: 2px;
       }
     }
+
+    @media only screen and (min-width: 576px){
+      .col-sm-4 {
+      flex: 0 0 auto;
+      width: 33.3333333333% !important;
+    }
+    }
+
+    .seach-input{
+      color:black;
+    background: #ffffffc1;
+    box-shadow: 1px 1px 6px 0px black;
+    margin-bottom: 10px;
+    border: none;
+    }
+   
+     
   </style>
   <!--Nav Bar -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top"
@@ -103,7 +127,7 @@
       </section>
     </div>
   </nav>
-  <div style="height: 59px;"></div>
+  <div style="height: 57px;"></div>
   <!-- <script>
     const navele=document.getElementsByTagName("nav")[0];
     document.getElementById("dummy_nav").setAttribute("style",`height:${navele.offsetHeight}px`);
@@ -111,14 +135,86 @@
 
   </script> -->
   {%block body%}
-
+  <!-- select2.org -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  
   <!--Slider -->
-  <section class="home-slider" style="border: 0px solid black;">
-    <img src="{%static 'img/slider_2.jpg'%}" class="d-block w-100 " style="object-fit: cover;" alt="...." height="450">
+  <section class="home-slider"
+    style="background-image: url('{%static 'img/slider_2.jpg'%}'); height: 450px; background-size:cover; background-position:center;">
+
+    <!-- <img src="{%static 'img/slider_2.jpg'%}" class="d-block w-100 " style="object-fit: cover;" alt="...." height="450"> -->
     <section class="home-slider-input">
-      <h1>Find Your Apartment</h1>
-      <button type="button" class="btn buy-btn px-5 py-2 mt-2" id="buy-btn">Buy</button>
-      <button type="button" class="btn rent-btn px-5 py-2 mt-2" id="rent-btn">Rent</button>
+
+      <h1 class="title">Find Your Apartment</h1>
+      <!-- <button type="button" class="btn buy-btn px-5 py-2 mt-2" id="buy-btn">Buy</button>
+      <button type="button" class="btn rent-btn px-5 py-2 mt-2" id="rent-btn">Rent</button> -->
+
+      <!-- <style>
+        .select2-container .select2-selection--single{
+          height: 50px;
+        }
+      </style> -->
+      <div class="form">
+        <form action="." method="get">
+          <div class="">
+            <div class="col-sm-4 mx-auto">
+              <label for="inputGroupSelect01">Property type</label>
+              <select type="text" name="properyt_type" style="width: 100%;" class="myselect"
+                aria-label="Default select example" id="inputGroupSelect01">
+                <option selected>Select a Property type  </option>
+                {%for ptype in propertytype%}
+                <option value="{{ptype.id}}">{{ptype}}</option>
+                {%endfor%}
+              </select>
+            </div>
+            <div class="col-sm-4 mx-auto mt-2">
+              <label for="inputGroupSelect02">City</label>
+              <select type="text" name="city" style="width: 100%;" class="myselect"
+                aria-label="Default select example" id="inputGroupSelect02">
+                <option selected>Select a City </option>
+
+                {%for city in city_list%}
+                <!-- <option selected>Open this </option> -->
+                <option value="{{city.id}}">{{city.name}}</option>
+                {%endfor%}
+              </select>
+            </div>
+            <div class="col">
+              <div class="btn btn-default" id="search_Btn" >click me</div>
+              <!-- <input type="button" onsubmit="getSelectedValue" value="search"> -->
+            </div>
+          </div>
+        </form>
+      </div>
+      <script>
+
+        $(document).ready(function() {
+            $('.myselect').select2({
+              width: 'resolve',
+              placeholder:"property type"
+            });
+        });
+       
+        document.getElementById("search_Btn").addEventListener("click",function(e){
+          let url="./property/list/?";
+          // select input ids
+          ['inputGroupSelect01','inputGroupSelect02'].map(function(val,idx){
+            const ele = document.getElementById(val)
+            url+=`${ele.getAttribute("name")}=${ele.value}&`
+            
+
+          });
+          window.location.assign(url);
+        })
+
+      </script>
+
+
+    </section>
+    <section class="search-op">
+
     </section>
   </section>
 
@@ -282,7 +378,7 @@
     // var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     //   return new bootstrap.Tooltip(tooltipTriggerEl);
     // });
-   
+
 
   </script>
   {%block script%}{%endblock script%}

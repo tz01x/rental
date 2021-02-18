@@ -1,15 +1,29 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import  reverse
 from django.http import HttpResponse,HttpResponseBadRequest
 
 from .forms import PropertyForm,PropertyFormPart2,PropertyImgForm
-from .models import Property
-from imguploading.models import  Images
+
+
 from django.views.generic import  CreateView,UpdateView,ListView,DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.contrib.auth.decorators import user_passes_test,login_required
 from user.forms import MessageForm
 
+
+from .models import Property
+from .models import PropertyType
+from user.models import Citys
+from imguploading.models import  Images
+import re as re
+def _re_checkFornoWord(string):
+    pattern = ("[a-zA-Z_]")
+    m=re.match(pattern, string)
+    print(m)
+    if m:
+        return False
+    return True
 # decorators
 def checkPropertyPermission(callBackFunction):
     '''
@@ -158,7 +172,24 @@ def imageUpload(request,slug):
 
 class  PropertyListView(ListView):
     model=Property
-
+    def get_queryset(self,*args,**kwargs):
+        qs=Property.objects.all()
+        ptype=self.request.GET.get("properyt_type",None)
+        city=self.request.GET.get("city",None)
+        # print(ptype,city)
+        try:
+            if city and _re_checkFornoWord(city):
+                qs=qs.filter(city=Citys.objects.get(id=city).name)
+            if ptype and _re_checkFornoWord(ptype):
+                qs=qs.filter(property_types=ptype)
+        except:
+            print("expected number but got an charecter")
+        # print(self.request.GET.values())
+        # for key,val in zip(self.request.GET.keys(),self.request.GET.values()):
+            
+        #     print(dir(qs.raw(f"select * form proprty where {key}={val}")))
+            
+        return qs
 
 class PropertyDetailsView(DetailView):
     model=Property
@@ -176,9 +207,13 @@ def homeView(request):
     # print(dir(request))
     # request.get_full_path_info
     context={
-        'property_list':Property.objects.all()
+        'property_list':Property.objects.all(),
+        'propertytype':PropertyType.objects.all(),
+        'city_list':Citys.objects.all(),
     }
     return render(request,"home.html",context=context)
 
 def ContactView(request):
     return render(request,"contact.html")
+
+
