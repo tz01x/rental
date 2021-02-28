@@ -110,33 +110,20 @@ body {
 
 /** Home page**/
 
-.home-slider {
-  position: relative;
-  text-align: center;
-  color: white;
-}
-
 .home-slider-input {
-  position: relative;
-  top: 50%
-  /* position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.rent-btn {
-  border-radius: 15px;
-  border: none;
-  background-color: #ffffff;
-  color: #ff653d;
-
-  cursor: pointer;
+.home-slider-input .form .title {
+  color: white;
+  text-shadow: 7px 8px 6px #130806c4;
 }
 
-.rent-btn:hover {
-  color: #ffffff;
-  background-color: #f44f2e;
+.sub-title {
+  color: rgba(255, 255, 255, 0.938);
+  text-shadow: 7px 5px 20px #130806c4;
 }
 
 .buy-btn {
@@ -204,6 +191,3 @@ body {
   background-color: #f44f2e;
   /*set the color you want here*/
 }
-
-
-
