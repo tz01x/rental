@@ -43,7 +43,6 @@
       height: 54px;
       /* Height of new image */
       padding-left: 180px;
-      margin-left: 49px;
       /* Equal to width of new image */
     }
 
@@ -141,26 +140,15 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   
   <!--Slider -->
-  <section class="home-slider"
-    style="background-image: url('{%static 'img/slider_2.jpg'%}'); height: 450px; background-size:cover; background-position:center;">
+  <section class="home-slider" style="background-image: url('{%static 'img/slider_2.jpg'%}'); height: 300px; background-size:cover;">
 
-    <!-- <img src="{%static 'img/slider_2.jpg'%}" class="d-block w-100 " style="object-fit: cover;" alt="...." height="450"> -->
-    <section class="home-slider-input">
-
-      <h1 class="title">Find Your Apartment</h1>
-      <!-- <button type="button" class="btn buy-btn px-5 py-2 mt-2" id="buy-btn">Buy</button>
-      <button type="button" class="btn rent-btn px-5 py-2 mt-2" id="rent-btn">Rent</button> -->
-
-      <!-- <style>
-        .select2-container .select2-selection--single{
-          height: 50px;
-        }
-      </style> -->
-      <div class="form">
+      <section class="home-slider-input text-center" >
+      <div class="form mt-4">
+        <h1 class="title">What are you looking for?</h1>
         <form action="." method="get">
-          <div class="">
-            <div class="col-sm-4 mx-auto">
-              <label for="inputGroupSelect01">Property type</label>
+          <div class="searchBar">
+            <div class="col-lg-8  mx-auto mx-auto ">
+              <label for="inputGroupSelect01" class="fw-bold sub-title fs-5">Property type</label>
               <select type="text" name="properyt_type" style="width: 100%;" class="myselect"
                 aria-label="Default select example" id="inputGroupSelect01">
                 <option selected>Select a Property type  </option>
@@ -169,8 +157,8 @@
                 {%endfor%}
               </select>
             </div>
-            <div class="col-sm-4 mx-auto mt-2">
-              <label for="inputGroupSelect02">City</label>
+            <div class="col-lg-8 mx-auto mt-2">
+              <label for="inputGroupSelect02"  class="fw-bold sub-title fs-5">City</label>
               <select type="text" name="city" style="width: 100%;" class="myselect"
                 aria-label="Default select example" id="inputGroupSelect02">
                 <option selected>Select a City </option>
@@ -181,13 +169,14 @@
                 {%endfor%}
               </select>
             </div>
-            <div class="col">
-              <div class="btn btn-default" id="search_Btn" >click me</div>
+            
+              <div class="d-grid col-8 mx-auto login-btn mx-auto mt-2 fw-bold fs-6" id="search_Btn" style="color:white">Click me</div>
               <!-- <input type="button" onsubmit="getSelectedValue" value="search"> -->
-            </div>
-          </div>
+               </div>
+          
         </form>
       </div>
+      </section>
       <script>
 
         $(document).ready(function() {
@@ -219,65 +208,11 @@
   </section>
 
 
-  <!-- Search Bar
-              <div class="search-menu row mt-5 p-3">
-                <div class="col-sm-2">
-                <div class="input-group input-group-sm">
-                  <input type="text" class="form-control rounded-pill" placeholder="keyword" >
-                 </div>
-                  </div>
-              <div class="col-sm-2 nopadding">
-                <div class="dropdown">
-                  <button class="btn btn-sm dropdown-toggle search-menu-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                   Property Type
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-
-                  </ul>
-                </div>
-              </div>
-              <div class="col-sm-2">
-                <div class="dropdown nopadding">
-                  <button class="btn search-menu-dropdown btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Location<a>   <i class="fa fa-map-marker"></i></a>
-                  </button>
-                </div>
-              </div>
-              <div class="col-sm-2">
-                <div class="dropdown nopadding">
-                  <button class="btn search-menu-dropdown btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Price
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-sm-2 nopadding">
-                  <button class="btn search-menu-dropdown btn-sm border-0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                    Advanced <a><i class="fa fa-ellipsis-v"></i></a>
-                  </button>
-              </div>
-              <div class="col-sm-2 nopadding">
-                  <button class="btn search-menu-searchbtn btn-sm " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                    search <i class="fa fa-search"></i>
-                  </button>
-
-
-              </div>
-
-            </div> -->
+  
 
   <!--Property List Card-->
   <main>
-    <section class="property-card container mt-4">
+    <section class="property-card container mt-2">
       <h2 class="text-center mb-3">Our Featured Properties</h2>
 
       <article class="row">
