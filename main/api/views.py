@@ -1,5 +1,5 @@
-from main.serializers import PropertySerializers
-from main.models import Property
+from main.serializers import PropertySerializers,PropertyTypeSerializers
+from main.models import Property,PropertyType
 from rest_framework.generics import ListAPIView
 
 class PropertyListApiView(ListAPIView):
@@ -15,3 +15,8 @@ class PropertyListApiView(ListAPIView):
         if id:
             qs=qs.filter(title=title)
         return qs
+class PropertyTypeListApiView(ListAPIView):
+    serializer_class=PropertyTypeSerializers
+    def get_queryset(self):
+        return PropertyType.objects.all()
+

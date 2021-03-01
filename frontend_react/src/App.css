@@ -1,0 +1,16 @@
+
+
+.ifields{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  align-items:center;
+  
+}
+body{
+  background-color:rgb(119, 125, 176) !important;
+}
+
+.MuiGrid-spacing-xs-1 {
+  margin: -6.5px!important;
+}

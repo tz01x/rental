@@ -4,11 +4,15 @@
 
 {%endblock head%}
 {%block body%}
-
-
+<div class="mt-5"></div>
+<div class="mt-5"></div>
 <div class="container mt-5 ">
-  <h1>Property List view</h1>
-  <hr>
+  {%block pg%}
+  <link rel="stylesheet" href="https://yarnpkg.com/en/package/normalize.css">
+  
+  {%include 'index.html'%}
+  {%endblock%}
+  
   {%for property in property_list%}
   <h3>{{property.title}}</h3>
   <a href="{%url 'main:property_details' slug=property.slug %}">details</a>

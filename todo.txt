@@ -1,6 +1,6 @@
 TOdo
 
-1.style  search ber in home page (main/home.dhtml)
+1.style  search ber in home page (main/home.html)
 2 . create list page (main/templates/main/property_list.html)
 3. style the  socal share button in product details page , button sould be in horizontal (main/templates/main/property_details.html)
 ***note**

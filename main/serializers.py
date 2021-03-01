@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Property
+from .models import Property,PropertyType
 from imguploading.serializers import ImageSerializer
 class PropertySerializers(serializers.ModelSerializer):
     img=ImageSerializer(many=True)
@@ -15,3 +15,7 @@ class PropertySerializers(serializers.ModelSerializer):
         'adress',
         'img',
         ]
+class  PropertyTypeSerializers(serializers.ModelSerializer):
+    class Meta:
+        model=PropertyType
+        fields="__all__"

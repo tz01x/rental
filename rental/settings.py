@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'main',
     'features',
     'imguploading',
+    'frontend_react',
     # 3d party
     'widget_tweaks',
     'rest_framework',
@@ -67,7 +68,7 @@ ROOT_URLCONF = 'rental.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR,'templates'),BASE_DIR/"frontend_react/build/"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -148,6 +149,7 @@ STATIC_URL = '/static/'
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 STATICFILES_DIRS = [
+    BASE_DIR/"frontend_react/build/static/",
     os.path.join(BASE_DIR, './static/static_dir'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,'./static')
