@@ -1,25 +1,28 @@
 {%extends 'home.html' %}
-
+{%load static%}
 {%block head%}
 
 {%endblock head%}
 {%block body%}
-<div class="mt-5"></div>
-<div class="mt-5"></div>
-<div class="container mt-5 ">
-  {%block pg%}
-  <link rel="stylesheet" href="https://yarnpkg.com/en/package/normalize.css">
+<style>
+ 
+</style>
+
+<div class="" >
+  {%include 'build/index.html'%}
+
+</div>
+<!-- <div class="container mt-5 ">
   
-  {%include 'index.html'%}
-  {%endblock%}
+  
+  
   
   {%for property in property_list%}
   <h3>{{property.title}}</h3>
   <a href="{%url 'main:property_details' slug=property.slug %}">details</a>
   {%endfor%}
 
-</div>
-<div style="width: 640px; height: 480px" id="mapContainer"></div>
+</div> -->
 
 
 <script>

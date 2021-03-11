@@ -80,6 +80,7 @@ class Property(models.Model):
             return self.ad_for.title
         except:
             return ''
+    
     # def getLatLong(self):
 
     #     if self.latlong!=None or len(self.latlong)>1:

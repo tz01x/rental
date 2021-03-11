@@ -176,6 +176,7 @@ class  PropertyListView(ListView):
         qs=Property.objects.all()
         ptype=self.request.GET.get("properyt_type",None)
         city=self.request.GET.get("city",None)
+        
         # print(ptype,city)
         try:
             if city and _re_checkFornoWord(city):
@@ -204,7 +205,7 @@ class PropertyDetailsView(DetailView):
 
 def homeView(request):
 
-    # print(dir(request))
+    print((request.session))
     # request.get_full_path_info
     context={
         'property_list':Property.objects.all(),
