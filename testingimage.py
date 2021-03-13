@@ -17,14 +17,20 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE','rental.settings')
 import django
 django.setup()
 from user.models import Citys
+from main.models import  PropertyType
 import json
-# Citys.objects.all().delete()
+
+ptype=['Bachelor','Hostal','Apartment','Flat']
+Citys.objects.all().delete()
+PropertyType.objects.all().delete()
 # Districts.objects.all().delete()
 # Thana.objects.all().delete()
 divisions=json.load(open('citys.json',encoding="utf8"))[0]['citys']
 # districts=json.load(open('districts.json',encoding="utf8"))['districts']
 # upazila=json.load(open('upazila.json',encoding="utf8"))['upazilas']
 # print(upazila)
+for p in ptype:
+    PropertyType.objects.create(name=p)
 for division in divisions:
     Citys.objects.create(name=division['name'],bn_name=division['bn_name'],lat=division['lat'],lng=division['long'])
 # last_div_id=None
