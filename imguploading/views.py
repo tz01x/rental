@@ -14,7 +14,8 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.utils import translation
 # Create your views here.
-# def hotel_image_view(request):
+def hotel_image_view(request):
+    
     
 #     print(translation.get_language())
 #     translation.activate('bd')
@@ -73,8 +74,8 @@ from django.utils import translation
 #         #         return HttpResponse(json.dumps(data))
 #     else:
 #         form = HotelForm()
-#     objs=Hotel.objects.all().order_by("-id")
-#     return render(request, 'home.html', {'form' : form,'objs':objs})
+    # objs=Hotel.objects.all().order_by("-id")
+    return render(request, 'home.html')
 
 def ImageDelete(request,pk,objpk):
     object=get_object_or_404(Images,pk=pk)
