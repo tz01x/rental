@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom CSS-->
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./static/static_dir/css/progress_indicators.css">
     <title>Profile Info</title>
 </head>
 
@@ -30,7 +31,7 @@
     }
 
     .update-btn {
-        border-radius: 10px;
+        border-radius: 50px;
         border: 1px solid #ff653d;
         background-color: #ff653d;
         color: #ffff;
@@ -164,33 +165,33 @@
                                     <!-- Image Will be here  -->
                                     <label for="userName" class="mb-1"><small class="fw-bold">User Name</small></label>
                                     <div class="input-group mb-1">
-                                        <input type="text" id="userName" class="form-control form-control-sm"
+                                        <input type="text" id="userName" class="form-control form-control"
                                             placeholder="Ex: Abdul Khalek">
 
                                     </div>
                                     <label for="userEmail" class="mb-1"><small class="fw-bold">Email
                                             Address</small></label>
                                     <div class="input-group mb-1">
-                                        <input type="email" id="userEmail" class="form-control form-control-sm"
+                                        <input type="email" id="userEmail" class="form-control form-control"
                                             placeholder="Ex: abdul.khalek@gmail.com">
                                     </div>
                                     <label for="userPhoneNumber" class="mb-1"><small
                                             class="fw-bold">Number</small></label>
                                     <div class="input-group mb-1">
-                                        <input type="tel" id="userPhoneNumber" class="form-control form-control-sm"
+                                        <input type="tel" id="userPhoneNumber" class="form-control form-control"
                                             placeholder="Ex: 01XXXXXXXXX">
                                     </div>
                                     <label for="userPresentAddress" class="mb-1"><small class="fw-bold">Present
                                             Address</small></label>
                                     <div class="input-group mb-1">
-                                        <textarea class="form-control form-control-sm" id="userPresentAddress"
+                                        <textarea class="form-control form-control" id="userPresentAddress"
                                             placeholder="Ex: Flat B-3, 394/3, Modhubagh..."
                                             style="height: 50px"></textarea>
                                     </div>
                                     <label for="userPermanentAddress" class="mb-1"><small class="fw-bold">Parmanent
                                             Address</small></label>
                                     <div class="input-group mb-3">
-                                        <textarea class="form-control form-control-sm " id="userPermanentAddress"
+                                        <textarea class="form-control form-control " id="userPermanentAddress"
                                             placeholder="Ex : Your Premanent Address" style="height: 50px"></textarea>
                                     </div>
                                 </div>
@@ -198,31 +199,31 @@
                                     <label for="userJob" class="mb-1"><small class="fw-bold">Job
                                             Description</small></label>
                                     <div class="input-group mb-1">
-                                        <input type="text" id="userJob" class="form-control form-control-sm"
+                                        <input type="text" id="userJob" class="form-control form-control"
                                             placeholder="What do you do for a living?">
                                     </div>
                                     <label for="userCompany" class="mb-1"><small class="fw-bold">Company
                                             Name</small></label>
                                     <div class="input-group mb-1">
-                                        <input type="text" id="userCompany" class="form-control form-control-sm"
+                                        <input type="text" id="userCompany" class="form-control form-control"
                                             placeholder="Where do you work?">
                                     </div>
                                     <label for="userFbProfile" class="mb-1"><small><span class="fw-bold">Facebook
                                                 Profile Link</span> ( Optional )</small></label>
                                     <div class="input-group mb-1">
-                                        <input type="text" id="userFbProfile" class="form-control form-control-sm"
+                                        <input type="text" id="userFbProfile" class="form-control form-control"
                                             placeholder="Ex: www.facebook.com/abdul.karim">
                                     </div>
                                     <label for="userYoutubeProfile" class="mb-1"><small><span class="fw-bold">Youtube
                                                 Channel Link</span> ( Optional )</small></label>
                                     <div class="input-group mb-1">
-                                        <input type="text" id="userYoutubeProfile" class="form-control form-control-sm"
+                                        <input type="text" id="userYoutubeProfile" class="form-control form-control"
                                             placeholder="Ex: youtube.com/channel/AbdulKarim">
                                     </div>
                                     <label for="userWebsite" class="mb-1"><small><span class="fw-bold">Personal Website
                                                 Link</span> ( Optional )</small></label>
                                     <div class="input-group mb-3">
-                                        <input type="text" id="userWebsite" class="form-control form-control-sm"
+                                        <input type="text" id="userWebsite" class="form-control form-control"
                                             placeholder="Ex: www.abdulkarim.com">
                                     </div>
                                     <div class="d-flex flex-row-reverse  mt-4">
@@ -249,7 +250,7 @@
                                             Password</small></label>
                                     <div class="input-group mb-1">
                                         <input type="password" id="userOldPassword"
-                                            class="form-control form-control-sm">
+                                            class="form-control form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -257,18 +258,18 @@
                                                 Password</span> (Password Must Be Minimum 8 Characters)</small></label>
                                     <div class="input-group mb-1">
                                         <input type="password" id="userNewPassword"
-                                            class="form-control form-control-sm w-25">
+                                            class="form-control form-control w-25">
                                     </div>
                                     <label for="userConfirmPassword" class="mb-1"><small><span class="fw-bold">
                                                 Confrim NewPassword</span> (Password Must Be Minimum 8
                                             Characters)</small></label>
                                     <div class="input-group mb-1">
                                         <input type="password" id="userConfirmPassword"
-                                            class="form-control form-control-sm">
+                                            class="form-control form-control">
                                     </div>
                                     <div class="d-flex flex-row-reverse mt-3">
                                         <button type="button" class="btn update-btn px-2 me-3"><small>Update
-                                                Profile</small>
+                                                Password</small>
                                         </button>
                                     </div>
                                 </div>

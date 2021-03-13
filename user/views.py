@@ -1,3 +1,4 @@
+from user.models import Citys
 from django.shortcuts import render,redirect
 from django.urls import reverse
 
@@ -5,28 +6,73 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse,JsonResponse,HttpResponseBadRequest
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, PasswordChanger
 # Create your views here.
-from django.conf import settings
-from django.core.mail import send_mail
+# from django.conf import settings
+# from django.core.mail import send_mail
 
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-from django.template.loader import render_to_string
+# from django.contrib.sites.shortcuts import get_current_site
+# from django.utils.encoding import force_bytes
+# from django.utils.http import urlsafe_base64_encode
+# from django.template.loader import render_to_string
 
 from .tokens import account_activation_token
 from main.models import Property
+from  .forms import UpdateUserInfo,UpdateProfileInfo
 import json 
-
-class ProfileView(TemplateView):
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import  messages
+class ProfileView(LoginRequiredMixin,TemplateView):
     template_name="user/profile.html"
     def get_context_data(self,**kwargs):
         ctx=super(ProfileView,self).get_context_data(**kwargs)
         myproperty=Property.objects.filter(user=self.request.user)
         ctx['myproperty_list']=myproperty
+        ctx['city_list']=Citys.objects.all()
+        # ctx['form_userinfo']=UpdateUserInfo(instance=self.request.user)
+        # ctx['form_profileinfo']=UpdateProfileInfo(instance=self.request.user.profile)
         return ctx
+    def post(self,*args,**kwargs):
+        
+        if 'update_profile' in self.request.POST.keys():
+            uf=UpdateUserInfo(self.request.POST,instance=self.request.user)
+            pf=UpdateProfileInfo(self.request.POST,instance=self.request.user.profile)
+            if(uf.is_valid()):
+                uf.save()
+            else:
+                for f in uf:
+                    for error in f.errors:
+                        messages.add_message(self.request,messages.ERROR,error,"danger")
+                # warring messageg
+            if(pf.is_valid()):
+                pf.save()
+            else:
+                for f in pf:
+                    for error in f.errors: 
+                        messages.add_message(self.request,messages.ERROR,error,"danger")
+                # messages.error(self.request,"Looks like you inseart wrong credentials")
 
+
+            if(pf.is_valid() and uf.is_valid()):
+                messages.add_message(self.request,messages.SUCCESS,"Profile info update Successfully")
+        
+        # return render(self.request,self.template_name,self.get_context_data())
+        if 'update_password' in self.request.POST.keys():
+            pass_form=PasswordChanger(self.request.POST)
+            if pass_form.is_valid():
+                if(self.request.user.check_password(pass_form.cleaned_data.get('old_password'))) and pass_form.cleaned_data.get('new_password')==pass_form.cleaned_data.get('confirm_password'):
+                    self.request.user.set_password(pass_form.cleaned_data.get('confirm_password'))
+                    messages.add_message(self.request,messages.SUCCESS,"Your <strong>Password</strong> has been Changed")
+            else:
+                for field in pass_form:
+                    for error in field.errors:
+                        messages.add_message(self.request,messages.ERROR,error,"danger")
+
+
+
+                    
+
+        return redirect("user:profile")
 
 
 # def register(request):
@@ -165,8 +211,8 @@ from .forms import  MessageForm
 def sendMessagesTo(request):
     if  request.method=="POST":
         form=MessageForm(request.POST)
-        print(request.POST)
-        print(form.changed_data)
+        # print(request.POST)
+        # print(form.cleaned_data)
         if form.is_valid():
             form.save()
             return HttpResponse("{\"details\":\"done\",\"status\":200}")

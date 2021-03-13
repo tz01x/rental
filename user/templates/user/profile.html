@@ -1,19 +1,422 @@
-{%extends 'index.html'%}
+{%extends 'home.html'%}
+{%load static%}
 
 {%block body%}
 
 
-<div class="container">
-<h3>{{request.user}}</h3>
-My post 
-<br>
-{%for property in myproperty_list%}
-<p>{{ forloop.counter }} <strong>{{property.title}}</strong></p>
-<a href="{%url 'main:property_details' slug=property.slug %}">details</a>
-<a href="{%url 'main:update_adpost' slug=property.slug %}">Edit</a>
-{%empty%}
-<p>opps ! you haved not make any post</p>
-{%endfor%}
 
-</div>
+<link rel="stylesheet" href="{%static 'css/progress_indicators.css' %}">
+
+<body>
+    <style>
+        .view-btn {
+            border-radius: 10px;
+            border: 1px solid #ff653d;
+            background-color: #ffffff;
+            color: #202020;
+            cursor: pointer;
+        }
+    
+        .view-btn:hover {
+            color: #f44f2e;
+            border: 1px solid #f44f2e;
+        }
+    
+        .update-btn {
+            border-radius: 50px;
+            border: 1px solid #ff653d;
+            background-color: #ff653d;
+            color: #ffff;
+            cursor: pointer;
+        }
+    
+        .update-btn:hover {
+            background-color: #f44f2e;
+            color: #ffffff;
+        }
+    
+        #profileLink,
+        #propertiesLink {
+            border-right: 2px solid;
+            padding-right: 6px;
+            padding-left: 5px;
+            color: #ff653d;
+            text-decoration: none;
+        }
+    
+        #propertiesLink {
+            border-right: none;
+        }
+    
+        #profileLink:hover {
+            color: #f44f2e;
+            text-decoration: underline;
+        }
+    
+        #propertiesLink :hover {
+            color: #f44f2e;
+            text-decoration: underline;
+        }
+    
+        .archiveLink {
+            background-color: #ffffff;
+            color: rgb(216, 0, 0);
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    
+        .archiveLink:hover {
+            color: rgb(255, 42, 42);
+        }
+    
+        .publishLink {
+            background-color: #ffffff;
+            color: rgb(8, 141, 8);
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    
+        .publishLink:hover {
+    
+            color: rgb(17, 224, 17);
+        }
+        .img-list{
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+    </style>
+
+  
+    <main>
+        
+
+        </div>
+        <!-- Empty Space -->
+        <div class="container p-3">
+            <section id="greeting-link-section">
+                <h2 class="card-title" id="user-name" style="color: black;">{{user.username}}</h2>
+                <h6 class="card-subtitle mb-2 text-muted">We are glad you are here!</h6>
+                <div class="links">
+                    <a href="#" id="profileLink" class="fw-bold">
+                        <span class="fs-4"><i class="fa fa-user-circle" style="padding-right: 3px;"></i>My
+                            Profile</span>
+
+                    </a>
+                    <a href="#" id="propertiesLink" class="fw-bold">
+                        <span class="fs-4"><i class="fa fa-home" style="padding-right: 3px;"></i>My Properties</span>
+                    </a>
+                </div>
+            </section>
+            <!-- Form Section -->
+            <section id="form-section" class="mt-3">
+                <!-- General Info -->
+                <div class="card">
+                    <div class="card-body">
+                        {%if messages%}
+                        {% for message in messages %}
+                        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                            {{message|safe}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {%endfor%}
+                        {%endif%}
+                        <h4 class="card-title">General Information</h4>
+                        <form method="POST" action="">
+                            {%csrf_token%}
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <!-- Image Will be here  -->
+                                    <label for="userName" class="mb-1"><small class="fw-bold">User Name</small></label>
+                                    <div class="input-group mb-1">
+                                        <input type="text" name="username" id="userName" value="{{user.username}}" class="form-control form-control"
+                                            placeholder="Ex: Abdul Khalek">
+
+                                    </div>
+                                    <label for="userEmail" class="mb-1"><small class="fw-bold">Email
+                                            Address</small></label>
+                                    <div class="input-group mb-1">
+                                        <input type="email" name="email" id="userEmail" value="{{user.email}}" class="form-control form-control"
+                                            placeholder="Ex: abdul.khalek@gmail.com">
+                                    </div>
+                                    <label for="userPhoneNumber" class="mb-1"><small
+                                            class="fw-bold">Phone Number</small></label>
+                                    <div class="input-group mb-1">
+                                        <input name="phone" type="tel" id="userPhoneNumber" class="form-control form-control"
+                                            placeholder="Ex: 01XXXXXXXXX" value="{{user.profile.phone}}">
+                                    </div>
+                                    
+                                    <div class="input-group mb-1 mt-2">
+                                        <label class="input-group-text" for="city">City</label>
+                                        <select name="city" class="form-select" id="city" > 
+                                            {%for c in city_list%}
+                                            {%if c.name == user.profile.city%}
+                                            <option value="{{c.name}}" selected>{{c.name}}</option>
+                                            {%else%}
+                                            <option value="{{c.name}}" >{{c.name}}</option>
+
+                                            {%endif%}
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                    <label for="userPermanentAddress" class="mb-1"><small class="fw-bold">Present
+                                            Address</small></label>
+                                    <div class="input-group mb-3">
+                                        <textarea name="area"class="form-control form-control " id="userPermanentAddress"
+                                            placeholder="Ex : Your Present Address" style="height: 50px">{{user.profile.area}}</textarea>
+                                    </div>
+                                    <div class="input-group mb-1 mt-2">
+                                        <label class="input-group-text" for="gender">Gender</label>
+                                        <select name="gender" class="form-select" id="gender" > 
+                                            {%if user.profile.gender == 'm' %} selected {%endif%}
+                                            <option value="m" {%if user.profile.gender == 'm' %} selected {%endif%}>Male</option>
+                                            <option value="f" {%if user.profile.gender == 'f' %} selected {%endif%}>Female</option>
+                                            <option value="o" {%if user.profile.gender == 'o' %} selected {%endif%}>Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="userJob" class="mb-1"><small class="fw-bold">Job
+                                            Description</small></label>
+                                    <div class="input-group mb-1">
+                                        <input type="text" name="jobDescription" id="userJob" class="form-control form-control"
+                                            placeholder="What do you do for a living?">
+                                    </div>
+                                    <label for="userCompany" class="mb-1"><small class="fw-bold">Company
+                                            Name</small></label>
+                                    <div class="input-group mb-1">
+                                        <input name="companyName" type="text" id="userCompany" class="form-control form-control"
+                                            placeholder="Where do you work?">
+                                    </div>
+                                    <label for="userFbProfile" class="mb-1"><small><span class="fw-bold">Facebook
+                                                Profile Link</span> ( Optional )</small></label>
+                                    <div class="input-group mb-1">
+                                        <input name="fb_link" type="text" id="userFbProfile" class="form-control form-control"
+                                            placeholder="Ex: www.facebook.com/abdul.karim">
+                                    </div>
+                                    <label for="userYoutubeProfile" class="mb-1"><small><span class="fw-bold">Youtube
+                                                Channel Link</span> ( Optional )</small></label>
+                                    <div class="input-group mb-1">
+                                        <input type="text" name="yt_link" id="userYoutubeProfile" class="form-control form-control"
+                                            placeholder="Ex: youtube.com/channel/AbdulKarim">
+                                    </div>
+                                    <label for="userWebsite" class="mb-1"><small><span class="fw-bold">Personal Website
+                                                Link</span> ( Optional )</small></label>
+                                    <div class="input-group mb-3">
+                                        <input name="web_link" type="text" id="userWebsite" class="form-control form-control"
+                                            placeholder="Ex: www.abdulkarim.com">
+                                    </div>
+                                    <div class="d-flex flex-row-reverse  mt-4">
+                                        <button type="submit" name="update_profile" class="btn update-btn px-2 me-3"><small>Update
+                                                Profile</small>
+                                        </button>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mt-2">
+                    <!-- Personal Info -->
+                    <div class="card-body">
+                        <h4 class="card-title">Security Info</h4>
+                        <form method="POST" action="">
+                            <div class="row mt-6">
+                                <div class="col-md-6">
+                                    <label for="userOldPassword" class="mb-1"><small class="fw-bold">Enter Old
+                                            Password</small></label>
+                                    <div class="input-group mb-1">
+                                        <input type="password" name="old_password"  id="userOldPassword"
+                                            class="form-control form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="userNewPassword" class="mb-1"><small><span class="fw-bold">New
+                                                Password</span> (Password Must Be Minimum 8 Characters)</small></label>
+                                    <div class="input-group mb-1">
+                                        <input type="password"  name="new_password"  id="userNewPassword"
+                                            class="form-control form-control w-25">
+                                    </div>
+                                    <label for="userConfirmPassword" class="mb-1"><small><span class="fw-bold">
+                                                Confrim NewPassword</span> (Password Must Be Minimum 8
+                                            Characters)</small></label>
+                                    <div class="input-group mb-1">
+                                        <input type="password"  name="confirm_password" id="userConfirmPassword"
+                                            class="form-control form-control">
+                                    </div>
+                                    {%csrf_token%}
+                                    <div class="d-flex flex-row-reverse mt-3">
+                                        <button type="submit" name="update_password" class="btn update-btn px-2 me-3"><small>Update
+                                                Password</small>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Properties Section -->
+            <section id="property-section" class="mt-3" style="display: none;">
+                <!-- Board Section -->
+                <section id="board-section">
+                    <div class="d-flex flex-row bd-highlight mb-3">
+                        <div class="card" style="width: 25rem; margin-right:5px;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6 text-center">
+                                        <h4><span class="fw-bold">{{myproperty_list.count}}</span><br>
+                                            <small class="text-muted">All Properties</small>
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-6 text-center mt-2">
+                                        <h3><a href="#"><i class="fa fa-home"
+                                                    style="color: grey; border: 5px solid  rgb(194, 194, 194); border-radius: 25px; background-color: rgb(194, 194, 194);"></i></a>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+                <!-- Property List Section -->
+                <section>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="flex-row bd-highlight mb-3">
+                                {%for property in myproperty_list%}
+                            
+                                
+                                <div class="row mb-2">
+                                    <div class="col-sm-2 mt-2">
+                                        <img src="{{property.img.first.timage.url}}"  class="img-list">
+                                    </div>
+                                    <div class="col-sm-4 mt-1">
+                                        <h5>
+                                        <a href="{%url 'main:property_details' slug=property.slug%}" target="_blank" rel="noopener noreferrer">{{property.title}}</a>
+                                        </h5>
+                                        <h6 class="text-muted"><i class="fa fa-map-marker"></i> {{property.area}},{{property.city}}</h6>
+                                        <p style="color: #ff653d ;">Rent: {{property.price}} BDT / Per Month</p>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {%if property.publish%}
+                                        <a href="#" class="archiveLink pb-4">Archive</a><br>
+                                        {%else%}
+                                        <a href="#" class="publishLink">make Publish</a>
+                                        {%endif%}
+                                    </div>
+                                </div>
+                                <hr>
+                                {%endfor%}
+
+                            
+
+                        
+                            </div>
+                        </div>
+
+                    </div>
+
+        </div>
+        </div>
+
+        </section>
+
+        </section>
+        </div>
+
+    </main>
+
+
+
+
+    <!--Footer -->
+    <footer class=" footer-lower-section mt-5 ps-5 row">
+        <section class="col-sm">
+            <div class="card-body pe-5 me-2">
+                <h5>About Site </h5>
+                <p><small>Ipsum is simply dummy text of the printing and
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of
+                        type and
+                        scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the
+                        leap into
+                        electronic typesetting, remaining essentially unchanged.
+                        It was popularised in the 1960s with
+                        the release of
+                        Letraset sheets containing Lorem Ipsum passages.
+                    </small></p>
+            </div>
+        </section>
+        <section class="col-sm">
+            <div class="card-body " style="width: fit-content;">
+                <h5>Quick Links</h5>
+                <a href="#" class="footer-link "><small>About Us</small></a><br>
+                <a href="#" class="footer-link "><small>Terms &
+                        Condition</small></a><br>
+                <a href="#" class="footer-link"><small>User's
+                        Guide</small></a><br>
+                <a href="#" class="footer-link "><small>Support
+                        Center</small></a>
+            </div>
+        </section>
+        <section class="col-sm">
+            <div class="card-body">
+                <h5>Contact Us</h5>
+                <small>Mobile: 01864231444</small><br>
+                <small>Mobile: 01953559165</small><br>
+                <small>G-Mail: bhatatia@gmail.com</small><br>
+                <small>Facebook Page: facebook.com/bhatatia</small>
+            </div>
+        </section>
+        <section class="col-sm">
+            <div class="card-body">
+                <h5>Subscribe</h5>
+                <input style="border-radius: 15px; border: none; width: fit-content;  display: inline-block;"
+                    class="form-control" type="email" placeholder="Enter Your Mail" id="subscribe-email">
+                <a href="#" id="subscribe-btn"><i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+        </section>
+    </footer>
+
+
+
+
+
+    <!--Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+    <script>
+        const profileLink = document.querySelector('#profileLink');
+        const propertyLink = document.querySelector("#propertiesLink");
+
+        const formSection = document.querySelector("#form-section");
+        const propertySection = document.querySelector("#property-section");
+
+        profileLink.addEventListener('click', function () {
+
+            formSection.style.display = 'block';
+            propertySection.style.display = 'none';
+
+        });
+
+        propertyLink.addEventListener('click', function () {
+
+            formSection.style.display = 'none';
+            propertySection.style.display = 'block';
+
+        });
+
+    </script>
+</body>
+
 {%endblock body%}
