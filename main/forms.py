@@ -30,7 +30,7 @@ class PropertyForm(forms.ModelForm):
     lng=forms.CharField(required=False,widget=forms.HiddenInput)
 
 
-    mymap=forms.CharField(required=False)
+    mymap=forms.CharField(required=False,label="Set Your Property Location")
     class Meta:
         model=Property
         fields=['user',
