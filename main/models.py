@@ -109,6 +109,9 @@ class Property(models.Model):
 
 
         return None
+    def paddress(self):
+        return f"{self.area},{self.city}"
+      
 
 @receiver(models.signals.pre_save, sender=Property)
 def auto_slug_generator(sender, instance, **kwargs):
