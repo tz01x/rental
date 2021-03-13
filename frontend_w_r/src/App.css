@@ -1,0 +1,36 @@
+.search_bar{
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+
+}
+
+.ifields{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  align-items:center;
+  
+}
+
+
+.MuiGrid-spacing-xs-1 {
+  margin: -6.5px!important;
+}
+
+.sbkimg{
+    background-image: url("./sofa_red.jpg");
+    background-size: cover;
+    background-position: center;
+    /* background-color: currentcolor; */
+    padding: 2px;
+    height: 55vh;
+ }
+
+ @media only screen and (max-width: 600px){
+   /*Big smartphones [ 600px]*/
+  .sbkimg{
+    background-position: right;
+    }
+}
