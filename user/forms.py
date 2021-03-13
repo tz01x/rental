@@ -1,6 +1,7 @@
 
 
 from django.contrib.auth.models import User
+from django.db.models import fields
 
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext as gt
@@ -9,7 +10,8 @@ from django.utils.translation import gettext as gt
 from django.core.exceptions import ValidationError
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Citys,Messages
+from .models import Citys,Messages, Profile
+import re
 # from phonenumber_field.formfields import PhoneNumberField
 
 """
@@ -72,7 +74,7 @@ class CustomUserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label=_("Password"),widget=forms.PasswordInput,min_length=6,help_text=_('<li>Password mast be 6 chareture long all numaric chareture not allowed</li>'))
     password2 = forms.CharField(label=_("Password confirmation"),widget=forms.PasswordInput,min_length=6)
     # phone = PhoneNumberField(max_length=14,min_length=11,label=_("Phone"),help_text=_('Use this forment +8801*******'))
-    phone = forms.CharField(max_length=14,min_length=11,label=_("Mobile number"),help_text=_(''))
+    phone = forms.CharField(max_length=14,min_length=11,label=_("Mobile number"),help_text=_('ex: +8801######## or 01#########'))
     # address=forms.CharField(max_length=200,label=_("Address"),widget=forms.Textarea(attrs={'rows':"2"}))
     city=forms.ChoiceField(required=True)
     gender=forms.ChoiceField(choices=[('m',"Male"),('f','Female'),('o',"Other")],required=True)
@@ -136,3 +138,50 @@ class  MessageForm(forms.ModelForm):
     class Meta:
         model=Messages
         fields=['user','name','email','phone','msg']
+class UpdateUserInfo(forms.ModelForm):
+    username=forms.CharField(max_length=150)
+    email=forms.EmailField()
+    class Meta:
+        model=User
+        fields=['username','email']
+    def clean_usename(self):
+        uname=self.cleaned_data.get('usename')
+        if(User.objects.filter(username=uname).count()>0):
+            raise ValidationError("<strong>This username is alrealy taken</strong>, Please use another username")
+        return uname
+    def clean_email(self):
+        email=self.cleaned_data.get('email')
+        if(User.objects.filter(username=email).count()>0):
+            raise ValidationError("<strong>This Email is alrealy exits</strong>, Please use another email address")
+        return email
+
+class UpdateProfileInfo(forms.ModelForm):
+    
+    phone=forms.CharField(max_length=150)
+    city=forms.CharField(max_length=150)
+    area=forms.CharField(max_length=150,required=False)
+    gender=forms.ChoiceField(choices=[('m',"Male"),('f','Female'),('o',"Other")],required=True)
+    jobDescription=forms.CharField(max_length=150,required=False)
+    companyName=forms.CharField(max_length=150,required=False)
+    fb_link=forms.CharField(max_length=500,required=False)
+    yt_link=forms.CharField(max_length=500,required=False)
+    web_link=forms.CharField(max_length=500,required=False)
+    
+    class Meta:
+        model=Profile
+        exclude=['user']
+
+    def clean_phone(self):
+        p=self.cleaned_data.get('phone')
+        if(self.is_Phone_number(p)):
+            pass
+        else:
+            raise ValidationError("This Phone number is <strong>not acceptable</strong>, please inseart valid Phone number")
+        return p
+    def is_Phone_number(self,p):
+        m=re.match(r'(\+8801[0-9]{9})|(01[0-9]{9})',p)
+        return m
+class PasswordChanger(forms.Form):
+    new_password=forms.CharField(max_length=100)
+    old_password=forms.CharField(widget=forms.PasswordInput,max_length=100)
+    confirm_password=forms.CharField(max_length=100,widget=forms.PasswordInput)

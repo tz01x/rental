@@ -27,6 +27,12 @@ class Profile(models.Model):
     email_confirmed = models.BooleanField(default=False)
     ps=models.CharField(blank=True,null=True,max_length=499)
     gender=models.CharField(choices=[('m',"Male"),('f','Female'),('o',"Other")],max_length=1,blank=True)
+    jobDescription=models.CharField(max_length=150,blank=True,null=True)
+    companyName=models.CharField(max_length=150,blank=True,null=True)
+    fb_link=models.CharField(max_length=500,blank=True,null=True)
+    yt_link=models.CharField(max_length=500,blank=True,null=True)
+    web_link=models.CharField(max_length=500,blank=True,null=True)
+
     def __str__(self):
         return self.user.username
 

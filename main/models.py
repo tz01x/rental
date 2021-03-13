@@ -80,6 +80,7 @@ class Property(models.Model):
             return self.ad_for.title
         except:
             return ''
+    
     # def getLatLong(self):
 
     #     if self.latlong!=None or len(self.latlong)>1:
@@ -108,6 +109,9 @@ class Property(models.Model):
 
 
         return None
+    def paddress(self):
+        return f"{self.area},{self.city}"
+      
 
 @receiver(models.signals.pre_save, sender=Property)
 def auto_slug_generator(sender, instance, **kwargs):

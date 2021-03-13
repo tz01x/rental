@@ -58,22 +58,20 @@
       }
     }
 
-    @media only screen and (min-width: 576px){
+    @media only screen and (min-width: 576px) {
       .col-sm-4 {
-      flex: 0 0 auto;
-      width: 33.3333333333% !important;
-    }
+        flex: 0 0 auto;
+        width: 33.3333333333% !important;
+      }
     }
 
-    .seach-input{
-      color:black;
-    background: #ffffffc1;
-    box-shadow: 1px 1px 6px 0px black;
-    margin-bottom: 10px;
-    border: none;
+    .seach-input {
+      color: black;
+      background: #ffffffc1;
+      box-shadow: 1px 1px 6px 0px black;
+      margin-bottom: 10px;
+      border: none;
     }
-   
-     
   </style>
   <!--Nav Bar -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top"
@@ -138,77 +136,49 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  
+
   <!--Slider -->
-  <section class="home-slider" style="background-image: url('{%static 'img/slider_2.jpg'%}'); height: 300px; background-size:cover;">
+  <section class="home-slider"
+    style="background-image: url('{%static 'img/slider_2.jpg'%}'); height: 300px; background-size:cover;">
 
-      <section class="home-slider-input text-center" >
+    <section class="home-slider-input ">
       <div class="form mt-4">
-        <h1 class="title">What are you looking for?</h1>
-        <form action="." method="get">
-          <div class="searchBar">
-            <div class="col-lg-8  mx-auto mx-auto ">
-              <label for="inputGroupSelect01" class="fw-bold sub-title fs-5">Property type</label>
-              <select type="text" name="properyt_type" style="width: 100%;" class="myselect"
-                aria-label="Default select example" id="inputGroupSelect01">
-                <option selected>Select a Property type  </option>
-                {%for ptype in propertytype%}
-                <option value="{{ptype.id}}">{{ptype}}</option>
-                {%endfor%}
-              </select>
-            </div>
-            <div class="col-lg-8 mx-auto mt-2">
-              <label for="inputGroupSelect02"  class="fw-bold sub-title fs-5">City</label>
-              <select type="text" name="city" style="width: 100%;" class="myselect"
-                aria-label="Default select example" id="inputGroupSelect02">
-                <option selected>Select a City </option>
-
-                {%for city in city_list%}
-                <!-- <option selected>Open this </option> -->
-                <option value="{{city.id}}">{{city.name}}</option>
-                {%endfor%}
-              </select>
-            </div>
-            
-              <div class="d-grid col-8 mx-auto login-btn mx-auto mt-2 fw-bold fs-6" id="search_Btn" style="color:white">Click me</div>
-              <!-- <input type="button" onsubmit="getSelectedValue" value="search"> -->
-               </div>
-          
-        </form>
+        <h3 class="title text-center "> <i>To-let Ekhon Hather Muthoy</i> </h3>
+        {%include 'build/search_bar.html'%}
       </div>
-      </section>
-      <script>
+    </section>
+    <script>
 
-        $(document).ready(function() {
-            $('.myselect').select2({
-              width: 'resolve',
-              placeholder:"property type"
-            });
+      $(document).ready(function () {
+        $('.myselect').select2({
+          width: 'resolve',
+          placeholder: "property type"
         });
-       
-        document.getElementById("search_Btn").addEventListener("click",function(e){
-          let url="./property/list/?";
-          // select input ids
-          ['inputGroupSelect01','inputGroupSelect02'].map(function(val,idx){
-            const ele = document.getElementById(val)
-            url+=`${ele.getAttribute("name")}=${ele.value}&`
-            
+      });
 
-          });
-          window.location.assign(url);
-        })
-
-      </script>
+      document.getElementById("search_Btn").addEventListener("click", function (e) {
+        let url = "./property/list/?";
+        // select input ids
+        ['inputGroupSelect01', 'inputGroupSelect02'].map(function (val, idx) {
+          const ele = document.getElementById(val)
+          url += `${ele.getAttribute("name")}=${ele.value}&`
 
 
-    </section>
-    <section class="search-op">
+        });
+        window.location.assign(url);
+      })
 
-    </section>
+    </script>
+
+
+  </section>
+  <section class="search-op">
+
+  </section>
   </section>
 
 
-  
+
 
   <!--Property List Card-->
   <main>
@@ -219,18 +189,26 @@
         {%for property in property_list%}
         <section class="col-md-3 mb-2">
 
-          <div class="card">
-            <img src="{{property.img.first.timage.url}}" class="card-img-top" alt="...">
+          <div class="card" style="box-shadow:-2px 2px 9px -3px #020202">
+            <img src="{{property.img.first.timage.url}}" height="200" class="card-img-top" alt="...">
             <div class="card-body">
               <div class="card-text">
                 <h6><a href="{%url 'main:property_details' slug=property.slug %}">{{property.title}}</a></h6>
-                <p><i class="fa fa-map-marker"></i> {{property.area}},{{property.city}}</p>
+                <p><i class="fa fa-map-marker"></i> {{property.area}},{{property.city}}
+                  <br>
+                  <small>
+                    <i class="fa fa-bed"></i> <span id="bednumber" class="pe-2">{{property.bedroom}} Beds</span><i
+                      class="fa fa-bath"></i>
+                    <span id="bathnumber" class="pe-2">{{property.bathroom}} Baths</span><i class="fa fa-th-large"></i>
+                    <span id="area" class="pe-2">{{property.property_size}} sqft</span>
+
+                  </small>
+                </p>
               </div>
             </div>
             <div class="card-footer" style="background-color: #ffff;">
               <small class="text-muted fw-bold">BDT <span class="fs-5" style="color: #ff653d;">
                   {{property.price}}</span> / MONTH</small>
-
             </div>
           </div>
         </section>
