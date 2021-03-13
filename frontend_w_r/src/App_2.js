@@ -14,7 +14,7 @@ const theme = createMuiTheme({
   },
 });
 function App_2() {
-  const api_server_url = window.location.host=="localhost"?"http://127.0.0.1:8000/":(window.location.host+":"+window.location.port+"/");
+  const api_server_url = window.location.host=="localhost"?"http://127.0.0.1:8000/":(window.location.host+ (window.location.port==""?'':":"+window.location.port+"/"));
 
   const [fdata,setFdata]=useState({
     city:'',
