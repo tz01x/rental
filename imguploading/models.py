@@ -4,7 +4,7 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys,os
 import datetime
-import cv2,numpy
+# import cv2,numpy
 
 from PIL import Image
 from PIL import ImageFont
