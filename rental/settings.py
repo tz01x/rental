@@ -152,7 +152,8 @@ STATICFILES_DIRS = [
     BASE_DIR/"frontend_w_r/build/static/",
     os.path.join(BASE_DIR, './static/static_dir'),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR,'./static')
+STATIC_ROOT = os.path.join(BASE_DIR,'./static/static_root/')
+
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
