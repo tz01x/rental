@@ -437,9 +437,10 @@
 
             <div class="form-floating">
               <textarea class="form-control" placeholder="" style="height: 120px" name="msg"
-                id="id_msg">I would like to inquire about your property P-{{property.pk}} Please contact me at your earliest convenience.</textarea>
+                id="id_msg">I would like to inquire about your property P-{{property.pk}} Please contact me at your earliest convenience.  </textarea>
               <label for="id_msg">Message</label>
             </div>
+            <input type="text" hidden name="property_url" value="{{request.get_raw_uri}}"> 
 
             <button class="btn btn-primary mt-2"> <i class="fa fa-send"></i> Send</button>
 
@@ -730,6 +731,18 @@
 
     e.preventDefault();
     let msgformData = new FormData(form_ele);
+   
+    // const fvalue={};
+    // for (let index = 0; index < field_ids.length; index++) {
+    //  ele= document.getElementById(field_ids[index]);
+     
+    //   fvalue[field_ids[index]]=ele.value;
+    // }
+    // fvalue['csrfmiddlewaretoken']=getCookie('csrftoken');
+    // fvalue['id_msg']+=`<br/><a href="${window.location.href}"> property link </a> `;
+    // console.log(fvalue);
+    // msgformData.set('id_msg',modify_msg);
+
     //send api call or post request 
     let formvalid = true;
     for (let i = 0; i < field_ids.length; i++) {
@@ -745,6 +758,11 @@
     }
     fetch(`${window.location.origin}/send-messages/`, {
         'method': 'POST',
+        // headers: {
+        //   'Content-type': 'application/json; charset=UTF-8', // Indicates the content
+        //   'X-CSRFToken':getCookie('csrftoken')
+        // },
+
         body: msgformData,
       })
       .then(response => {
@@ -795,6 +813,23 @@
 
     //endof event listener 
   });
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 </script>
 
 {%endblock%}

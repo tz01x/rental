@@ -1,4 +1,4 @@
-from user.models import Citys
+from user.models import Citys,Messages
 from django.shortcuts import render,redirect
 from django.urls import reverse
 
@@ -21,14 +21,16 @@ from main.models import Property
 from  .forms import UpdateUserInfo,UpdateProfileInfo
 import json 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import  messages
+
 class ProfileView(LoginRequiredMixin,TemplateView):
     template_name="user/profile.html"
     def get_context_data(self,**kwargs):
         ctx=super(ProfileView,self).get_context_data(**kwargs)
         myproperty=Property.objects.filter(user=self.request.user)
+        user_messages=Messages.objects.filter(user=self.request.user)
         ctx['myproperty_list']=myproperty
         ctx['city_list']=Citys.objects.all()
+        ctx['user_messages']=user_messages
         # ctx['form_userinfo']=UpdateUserInfo(instance=self.request.user)
         # ctx['form_profileinfo']=UpdateProfileInfo(instance=self.request.user.profile)
         return ctx
@@ -211,15 +213,26 @@ from .forms import  MessageForm
 def sendMessagesTo(request):
     if  request.method=="POST":
         form=MessageForm(request.POST)
-        # print(request.POST)
-        # print(form.cleaned_data)
+        print((request.POST))
+        
+        modify_msg=request.POST['msg']+"</br> <a href='"+request.POST['property_url']+"'> property link </a>"
+        
+
+        # purl=(form.cleaned_data.get('property_url'))
+        # print((form.fields['msg'].clean()))
+        print(modify_msg)
         if form.is_valid():
-            form.save()
+            
+            msg_obj=form.save(commit=False)
+            msg_obj.msg=modify_msg
+            msg_obj.save()
+
             return HttpResponse("{\"details\":\"done\",\"status\":200}")
         else:
             error_data={}
             for field in form:
                 if field.errors:
+                    print(field.errors)
                     error_data["id_"+field.name]=True
                     # print(form.errors)
             return HttpResponse(content='{"status":400,"details":'+json.dumps(error_data)+'}')

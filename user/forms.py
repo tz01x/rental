@@ -138,6 +138,7 @@ class  MessageForm(forms.ModelForm):
     class Meta:
         model=Messages
         fields=['user','name','email','phone','msg']
+    
 class UpdateUserInfo(forms.ModelForm):
     username=forms.CharField(max_length=150)
     email=forms.EmailField()

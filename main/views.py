@@ -198,6 +198,7 @@ class PropertyDetailsView(DetailView):
     # template_name="main/property_detail.html"
     def get_context_data(self,*args,**kwargs):
         # print(kwargs.get("pk",None))
+        # print(())
         ctx=super(PropertyDetailsView,self).get_context_data(*args,**kwargs)
         ctx['msgform']=MessageForm(initial={"user":self.get_object().user})
 

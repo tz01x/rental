@@ -63,6 +63,7 @@ function App_2() {
     }
     fetchdata();
   },[])
+  // (=(\w+)|=(\[\d+,\d+\]))
 
   function handelChangeFdata(event){
     // event.terget.name
