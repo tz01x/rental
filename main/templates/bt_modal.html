@@ -1,0 +1,32 @@
+<script>
+
+let simple_modal = new bootstrap.Modal(document.getElementById('simple_modal_main_id'));
+  let modal_title_ele = new bootstrap.Modal(document.getElementById('modal_title'));
+  let modal_body_ele = new bootstrap.Modal(document.getElementById('modal_body'));
+  
+
+  function show_modal(title,body){
+    modal_title_ele.textContent=title;
+    modal_body_ele.textContent=body;
+  simple_modal.show();
+  }
+</script>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="simple_modal_main_id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal_title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal_body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

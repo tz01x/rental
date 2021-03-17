@@ -604,6 +604,23 @@
 </div>
 </main>
 
+<div class="modal" tabindex="-1" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Message Sent </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Your message has been sent </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
@@ -775,13 +792,14 @@
         let mydata = data.details;
         if (s == 200) {
           // done scessusfully 
-          console.log("good RESPONCE");
+          // console.log("good RESPONCE");
           // alert("message send");
           var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
             keyboard: true,
             focus: true
           });
-          // myModal.show();
+          myModal.show();
+          show_modal('Message Sent ','Your message sent succefully');
           
           for (let i = 0; i < field_ids.length; i++) {
             //restoring inital value and class of input field 

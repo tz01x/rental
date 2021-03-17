@@ -8,6 +8,7 @@ import SimpleSelect from './components/SimpleSelect';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import {Fade} from '@material-ui/core/';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
@@ -28,7 +29,7 @@ function App() {
   const [fdata, setFdata] = useState({
     city: '',
     property_type: '',
-    price: [5000, 10000],
+    price: [5000, 100000],
     bedroom: '',
     bathroom: '',
     features: [],
@@ -128,13 +129,13 @@ function App() {
     //setFdata({ ...fdata, [event.target.name]: event.target.value });
     event.persist();
     setFdata((state)=>{
-      console.log(event.target.name);
+      // console.log(event.target.name);
       let data={ ...state, [event.target.name]: event.target.value };
       
       for(const key in data){
         fdata[key]=data[key];
       }
-      handelFiltering(null);
+      //handelFiltering(null);
       return data;
     });
   
@@ -149,13 +150,12 @@ function App() {
    //console.log(burl);
    load_fatch_Data('propertylist',burl,myproperty,setMyProperty,
    (element)=>{
-     console.log(element);
+    //  console.log(element);
      
    
-     let d=[];
+    let d=[];
     if (element.hasOwnProperty("results")){
       element.results.forEach(ele=>{
-
         d.push(ele);
       });
       setMyProperty([...d]);
@@ -170,8 +170,9 @@ function App() {
 
   return (
     <div>
-      <div className="search_bar sbkimg">
+      <div className="search_bar cover-img">
 
+        <div className="cover-title">তো-লেট্ এখন হাতের মুঠোয়</div>
 
         <div className="ifields">
           <ThemeProvider theme={theme}>
@@ -215,7 +216,9 @@ function App() {
         Filter
       </Button>
       </div>
-      <Container>
+      <Container className="propertys_list">
+      <div className="" style={{marginBottom:"10px",marginTop:"10px",fontSize:"20px"}}>Our Featured Properties</div>
+
 
         {/* <div style={{ float: 'right',margin: '10px 0 10px 0'}}>
 
@@ -258,7 +261,9 @@ function App() {
           {myproperty.map(property => {
 
             return (
-              <Grid item xs={12} sm={3}>
+              <Fade in={true} style={{transitionDelay:"500ms"}}> 
+              <Grid item xs={12} sm={6} md={3}>
+               
                 <div className="card" style={{ boxShadow: "-2px 2px 9px -3px #020202" }}>
                   <img src={`${property.img[0].timage}`} height="200" className="card-img-top" alt="..."></img>
                   <div className="card-body">
@@ -281,8 +286,10 @@ function App() {
                       {property.price}</span> / MONTH</small>
                   </div>
                 </div>
+               
               </Grid>
-            )
+              </Fade>
+            );
           })}
 
         </Grid>

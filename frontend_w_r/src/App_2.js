@@ -5,6 +5,7 @@ import SimpleSelect from './components/SimpleSelect';
 import {createMuiTheme,ThemeProvider} from '@material-ui/core/styles';
 import RangeSlider from './components/RangeSlider';
 import Fab from '@material-ui/core/Fab';
+import {Button} from '@material-ui/core';
 import MultipleSelect from './components/MultipleSelect.js'
 const theme = createMuiTheme({
   palette: {
@@ -92,17 +93,21 @@ function App_2() {
       
       
       </div>
-      <Fab  style={{background:"white",color:"#ea4e2f"}} onClick={()=>{
+      {/* <Fab  style={{background:"white",color:"#ea4e2f"}} onClick={()=>{
         let args="?";
         for (const key in fdata) {
          args=`${key}=${fdata[key]}&`;
         }
         window.location.assign("./property/list/"+args);
         }}>
+      
+      </Fab> */}
+
+      <Button variant="contained" color="secondary">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
       </svg>
-      </Fab>
+      </Button>
       </div>
      
       

@@ -89,9 +89,9 @@
           <li class="nav-item mt-1 pt-2 me-2">
             <a href="{%url 'main:home'%}" id="home-page">Home</a>
           </li>
-          <li class="nav-item mt-1 pt-2 me-2">
+          <!-- <li class="nav-item mt-1 pt-2 me-2">
             <a href="{%url 'main:property_list'%}" id="listing-page">Property List</a>
-          </li>
+          </li> -->
           
           
           <li class="nav-item mt-1 pt-2 me-2">
@@ -134,7 +134,7 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <!--Slider -->
-  <section class="home-slider"
+  <!-- <section class="home-slider"
     style="background-image: url('{%static 'img/slider_2.jpg'%}'); height: 300px; background-size:cover;">
 
     <section class="home-slider-input ">
@@ -167,7 +167,9 @@
     </script>
 
 
-  </section>
+  </section> -->
+
+  {%include 'build/index.html'%}
   <section class="search-op">
 
   </section>
@@ -177,11 +179,11 @@
 
 
   <!--Property List Card-->
-  <main>
+  <!-- <main>
     <section class="property-card container mt-2">
-      <h2 class="text-center mb-3">Our Featured Properties</h2>
+      <h2 class="text-center mb-3">Our Featured Properties</h2> -->
 
-      <article class="row">
+      <!-- <article class="row">
         {%for property in property_list%}
         <section class="col-md-3 mb-2">
 
@@ -209,29 +211,17 @@
           </div>
         </section>
         {%endfor%}
-      </article>
-    </section>
+      </article> -->
+    <!-- </section>
 
-  </main>
+  </main> -->
   {%endblock%}
 
-  <div class="modal" tabindex="-1" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
+
+
+
+
 
   <!--Footer -->
   <footer class="footer-lower-section  ps-5 row">
@@ -287,6 +277,7 @@
     // var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     //   return new bootstrap.Tooltip(tooltipTriggerEl);
     // });
+
 
 
   </script>

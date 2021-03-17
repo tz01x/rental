@@ -64,7 +64,7 @@ ValueLabelComponent.propTypes = {
 export default function RangeSlider(props) {
 
     const classes = useStyles();
-    const [values, setValue] = React.useState(['5000', '10000']);
+    const [values, setValue] = React.useState(['5000', '100000']);
 
     // const handleChange = (event, newValue) => {
     //     setValue(newValue);
