@@ -157,8 +157,8 @@ STATIC_ROOT = os.path.join(BASE_DIR,'./static/static_root/')
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER='info.medicust@gmail.com'
-EMAIL_HOST_PASSWORD='ngohvrxzqyzwfknc'
+EMAIL_HOST_USER='abdur963rahman@gmail.com'
+EMAIL_HOST_PASSWORD='nzpfrtpajldijohh'
 
 from .rest_setting import  *
 from .cors_header import  *
