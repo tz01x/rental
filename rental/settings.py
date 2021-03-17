@@ -153,6 +153,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, './static/static_dir'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,'./static')
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER='info.medicust@gmail.com'
+EMAIL_HOST_PASSWORD='ngohvrxzqyzwfknc'
 
 from .rest_setting import  *
 from .cors_header import  *
