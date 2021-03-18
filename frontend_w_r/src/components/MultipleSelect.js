@@ -13,11 +13,14 @@ import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
+    
+    borderTopRightRadius:3,
+    borderTopLeftRadius:3,
     margin: theme.spacing(1),
     boxShadow:"-1px 3px 5px -3px",
     // minWidth: 120,
-    minWidth: "295px",
-    maxWidth: "315px",
+    minWidth: "150px",
+    // maxWidth: "250px",
     backgroundColor:"#ffffffc9",
     // marginTop:"25px",
     "& .MuiSelect-root":{
@@ -27,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     "&.MuiInputBase-root.Mui-focused":{
       backgroundColor:"white"
     },
+    
    
 
   },
@@ -93,7 +97,7 @@ export default function MultipleSelect(props) {
       </FormControl> */}
 
       <FormControl className={classes.formControl}>
-        <InputLabel style={{left:"12px"}} id="a-mutiple-checkbox-label">{props.label?props.label:null}</InputLabel>
+        <InputLabel style={{left:"12px",fontSize:"0.8rem"}} id="a-mutiple-checkbox-label">{props.label?props.label:null}</InputLabel>
         <Select
          
           labelId="a-mutiple-checkbox-label"

@@ -10,10 +10,13 @@ import { yellow } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        minWidth: "295px",
-        maxWidth: "315px",
+        minWidth: "253px",
+        maxWidth: "253px",
         // height:"70px",
         margin: theme.spacing(1),
+        borderTopRightRadius:3,
+        borderTopLeftRadius:3,
+
         
 
         // position:"relative",
@@ -31,12 +34,12 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(3),
     },
     input: {
-        width: 80,
+        width: 60,
         height: "1.00em"
     },
     rlables: {
         
-        fontSize: "12px",
+        fontSize: "0.8rem",
         paddingLeft: "4%",
         paddingTop: "1.5%",
         color:"#757575",
@@ -77,6 +80,11 @@ export default function RangeSlider(props) {
 
         let tempnum=0;
         try {
+            if(!(/[\d]*/.test(event.target.value))){
+                //return true if the value has any alpha char
+                return ; 
+                
+            }
             tempnum = Number(event.target.value);
 
             }catch{
@@ -148,7 +156,7 @@ export default function RangeSlider(props) {
                 // alignItems: "baseline",
                 justifyContent: "space-around",
 
-                backgroundColor: yellow,
+                // backgroundColor: yellow,
                 position: "relative",
                 // top:"-28px",
                 left: "14px",
@@ -156,7 +164,7 @@ export default function RangeSlider(props) {
             }}>
                 <Grid container spacing={1} alignItems="baseline">
                     <Grid item>
-                        <p style={{ fontSize: 16 }}>Min</p>
+                        <p style={{ fontSize: 12 }}>Min</p>
                     </Grid>
                     <Grid item>
                         <Input
@@ -168,19 +176,19 @@ export default function RangeSlider(props) {
                             onChange={(e)=>handleInputChange(e,"minval")}
                         // onBlur={handleBlur}
 
-                        inputProps={{
-                            step: 10,
+                        // inputProps={{
+                        //     step: 10,
 
-                            type: 'number',
-                            'aria-labelledby': 'input-slider',
-                        }}
+                        //     type: 'number',
+                        //     'aria-labelledby': 'input-slider',
+                        // }}
                         />
                     </Grid>
                 </Grid>
                 {/* <p style={{ fontSize: "26" }}>-</p> */}
                 <Grid container spacing={1} alignItems="baseline">
                     <Grid item>
-                        <p style={{ fontSize: 16 }}>Max</p>
+                        <p style={{ fontSize: 12 }}>Max</p>
                     </Grid>
                     <Grid item>
                         <Input
@@ -192,11 +200,11 @@ export default function RangeSlider(props) {
 
                             onChange={(e)=>handleInputChange(e,"maxval")}
                         // onBlur={handleBlur}
-                        inputProps={{
-                            step: 10,
-                            type: 'number',
-                            'aria-labelledby': 'input-slider',
-                        }}
+                        // inputProps={{
+                        //     step: 10,
+                        //     type: 'number',
+                        //     'aria-labelledby': 'input-slider',
+                        // }}
                         />
                     </Grid>
                 </Grid>

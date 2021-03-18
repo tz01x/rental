@@ -172,7 +172,7 @@ function App() {
     <div>
       <div className="search_bar cover-img">
 
-        <div className="cover-title">তো-লেট্ এখন হাতের মুঠোয়</div>
+        <div className="cover-title">টু-লেট্ এখন হাতের মুঠোয়</div>
 
         <div className="ifields">
           <ThemeProvider theme={theme}>
@@ -216,7 +216,7 @@ function App() {
         Filter
       </Button>
       </div>
-      <Container className="propertys_list">
+      <Container className="propertys_list" >
       <div className="" style={{marginBottom:"10px",marginTop:"10px",fontSize:"20px"}}>Our Featured Properties</div>
 
 
@@ -270,7 +270,7 @@ function App() {
                     <div className="card-text">
                       <h6><a href={api_server_url + "property/details/" + property.slug}>{property.title}</a></h6>
                       <p><i className="fa fa-map-marker"></i> {property.area},{property.city}</p>
-                      <br></br>
+                      
                       <small>
                         <i className="fa fa-bed"></i> <span id="bednumber" className="pe-2">{property.bedroom} Beds</span>
                         <i className="fa fa-bath"></i>

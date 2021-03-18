@@ -9,8 +9,8 @@ import Select from '@material-ui/core/Select';
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: "140px",
-    maxWidth:"150px",
+    minWidth: "118px",
+    // maxWidth:"130px",
     outlineColor:"#000000d1",
     boxShadow:"-1px 3px 5px -3px"
     
@@ -37,7 +37,7 @@ useEffect(()=>{
   return (
     
       <FormControl variant="filled"  className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">{props.label}</InputLabel>
+        <InputLabel id="demo-simple-select-label" style={{fontSize:"0.8rem"}}>{props.label}</InputLabel>
         <Select
           
           labelId="demo-simple-select-label"

@@ -48,7 +48,7 @@
   body {
     /* background: #000; */
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    /* font-size: 14px; */
     /* color: #000; */
     margin: 0;
     padding: 0;
@@ -77,10 +77,10 @@
       align-items: center;
   } */
 
-  .swiper-container {
+  /* .swiper-container {
     width: 100%;
     height: 100%;
-  }
+  } */
 
   .swiper-slide {
     text-align: center;
@@ -135,14 +135,9 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
 
-<div class="container">
-  <div class="display-4">
-    {{property.title}}
-  </div>
-</div>
-<div>
 
-  <!-- 
+
+<!-- 
   <div class="swiper-container">
     <div class="swiper-wrapper">
       {%for img in property.img.all%}
@@ -160,42 +155,42 @@
       </div>
       {%endif%}
     </div> -->
-  <!-- Add Pagination -->
-  <!-- <div class="swiper-pagination swiper-pagination-black"></div> -->
-  <!-- Add Navigation -->
-  <!-- <div class="swiper-button-prev"></div>
+<!-- Add Pagination -->
+<!-- <div class="swiper-pagination swiper-pagination-black"></div> -->
+<!-- Add Navigation -->
+<!-- <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
   </div> -->
 
 
-  <div class="swiper-container">
+<div class="swiper-container">
 
-    <div class="swiper-wrapper">
-      {%for img in property.img.all%}
-      <div class="swiper-slide">
+  <div class="swiper-wrapper">
+    {%for img in property.img.all%}
+    <div class="swiper-slide">
 
-        <!-- Required swiper-lazy class and image source specified in data-src attribute -->
-        <img data-src="{{img.baseimage.url}}" class="swiper-lazy mysliderimg">
-        <!-- Preloader image -->
-        <div class="swiper-lazy-preloader swiper-lazy-preloader-black"></div>
-      </div>
-      {%endfor%}
+      <!-- Required swiper-lazy class and image source specified in data-src attribute -->
+      <img data-src="{{img.baseimage.url}}" class="swiper-lazy mysliderimg">
+      <!-- Preloader image -->
+      <div class="swiper-lazy-preloader swiper-lazy-preloader-black"></div>
     </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination swiper-pagination-black"></div>
-    <!-- Navigation -->
-    <div class="swiper-button-next swiper-button-black"></div>
-    <div class="swiper-button-prev swiper-button-black"></div>
+    {%endfor%}
   </div>
+  <!-- Add Pagination -->
+  <div class="swiper-pagination swiper-pagination-black"></div>
+  <!-- Navigation -->
+  <div class="swiper-button-next swiper-button-black"></div>
+  <div class="swiper-button-prev swiper-button-black"></div>
+</div>
 
 
 
 
-  <main class="container mt-3">
+<main class="container mt-3">
 
 
-    <div class="row">
-      <!-- {%if user.is_authenticated%}
+  <div class="row">
+    <!-- {%if user.is_authenticated%}
       {%if property.user == user%}
       <div class="editBtn">
         <a href="{%url 'main:update_adpost' slug=property.slug%}">
@@ -206,294 +201,298 @@
       </div>
       {%endif%}
       {%endif%} -->
-      <article class="col-md-8 mb-3">
+    <article class="col-md-8 mb-3">
+      <div class="card-body">
+        {{property.title}}
+      </div>
+      <!--Basic Details-->
+      <article class="card mb-3">
 
-        <!--Basic Details-->
-        <article class="card mb-3">
+        <div class="card-body ps-4">
 
-          <div class="card-body ps-4">
+          {%if user.is_authenticated%}
+          {%if property.user == user%}
+          <div class="editBtn-2">
 
-            {%if user.is_authenticated%}
-            {%if property.user == user%}
-            <div class="editBtn-2">
-
-              <span data-bs-toggle="tooltip" data-bs-placement="top"
-                title="{%if property.publish%}Publish{%else%}Arcive{%endif%}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                  class="bi bi-check2-circle {%if property.publish%}post_publish {%else%}post_arcive{%endif%}"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
-                  <path
-                    d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
-                </svg>
-              </span>
+            <span data-bs-toggle="tooltip" data-bs-placement="top"
+              title="{%if property.publish%}Publish{%else%}Arcive{%endif%}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-check2-circle {%if property.publish%}post_publish {%else%}post_arcive{%endif%}"
+                viewBox="0 0 16 16">
+                <path
+                  d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+                <path
+                  d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+              </svg>
+            </span>
 
 
 
 
-              <a href="{%url 'main:update_adpost' slug=property.slug%}" data-bs-toggle="tooltip" data-bs-placement="top"
-                title="Edit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                  class="bi bi-pencil-square" viewBox="0 0 16 16">
-                  <path
-                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                  <path fill-rule="evenodd"
-                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                </svg></a>
-            </div>
-            {%endif%}
-            {%endif%}
+            <a href="{%url 'main:update_adpost' slug=property.slug%}" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Edit">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path
+                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+              </svg></a>
+          </div>
+          {%endif%}
+          {%endif%}
 
-            <h3 id="propertyprice">BDT {{property.price}} tk</h3>
-            <h6><i class="fa fa-bed"></i> <span id="bednumber" class="pe-2">{{property.bedroom}} Beds</span><i
-                class="fa fa-bath"></i>
-              <span id="bathnumber" class="pe-2">{{property.bathroom}} Baths</span><i class="fa fa-th-large"></i> <span
-                id="area" class="pe-2">{{property.property_size}} sqft</span>
-            </h6>
-            <h5 id="propertyaddress">{{property.area}},{{property.city}}</h5>
+          <h4 id="propertyprice">BDT {{property.price}} tk</h4>
+          <h6><i class="fa fa-bed"></i> <span id="bednumber" class="pe-2">{{property.bedroom}} Beds</span><i
+              class="fa fa-bath"></i>
+            <span id="bathnumber" class="pe-2">{{property.bathroom}} Baths</span><i class="fa fa-th-large"></i> <span
+              id="area" class="pe-2">{{property.property_size}} sqft</span>
+          </h6>
+          <h5 id="propertyaddress"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+          </svg> {{property.area}},{{property.city}}</h5>
 
-            <article id="propertydetails" class="mt-4">
-              <h4 style="color: #F44F2E;">Details</h4>
-              <div class="row">
-                <h6 class="mt-2 mb-3">Basic Details: </h6>
-
-                <article class="col-sm-4">
-                  <p>Rent Prize: <span class="fw-bold">{{property.price}} BDT</p>
-                  <p>Property Size: <span class="fw-bold">{{property.property_size}} sqft</span></p>
-                  <p>Available from: <span class="fw-bold">{{property.available_from}}</span> </p>
-
-                </article>
-
-                <article class="col-sm-3">
-                  <p>Bed Room:<span class="fw-bold">{{property.bedroom}} </span></p>
-                  <p>Bath: <span class="fw-bold">{{property.bathroom}} </span></p>
-                  <p>Balcony: <span class="fw-bold">{{property.balcony}} </span></p>
-                  </p>
-                </article>
-
-                <article class="col-sm-5">
-                  <p>Property Type: <span class="fw-bold">{{property.property_types}}</span></p>
-                  <!-- <p>Property Purpose: <span class="fw-bold">Rent</span></p> -->
-
-                  {%if property.hostal_type %}
-                  <p>Hostal for: <span class="fw-bold">{{property.hostal_type|title}}</span></p>
-                  {%endif%}
-                  {%if property.roommate_type %}
-                  <p>roommate: <span class="fw-bold">{{property.roommate_type|title}}</span></p>
-                  {%endif%}
-
-                  {%if property.people_per_room %}
-                  <p>People per-room: <span class="fw-bold">{{property.people_per_room}}</span></p>
-                  {%endif%}
-                </article>
-
-              </div>
-            </article>
-        </article>
-
-        <!--Additional Details-->
-        <article class="card mb-3">
-          <div class="card-body ps-4">
+          <article id="propertydetails" class="mt-4">
+            <h4 style="color: #F44F2E;">Details</h4>
             <div class="row">
-              <h5 class="mt-2 mb-3">Additional Details: </h5>
+              <h6 class="mt-2 mb-3">Basic Details: </h6>
 
-              <div class="col-sm-6  mb-3">
-                <p class="fs-6">Parking space: <span class="fw-bold">{%if property.parking_space %} Yes
-                    {%else%}No{%endif%}</span>
+              <article class="col-sm-4">
+                <p>Rant Prize: <span class="fw-bold">{{property.price}} BDT</p>
+                <p>Property Size: <span class="fw-bold">{{property.property_size}} sqft</span></p>
+                <p>Available from: <span class="fw-bold">{{property.available_from}}</span> </p>
 
-                  <!-- <p>Deposit: <span class="fw-bold">1 months Rent</span></p>
+              </article>
+
+              <article class="col-sm-3">
+                <p>Bed Room:<span class="fw-bold">{{property.bedroom}} </span></p>
+                <p>Bath: <span class="fw-bold">{{property.bathroom}} </span></p>
+                <p>Balcony: <span class="fw-bold">{{property.balcony}} </span></p>
+                </p>
+              </article>
+
+              <article class="col-sm-5">
+                <p>Property Type: <span class="fw-bold">{{property.property_types}}</span></p>
+                <!-- <p>Property Purpose: <span class="fw-bold">Rent</span></p> -->
+
+                {%if property.hostal_type %}
+                <p>Hostal for: <span class="fw-bold">{{property.hostal_type|title}}</span></p>
+                {%endif%}
+                {%if property.roommate_type %}
+                <p>roommate: <span class="fw-bold">{{property.roommate_type|title}}</span></p>
+                {%endif%}
+
+                {%if property.people_per_room %}
+                <p>People per-room: <span class="fw-bold">{{property.people_per_room}}</span></p>
+                {%endif%}
+              </article>
+
+            </div>
+          </article>
+      </article>
+
+      <!--Additional Details-->
+      <article class="card mb-3">
+        <div class="card-body ps-4">
+          <div class="row">
+            <h5 class="mt-2 mb-3">Additional Details: </h5>
+
+            <div class="col-sm-6  mb-3">
+              <p class="fs-6">Parking space: <span class="fw-bold">{%if property.parking_space %} Yes
+                  {%else%}No{%endif%}</span>
+
+                <!-- <p>Deposit: <span class="fw-bold">1 months Rent</span></p>
                 <p>Available From: <span class="fw-bold">March 1, 2021</span> </p>
                 <p>Lift: <span class="fw-bold">Available</span> </p> -->
-                  {%if property.feature_types %}
-                  <p>
+                {%if property.feature_types %}
+              <p>
 
-                    <span class="fs-5">Facilties:</span>
-                    {%for feature in property.feature_types.all%}
+                <span class="fs-5">Facilties:</span>
+                {%for feature in property.feature_types.all%}
 
-                    <span class="badge rounded-pill bg-secondary badge-fs ">{{feature}}</span>
-                    <!-- <span class="badge bg-light text-dark">Light</span> -->
-                    {%endfor%}
+                <span class="badge rounded-pill bg-secondary badge-fs ">{{feature}}</span>
+                <!-- <span class="badge bg-light text-dark">Light</span> -->
+                {%endfor%}
 
-                  </p>
-                  {%endif%}
-              </div>
-              <div class="col-sm-6  mb-3">
-                {%if property.utility_bill %}
-                <p>
-                  <span class="fs-5">Utility:</span>
-                  {%for utility in property.utility_bill.all%}
-                  <span class="badge rounded-pill bg-secondary badge-fs ">{{utility}}</span>
-                  {%endfor%}
-                </p>
-                {%endif%}
-                <!-- {%if property.youtube_link%}
+              </p>
+              {%endif%}
+            </div>
+            <div class="col-sm-6  mb-3">
+              {%if property.utility_bill %}
+              <p>
+                <span class="fs-5">Utility:</span>
+                {%for utility in property.utility_bill.all%}
+                <span class="badge rounded-pill bg-secondary badge-fs ">{{utility}}</span>
+                {%endfor%}
+              </p>
+              {%endif%}
+              <!-- {%if property.youtube_link%}
                 <p>Youtube link: <a target="_blank" href="{{property.youtube_link}}">{{property.youtube_link}}</a> </p>
                 {%endif%} -->
 
-                <!-- <p>Gas Bill: <span class="fw-bold">Included</span></p>
+              <!-- <p>Gas Bill: <span class="fw-bold">Included</span></p>
                 <p>Electricity Bill: <span class="fw-bold">Not Included</span></p>
                 <p>Service Charge: <span class="fw-bold">Inlcuded</span></p> -->
-              </div>
             </div>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <!--Overview-->
-        <article class="card mb-3">
-          <div id="articlebody" class="card-body ps-4">
-            <h4 style="color: #F44F2E;">Overview</h4>
-            <div class="row">
-              <div class="col-sm-6">
-                <h6>Description</h6>
-                <p>{{property.description|safe}}</p>
+      <!--Overview-->
+      <article class="card mb-3">
+        <div id="articlebody" class="card-body ps-4">
+          <h4 style="color: #F44F2E;">Overview</h4>
+          <div class="row">
+            <div class="col-sm-6">
+              <h6>Description</h6>
+              <p>{{property.description|safe}}</p>
 
-              </div>
-              <!-- <div class="col-sm-6">
+            </div>
+            <!-- <div class="col-sm-6">
                 <p>Bed Room:<span class="fw-bold"> 3</span></p>
                 <p>Bath: <span class="fw-bold">2</span></p>
                 <p>Balcony: <span class="fw-bold">2</span></p>
                 <p>Deposit: <span class="fw-bold">1 months Rent</span></p>
               </div> -->
-            </div>
-            <div id="mapaddress" class="mt-3">
-              <h4 style="color: #000000;"><i class="fa fa-map-marker"></i> </i>Adress On Map</h4>
-              <div class="mapAddress" id="mapid" style=" height: 512px;"></div>
-
-            </div>
-
-
-            {%if property.youtube_link%}
-            <div class="mt-3">
-              <h4 style="color: #000000;"><i class="fa fa-youtube-play"></i> </i>Youtube video</h4>
-
-              <div class="swiper-slide">
-
-                <iframe id="yt_video" class="yt_video"
-                  src="https://www.youtube.com/embed/{{property.youtube_link_embed}}" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen></iframe>
-
-              </div>
-            </div>
-            {%endif%}
-
+          </div>
+          <div id="mapaddress" class="mt-3">
+            <h4 style="color: #000000;"><i class="fa fa-map-marker"></i> </i>Adress On Map</h4>
+            <div class="mapAddress" id="mapid" style=" height: 512px;"></div>
 
           </div>
-        </article>
-      </article>
 
-      <aside class="col-md-4 ps-2">
 
-        <div class="card card-body ">
-          <h4 style="text-align: center;">Owner info</h4>
+          {%if property.youtube_link%}
+          <div class="mt-3">
+            <h4 style="color: #000000;"><i class="fa fa-youtube-play"></i> </i>Youtube video</h4>
 
-          <!-- <img src="{%static 'img/avatar.png'%}" alt="Avatar" class="avatar"> -->
-          <div class="avatar mb-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-person"
-              viewBox="0 0 16 16">
-              <path
-                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
-            </svg>
-            <br>
-            {{property.user.username}}
+            <div class="swiper-slide">
+
+              <iframe id="yt_video" class="yt_video" src="https://www.youtube.com/embed/{{property.youtube_link_embed}}"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+
+            </div>
           </div>
-          <p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone"
-              viewBox="0 0 16 16">
-              <path
-                d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
-            </svg>
-            {{property.user.profile.phone}}
-          </p>
-          <p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope"
-              viewBox="0 0 16 16">
-              <path
-                d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
-            </svg>
-            {{property.user.email}}
-          </p>
-          <hr>
-
-          <h6>
-            Message Owner
-          </h6>
-          <form id="msgform">
-            {%csrf_token%}
-            {{msgform.user}}
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="id_name" name="name" placeholder="">
-              <label for="id_name">Name</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="id_email" name="email" placeholder="">
-              <label for="id_email">Email address</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="id_phone" name="phone" placeholder="">
-              <label for="id_phone">Phone</label>
-            </div>
-
-            <div class="form-floating">
-              <textarea class="form-control" placeholder="" style="height: 120px" name="msg"
-                id="id_msg">I would like to inquire about your property P-{{property.pk}} Please contact me at your earliest convenience.  </textarea>
-              <label for="id_msg">Message</label>
-            </div>
-            <input type="text" hidden name="property_url" value="{{request.get_raw_uri}}"> 
-
-            <button class="btn btn-primary mt-2"> <i class="fa fa-send"></i> Send</button>
-
-          </form>
+          {%endif%}
 
 
         </div>
-        <div class="card card-body mt-3 ">
+      </article>
+    </article>
 
+    <aside class="col-md-4 ps-2">
 
-         
-          <div class="row">
-            <div class="col-3">
-                 <!-- Sharingbutton Facebook -->
-            <a class="resp-sharing-button__link"
-            href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}" target="_blank"
-            rel="noopener" aria-label="">
-            <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small">
-              <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path
-                    d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z" />
-                </svg>
-              </div>
-            </div>
-          </a>
+      <div class="card card-body ">
+        <h4 style="text-align: center;">Owner info</h4>
 
+        <!-- <img src="{%static 'img/avatar.png'%}" alt="Avatar" class="avatar"> -->
+        <div class="avatar mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-person"
+            viewBox="0 0 16 16">
+            <path
+              d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+          </svg>
+          <br>
+          {{property.user.username}}
+        </div>
+        <p>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone"
+            viewBox="0 0 16 16">
+            <path
+              d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+          </svg>
+          {{property.user.profile.phone}}
+        </p>
+        <p>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope"
+            viewBox="0 0 16 16">
+            <path
+              d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+          </svg>
+          {{property.user.email}}
+        </p>
+        <hr>
 
-            </div>
-            <div class="col-3">
-               <!-- Sharingbutton Twitter -->
-          <a class="resp-sharing-button__link"
-          href="https://www.twitter.com/intent/tweet/?text={{property.title}}&amp;url={{request.build_absolute_uri}}"
-          target="_blank" rel="noopener" aria-label="">
-          <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
-            <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                  d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" />
-              </svg>
-            </div>
+        <h6>
+          Message Owner
+        </h6>
+        <form id="msgform">
+          {%csrf_token%}
+          {{msgform.user}}
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="id_name" name="name" placeholder="">
+            <label for="id_name">Name</label>
           </div>
-        </a>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="id_email" name="email" placeholder="">
+            <label for="id_email">Email address</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="id_phone" name="phone" placeholder="">
+            <label for="id_phone">Phone</label>
+          </div>
+
+          <div class="form-floating">
+            <textarea class="form-control" placeholder="" style="height: 120px" name="msg"
+              id="id_msg">I would like to inquire about your property P-{{property.pk}} Please contact me at your earliest convenience.  </textarea>
+            <label for="id_msg">Message</label>
+          </div>
+          <input type="text" hidden name="property_url" value="{{request.get_raw_uri}}">
+
+          <button class="btn btn-primary mt-2"> <i class="fa fa-send"></i> Send</button>
+
+        </form>
 
 
-            </div>
-            <div class="col-3">
+      </div>
+      <div class="card card-body mt-3 ">
 
-              <!-- Sharingbutton E-Mail -->
-              <a target="_blank"
+
+
+        <div class="row">
+          <div class="col-3">
+            <!-- Sharingbutton Facebook -->
+            <a class="resp-sharing-button__link"
+              href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}" target="_blank"
+              rel="noopener" aria-label="">
+              <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small">
+                <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                      d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+
+
+          </div>
+          <div class="col-3">
+            <!-- Sharingbutton Twitter -->
+            <a class="resp-sharing-button__link"
+              href="https://www.twitter.com/intent/tweet/?text={{property.title}}&amp;url={{request.build_absolute_uri}}"
+              target="_blank" rel="noopener" aria-label="">
+              <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
+                <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                      d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+
+
+          </div>
+          <div class="col-3">
+
+            <!-- Sharingbutton E-Mail -->
+            <a target="_blank"
               href="https://mail.google.com/mail/u/0/?view=cm&amp;fs=1&amp;to&amp;su={{property.title}}&amp;body={{request.build_absolute_uri}}&amp;ui=2&amp;tf=1"
               title="Send via GMail" class="resp-sharing-button__link">
-  
+
               <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small">
                 <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
                   <svg xmlns="http://www.w3.org/2000/svg" class="" viewBox="0 0 32 32">
@@ -506,53 +505,35 @@
                   <span></span>
                 </div>
               </div>
-  
+
             </a>
 
 
-            </div>
-            <div class="col-3">
-               <!-- Sharingbutton WhatsApp -->
-          <a class="resp-sharing-button__link" href="whatsapp://send?text={{request.build_absolute_uri}}"
-          target="_blank" rel="noopener" aria-label="">
-          <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small">
-            <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                  d="M20.1 3.9C17.9 1.7 15 .5 12 .5 5.8.5.7 5.6.7 11.9c0 2 .5 3.9 1.5 5.6L.6 23.4l6-1.6c1.6.9 3.5 1.3 5.4 1.3 6.3 0 11.4-5.1 11.4-11.4-.1-2.8-1.2-5.7-3.3-7.8zM12 21.4c-1.7 0-3.3-.5-4.8-1.3l-.4-.2-3.5 1 1-3.4L4 17c-1-1.5-1.4-3.2-1.4-5.1 0-5.2 4.2-9.4 9.4-9.4 2.5 0 4.9 1 6.7 2.8 1.8 1.8 2.8 4.2 2.8 6.7-.1 5.2-4.3 9.4-9.5 9.4zm5.1-7.1c-.3-.1-1.7-.9-1.9-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6s.3-.3.4-.5c.2-.1.3-.3.4-.5.1-.2 0-.4 0-.5C10 9 9.3 7.6 9 7c-.1-.4-.4-.3-.5-.3h-.6s-.4.1-.7.3c-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.3-.3-.4-.6-.5z" />
-              </svg>
-            </div>
           </div>
-        </a>
+          <div class="col-3">
+            <!-- Sharingbutton WhatsApp -->
+            <a class="resp-sharing-button__link" href="whatsapp://send?text={{request.build_absolute_uri}}"
+              target="_blank" rel="noopener" aria-label="">
+              <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small">
+                <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                      d="M20.1 3.9C17.9 1.7 15 .5 12 .5 5.8.5.7 5.6.7 11.9c0 2 .5 3.9 1.5 5.6L.6 23.4l6-1.6c1.6.9 3.5 1.3 5.4 1.3 6.3 0 11.4-5.1 11.4-11.4-.1-2.8-1.2-5.7-3.3-7.8zM12 21.4c-1.7 0-3.3-.5-4.8-1.3l-.4-.2-3.5 1 1-3.4L4 17c-1-1.5-1.4-3.2-1.4-5.1 0-5.2 4.2-9.4 9.4-9.4 2.5 0 4.9 1 6.7 2.8 1.8 1.8 2.8 4.2 2.8 6.7-.1 5.2-4.3 9.4-9.5 9.4zm5.1-7.1c-.3-.1-1.7-.9-1.9-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6s.3-.3.4-.5c.2-.1.3-.3.4-.5.1-.2 0-.4 0-.5C10 9 9.3 7.6 9 7c-.1-.4-.4-.3-.5-.3h-.6s-.4.1-.7.3c-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.3-.3-.4-.6-.5z" />
+                  </svg>
+                </div>
+              </div>
+            </a>
 
 
 
-            </div>
-
-            
-         
           </div>
-          
-
-         
-
-          
 
 
 
-        
         </div>
-    </div>
-</div>
-
-<div>
-  <!-- {{request.build_absolute_uri}}
-          {{request.get_full_path_info}} -->
-</div>
-
-
-</aside>
-<!-- <aside class="col-md-3 ps-2 ">
+      </div>
+    </aside>
+    <!-- <aside class="col-md-3 ps-2 ">
 
         <div class="card card-body ">
           <div class="input-group mb-3 ">
@@ -601,7 +582,7 @@
 
 
 
-</div>
+  </div>
 </main>
 
 <div class="modal" tabindex="-1" id="myModal">
@@ -748,11 +729,11 @@
 
     e.preventDefault();
     let msgformData = new FormData(form_ele);
-   
+
     // const fvalue={};
     // for (let index = 0; index < field_ids.length; index++) {
     //  ele= document.getElementById(field_ids[index]);
-     
+
     //   fvalue[field_ids[index]]=ele.value;
     // }
     // fvalue['csrfmiddlewaretoken']=getCookie('csrftoken');
@@ -774,14 +755,14 @@
       return;
     }
     fetch(`${window.location.origin}/send-messages/`, {
-        'method': 'POST',
-        // headers: {
-        //   'Content-type': 'application/json; charset=UTF-8', // Indicates the content
-        //   'X-CSRFToken':getCookie('csrftoken')
-        // },
+      'method': 'POST',
+      // headers: {
+      //   'Content-type': 'application/json; charset=UTF-8', // Indicates the content
+      //   'X-CSRFToken':getCookie('csrftoken')
+      // },
 
-        body: msgformData,
-      })
+      body: msgformData,
+    })
       .then(response => {
         if (response.ok) {
           return response.json()
@@ -799,8 +780,8 @@
             focus: true
           });
           myModal.show();
-          show_modal('Message Sent ','Your message sent succefully');
-          
+          show_modal('Message Sent ', 'Your message sent succefully');
+
           for (let i = 0; i < field_ids.length; i++) {
             //restoring inital value and class of input field 
             const ele = document.getElementById(field_ids[i]);
@@ -835,18 +816,18 @@
   function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
         }
+      }
     }
     return cookieValue;
-}
+  }
 
 </script>
 

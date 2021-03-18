@@ -31,26 +31,31 @@
 
  .cover-title{
 
-  font-size:55px;
+  font-size:40px;
   color:rgba(255, 255, 255, 0.935);
   text-align: center;
-  margin:90px 0px;
+  margin:90px 0px 20px 0px;
   font-weight:lighter;
-  text-shadow: -2px 3px 3px black;
+  text-shadow: -2px 3px 3px #0000008c;
   
 
  }
 
  .propertys_list{
   margin-top:10px;
+  margin-bottom:50px;
+  min-height:100vh
  }
 
+svg .MuiSvgIcon-root .MuiSelect-icon{
+  top:calc(50% - 17px),
+}
  @media only screen and (max-width: 600px){
    /*Big smartphones [ 600px]*/
   .cover-img{
     background-position: right;
     }
 .cover-title{
-      font-size:32px;
+      font-size:25px;
     }
 }
