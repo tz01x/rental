@@ -1,8 +1,11 @@
 from django import  forms
+from django.db import models
+from django.forms import fields
 from django.utils.translation import gettext_lazy as _
-from .models import Property,PropertyType,FeatureType,Utilities,Preference
+from .models import Property,PropertyType,FeatureType,Utilities,Preference,Contact
 from django.contrib.auth import get_user_model
 from user.models import Citys
+
 class FeatureForm(forms.ModelForm):
     ptype=forms.ModelMultipleChoiceField(
     queryset=PropertyType.objects.all(),
@@ -178,3 +181,11 @@ class PropertyImgForm(forms.Form):
     images=forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True,"class":'form-file-input'}),required=False)
     def save(self,*args,**kwargs):
         super(PropertyImg,self).save(*args,**kwargs)
+
+
+class createContactForm(forms.ModelForm):
+    class Meta:
+        model=Contact
+        fields='__all__'
+        excludes=['id']
+

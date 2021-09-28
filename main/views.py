@@ -204,9 +204,19 @@ class PropertyDetailsView(DetailView):
 
         return ctx
 
+from user.sendMail import MailCls
+
 def homeView(request):
 
-    print((request.session))
+    mail=MailCls()
+    mail.run(
+        request=request,to=['abdufadfafafafdar963rahman@gmail.com',],
+        subject='tesging mail with thred',templateName='mail.html',
+        context={'name':'tumzied','body':'mail body'}
+    )
+   
+
+    # print((request.session))
     # request.get_full_path_info
     context={
         'property_list':Property.objects.all(),
@@ -215,7 +225,27 @@ def homeView(request):
     }
     return render(request,"home.html",context=context)
 
+def PrivacyPolicyView(request):
+
+    return render(request,"privacypolicy.html")
+
+from .forms import createContactForm
 def ContactView(request):
-    return render(request,"contact.html")
+    contract= createContactForm()
+    if (request.method=='POST'):
+        # print('here')
+        contract= createContactForm(request.POST)
+        if(contract.is_valid()):
+            contract.save()
+            # print('saved')
+        else:
+            print(contract.errors)
+
+        
+    return render(request,"contact.html",{'form':contract})
+
+# def createContract(request):
+    
+    
 
 

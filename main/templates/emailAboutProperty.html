@@ -1,0 +1,59 @@
+{% load i18n %}{% autoescape off %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifiation</title>
+</head>
+
+<body>
+
+    <div class="container" style="
+    
+    width: 60%;
+
+    margin: auto;
+
+
+
+    
+    ">
+
+        <h4>Dear {{msg_obj.user.username}},</h4>
+        <p>
+            I am <strong>{{msg_obj.name}}</strong>. {{msg_obj.message}}
+        </p>
+        <p>
+            my eamil: <em>{{msg_obj.email}}</em>
+            <br>
+            my phone: <em>{{msg_obj.phone}}</em>
+        </p>
+
+        <hr>
+
+        <p>
+            <small>
+
+
+                {% blocktrans %}Thanks for using <strong>Barattia.com</strong> site!{% endblocktrans %}
+
+
+
+            </small>
+
+
+        </p>
+
+
+
+    </div>
+
+
+</body>
+
+</html>
+
+{% endautoescape %}

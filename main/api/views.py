@@ -30,6 +30,8 @@ class PropertyListApiView(ListAPIView):
         bedroom=self.getData('bedroom')
         bathroom=self.getData('bathroom')
         features=self.getData('features')
+
+        # print(title,city,property_type,price)
         
     
 
@@ -44,22 +46,25 @@ class PropertyListApiView(ListAPIView):
         if price:
             qs=qs.filter(price__range=(price.split(",")))
         if bedroom:
-            if("+" in bathroom):
+            if("+" in bedroom):
                 qs=qs.filter(bedroom__gte=bedroom[0])
             else:
                 qs=qs.filter(bedroom=bedroom)
-                
+        
+        
 
         if bathroom:
-            if("+" in bathroom):
-                qs=qs.filter(bathroom__gte=bathroom[0])
-            else:
+            if int(bathroom)<5:
                 qs=qs.filter(bathroom=bathroom)
+            else:
+                qs=qs.filter(bathroom__gte=bathroom)
+
+
         if features:
             
             fs=FeatureType.objects.filter(name__in=features.split(','))
             qs=qs.filter(feature_types__in=fs)
-        return qs
+        return qs.distinct()
 
     def getData(self,name):
         return self.request.GET.get(name,None)

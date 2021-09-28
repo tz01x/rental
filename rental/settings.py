@@ -44,9 +44,11 @@ INSTALLED_APPS = [
     'features',
     'imguploading',
     'frontend_w_r',
+    'froentendR',
     # 3d party
     'widget_tweaks',
     'rest_framework',
+    'martor',
 
 
 
@@ -68,7 +70,7 @@ ROOT_URLCONF = 'rental.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates'),BASE_DIR/"frontend_w_r/"],
+        'DIRS': [os.path.join(BASE_DIR,'templates'),BASE_DIR/"froentendR/"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -150,6 +152,7 @@ MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 STATICFILES_DIRS = [
     BASE_DIR/"frontend_w_r/build/static/",
+    BASE_DIR/"froentendR/build/static/",
     os.path.join(BASE_DIR, './static/static_dir'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,'./static/static_root/')
@@ -184,3 +187,6 @@ SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
     # ('link', 'profile_url'),
 ]
 # API returns the data requested in SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS. To store the data in the database, we need to specify them in SOCIAL_AUTH_FACEBOOK_EXTRA_DATA.
+
+
+from .martor_config import *

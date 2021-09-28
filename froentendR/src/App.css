@@ -1,0 +1,55 @@
+.search_bar {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+  min-height: 55vh;
+}
+
+.ifields {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  /* background:rgba(255, 255, 255, 0.387); */
+}
+
+.MuiGrid-spacing-xs-1 {
+  margin: -6.5px !important;
+}
+
+.cover-img {
+  background-image: url("./sofa_red.jpg");
+  background-size: cover;
+  background-position: center;
+  /* background-color: currentcolor; */
+  padding: 2px;
+}
+
+.cover-title {
+  font-size: 40px;
+  color: rgba(255, 255, 255, 0.935);
+  text-align: center;
+  margin: 90px 0px 20px 0px;
+  font-weight: lighter;
+  text-shadow: -2px 3px 3px #0000008c;
+}
+
+.propertys_list {
+  margin-top: 10px;
+  margin-bottom: 50px;
+  min-height: 100vh;
+}
+
+svg .MuiSvgIcon-root .MuiSelect-icon {
+  top: calc(50% - 17px);
+}
+@media only screen and (max-width: 600px) {
+  /*Big smartphones [ 600px]*/
+  .cover-img {
+    background-position: right;
+  }
+  .cover-title {
+    font-size: 25px;
+  }
+}

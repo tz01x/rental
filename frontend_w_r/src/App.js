@@ -25,7 +25,7 @@ function App() {
   const ak="";
   const api_server_url = window.location.host=="localhost:3000"?"http://127.0.0.1:8000/":(window.location.protocol+"//"+window.location.host+"/");
 
-  
+  console.log(api_server_url);
   const [fdata, setFdata] = useState({
     city: '',
     property_type: '',

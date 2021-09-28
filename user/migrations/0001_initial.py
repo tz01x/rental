@@ -3,7 +3,10 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
+from django.contrib.auth.models import User
 
+def forwards_func(apps, schema_editor):
+    User.objects.create(username="admin",password="admin123432",email="admin@gmail.com")
 
 class Migration(migrations.Migration):
 
@@ -11,9 +14,13 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+     
+        
+
     ]
 
     operations = [
+  
         migrations.CreateModel(
             name='Profile',
             fields=[
@@ -28,3 +35,12 @@ class Migration(migrations.Migration):
             ],
         ),
     ]
+
+
+
+
+
+# def add_user(apps, schema_editor): 
+#     apps.get_model('myapp', 'Foo').objects.filter(user_id=1).update(
+#         user=apps.get_model('auth', 'User').objects.create_user(username='anonymous')
+#     )

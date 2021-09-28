@@ -1,0 +1,13 @@
+{% load i18n %}{% autoescape off %}
+<body>
+
+    <h3>hello,{{name}}</h3>
+
+    <p>
+        {{body}}
+    </p>
+    {% trans "Thanks for using our site!" %}
+
+	{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+</body>
+{% endautoescape %}

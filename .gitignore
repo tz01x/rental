@@ -2,6 +2,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,python
 .vscode/
+
+node_modules/
+.codesandbox/
+
 ### Django ###
 *.log
 *.pot
@@ -135,6 +139,8 @@ pythonenv*
 
 # mkdocs documentation
 /site
+
+
 
 # mypy
 .mypy_cache/

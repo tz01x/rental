@@ -131,10 +131,11 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<!-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"> -->
 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@2.4.21/dist/css/splide.min.css"
+  integrity="sha256-EqzwzekQXKNbB5EE4nNBQT+2gWQIWRZQXAd89YdIq8M=" crossorigin="anonymous">
 
 
 <!-- 
@@ -163,25 +164,19 @@
   </div> -->
 
 
-<div class="swiper-container">
-
-  <div class="swiper-wrapper">
-    {%for img in property.img.all%}
-    <div class="swiper-slide">
-
-      <!-- Required swiper-lazy class and image source specified in data-src attribute -->
-      <img data-src="{{img.baseimage.url}}" class="swiper-lazy mysliderimg">
-      <!-- Preloader image -->
-      <div class="swiper-lazy-preloader swiper-lazy-preloader-black"></div>
-    </div>
-    {%endfor%}
+<div class="splide">
+  <div class="splide__track">
+    <ul class="splide__list">
+      {%for img in property.img.all%}
+      <li class="splide__slide">
+        <img data-splide-lazy="{{img.baseimage.url}}" class="mysliderimg">
+      </li>
+      {%endfor%}
+    </ul>
   </div>
-  <!-- Add Pagination -->
-  <div class="swiper-pagination swiper-pagination-black"></div>
-  <!-- Navigation -->
-  <div class="swiper-button-next swiper-button-black"></div>
-  <div class="swiper-button-prev swiper-button-black"></div>
 </div>
+
+
 
 
 
@@ -248,9 +243,10 @@
             <span id="bathnumber" class="pe-2">{{property.bathroom}} Baths</span><i class="fa fa-th-large"></i> <span
               id="area" class="pe-2">{{property.property_size}} sqft</span>
           </h6>
-          <h5 id="propertyaddress"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-          </svg> {{property.area}},{{property.city}}</h5>
+          <h5 id="propertyaddress"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+              <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+            </svg> {{property.area}},{{property.city}}</h5>
 
           <article id="propertydetails" class="mt-4">
             <h4 style="color: #F44F2E;">Details</h4>
@@ -345,7 +341,7 @@
           <div class="row">
             <div class="col-sm-6">
               <h6>Description</h6>
-              <p>{{property.description|safe}}</p>
+              <p id="id_description">{{property.description|safe}}</p>
 
             </div>
             <!-- <div class="col-sm-6">
@@ -604,8 +600,14 @@
 </div>
 
 
-<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@2.4.21/dist/js/splide.min.js"
+  integrity="sha256-SmCcbf/1ehhlBnw3ZGinNu6fjQV471LDBjc4yMMJhsk=" crossorigin="anonymous"></script>
 
 <script>
   const lat = JSON.parse('{{property.lat| safe }}');
@@ -623,9 +625,36 @@
   }).addTo(mymap);
 </script>
 
+<script>
 
+  const html = SimpleMDE.prototype.markdown(`{{property.description}}`);
+  document.getElementById('id_description').innerHTML = html;
+  // console.log(simplemde.value('hdoije '));
+  // togglePreview
+
+</script>
 
 <script>
+
+  // Applying Splide
+  // Make sure that the target element is loaded if you initialize it on head:
+  document.addEventListener('DOMContentLoaded', function () {
+    new Splide('.splide', {
+      // perPage    : 1,
+      width: "100%",
+      heightRatio: 0.3,
+      lazyLoad: true,
+      type: 'fade',
+      cover: true,
+      rewind: true,
+      breakpoints: {
+        640: {
+          heightRatio: 0.7,
+        },
+      }
+    }).mount();
+  });
+
   // var swiper = new Swiper('.swiper-container', {
   //   zoom: true,
   //   loop: true,
@@ -645,22 +674,22 @@
 
   // });
 
-  var swiper = new Swiper('.swiper-container', {
-    // Enable lazy loading
-    slidesPerView: 'auto',
-    spaceBetween: 2,
-    lazy: true,
-    loop: true,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
+  // var swiper = new Swiper('.swiper-container', {
+  //   // Enable lazy loading
+  //   slidesPerView: 'auto',
+  //   spaceBetween: 2,
+  //   lazy: true,
+  //   loop: true,
+  //   // pagination: {
+  //   //   el: '.swiper-pagination',
+  //   //   clickable: true,
+  //   // },
+  //   navigation: {
+  //     nextEl: '.swiper-button-next',
+  //     prevEl: '.swiper-button-prev',
+  //   },
 
-  });
+  // });
 
   images_resize();
   window.onload = function (e) {

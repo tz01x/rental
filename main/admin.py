@@ -9,6 +9,7 @@ admin.site.register(PropertyCategory)
 admin.site.register(Property)
 admin.site.register(Utilities)
 admin.site.register(Preference)
+admin.site.register(Contact)
 
 
 class FeatureTypeAdmin(admin.ModelAdmin):

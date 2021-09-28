@@ -33,6 +33,7 @@ for p in ptype:
     PropertyType.objects.create(name=p)
 for division in divisions:
     Citys.objects.create(name=division['name'],bn_name=division['bn_name'],lat=division['lat'],lng=division['long'])
+    # print(p)
 # last_div_id=None
 # city=None
 # division_name=None

@@ -14,5 +14,6 @@ urlpatterns = [
     path("test/",TemplateView.as_view(template_name="main/test.html"),name=""),
     path("",homeView,name="home"),
     path("contact/",ContactView,name="contact"),
+    path("privacypolicy/",PrivacyPolicyView,name="privacypolicy"),
 
 ]

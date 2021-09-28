@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import re 
 # from phonenumber_field.modelfields import PhoneNumberField #<---
 from django.conf import settings
 class Messages(models.Model):
@@ -16,6 +17,16 @@ class Messages(models.Model):
     viewed=models.BooleanField(default=False)
     def __str__(self):
         return self.name+", has send you a message "
+
+    def message(self):
+        return self.msg.split(',')[0]
+    def gePropertyLink(self):
+        msgs=self.msg.split(',')
+        link=msgs[-1]
+        if re.match(r'((http://)|(https://))([0-9a-z]+.)+',link):
+            return link[-1]
+        return None
+
     class Meta:
         ordering=('-created',)
     

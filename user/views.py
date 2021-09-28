@@ -7,6 +7,8 @@ from django.http import HttpResponse,JsonResponse,HttpResponseBadRequest
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from .forms import CustomUserCreationForm, PasswordChanger
+
+from .sendMail import MailCls
 # Create your views here.
 # from django.conf import settings
 # from django.core.mail import send_mail
@@ -213,26 +215,32 @@ from .forms import  MessageForm
 def sendMessagesTo(request):
     if  request.method=="POST":
         form=MessageForm(request.POST)
-        print((request.POST))
+        # print((request.POST))
         
-        modify_msg=request.POST['msg']+"</br> <a href='"+request.POST['property_url']+"'> property link </a>"
+        modify_msg=request.POST['msg']+"</br> <a href='"+request.POST['property_url']+"'> property link </a> ,"+request.POST['property_url']
         
 
         # purl=(form.cleaned_data.get('property_url'))
         # print((form.fields['msg'].clean()))
-        print(modify_msg)
+        # print(modify_msg)
         if form.is_valid():
             
             msg_obj=form.save(commit=False)
             msg_obj.msg=modify_msg
             msg_obj.save()
+            mail=MailCls()
+            mail.run(request=request,to=[msg_obj.user.email,],
+            subject=f'[message notification] {msg_obj.name} have some question about you property',
+            context={"msg_obj":msg_obj},
+            templateName='emailAboutProperty.html'
+            )
 
             return HttpResponse("{\"details\":\"done\",\"status\":200}")
         else:
             error_data={}
             for field in form:
                 if field.errors:
-                    print(field.errors)
+                    # print(field.errors)
                     error_data["id_"+field.name]=True
                     # print(form.errors)
             return HttpResponse(content='{"status":400,"details":'+json.dumps(error_data)+'}')

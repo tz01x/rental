@@ -1,3 +1,4 @@
+from enum import auto
 from django.db import models
 from django.conf import settings
 from imguploading.models import Images
@@ -5,6 +6,8 @@ from django.dispatch import receiver
 from .slugify import unique_slug_generator
 import json
 import re
+
+
 class PropertyType(models.Model):
     name=models.CharField(max_length=100)
     def __str__(self):
@@ -136,3 +139,16 @@ class Preference(models.Model):
     name=models.CharField(max_length=150)
     def __str__(self):
         return self.name
+
+
+class Contact(models.Model):
+    name=models.CharField(max_length=150)
+    email=models.EmailField(max_length=150)
+    subject=models.CharField(max_length=150,null=True,blank=True)
+    phone=models.CharField(max_length=15)
+    message=models.TextField(max_length=1000,null=True,blank=True)
+    created_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f'{self.id},{self.created_at},: {self.subject}'
+
