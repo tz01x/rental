@@ -11,6 +11,7 @@ node_modules/
 *.pot
 *.pyc
 __pycache__/
+/static/static_root/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal

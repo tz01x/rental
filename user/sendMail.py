@@ -16,7 +16,7 @@ from threading import Thread
 from django.core.mail import EmailMessage
 
 class MailCls:
-    def _send(self,request,to:list[str],subject:str,templateName:str,context:dir):
+    def _send(self,request,to,subject,templateName,context):
         message = get_template(templateName).render(context )
         mail = EmailMessage(
         subject=subject,
@@ -28,7 +28,7 @@ class MailCls:
         mail.content_subtype = "html"
         mail.send()
         
-    def run(self,request,to:str,subject:str,templateName:str,context:dir):
+    def run(self,request,to,subject,templateName,context):
         self.current_site = get_current_site(request)
         th=Thread(target=self._send,daemon=True,args=[request,to,subject,templateName,{**context,'site_name':self.current_site}],name='mail_seandingThread')
         th.start()
