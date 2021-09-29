@@ -1,11 +1,20 @@
 {%extends 'home.html'%}
 {%load static%}
-{%block head%}
-<!-- Demo styles -->
+
+{%block metadata%}
+<meta name="description" content="{{property.title}}.... BDT {{property.price}} tk ... in {{property.area}},{{property.city}}  ">
+<meta name="keywords" content="rent , barattia,Contact ">
+<meta name="author" content="barattia">
+{%endblock metadata%}
 
 
-
+{%block title%}
+<title>
+  Contact
+</title>
 {%endblock%}
+
+
 {%block body%}
 <style>
   /* .editBtn {
