@@ -208,22 +208,22 @@ from user.sendMail import MailCls
 
 def homeView(request):
 
-    mail=MailCls()
-    mail.run(
-        request=request,to=['abdufadfafafafdar963rahman@gmail.com',],
-        subject='tesging mail with thred',templateName='mail.html',
-        context={'name':'tumzied','body':'mail body'}
-    )
+    # mail=MailCls()
+    # mail.run(
+    #     request=request,to=['abdufadfafafafdar963rahman@gmail.com',],
+    #     subject='tesging mail with thred',templateName='mail.html',
+    #     context={'name':'tumzied','body':'mail body'}
+    # )
    
 
     # print((request.session))
     # request.get_full_path_info
-    context={
-        'property_list':Property.objects.all(),
-        'propertytype':PropertyType.objects.all(),
-        'city_list':Citys.objects.all(),
-    }
-    return render(request,"home.html",context=context)
+    # context={
+    #     'property_list':Property.objects.all(),
+    #     'propertytype':PropertyType.objects.all(),
+    #     'city_list':Citys.objects.all(),
+    # }
+    return render(request,"home.html",context={})
 
 def PrivacyPolicyView(request):
 

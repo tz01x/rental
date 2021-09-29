@@ -26,9 +26,10 @@ class Property(models.Model):
     ('sale','Sale'),
     ]
     user=models.ForeignKey(to=settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=True)
-    slug=models.SlugField(blank=True,null=True,unique=True,db_index=True)
+    slug=models.SlugField(max_length=11000, blank=True,null=True,unique=True,db_index=True)
     title=models.CharField(max_length=10000)
     description=models.CharField(max_length=15000,blank=True,null=True)
+    varified=models.BooleanField(default=False)
     # propertry_built
 
     available_from=models.DateField(editable=True,null=True)
@@ -70,7 +71,7 @@ class Property(models.Model):
     utility_bill=models.ManyToManyField('Utilities',related_name="utility_bill",null=True,blank=True)
     set_available=models.CharField(max_length=250,blank=True,null=True)
 
-    preference=models.ManyToManyField('Preference',related_name='properties')
+    preference=models.ManyToManyField('Preference',related_name='properties',null=True,blank=True)
     img=models.ManyToManyField(Images,related_name='properties')
     youtube_link=models.URLField(blank=True,null=True)
     class Meta:

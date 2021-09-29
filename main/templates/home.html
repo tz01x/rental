@@ -25,7 +25,7 @@
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
   {%block title%}
   <title>
-    
+    Barattia.com
   </title>
   {%endblock%}
  
@@ -110,7 +110,10 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{%url 'main:contact'%}">Contact</a></li>
               <li><a class="dropdown-item" href="{%url 'main:privacypolicy'%}">Privacy Policy</a></li>
+
+              {%if user.is_authenticated %}
               <li><a class="dropdown-item" href="{%url 'user:logout'%}">Logout</a></li>
+              {%endif%}
 
 
               <!-- <li><hr class="dropdown-divider"></li>

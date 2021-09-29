@@ -28,162 +28,171 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 
 <!-- <div class="" style="margin-top:69px"> -->
-<div class="container mt-5">
-  {%if is_updatable%}
-  <h1>Update your AD </h1>
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
 
-  {%else%}
-  <h1>Create an AD </h1>
-  {%endif%}
+    <div class="container mt-5">
+      {%if is_updatable%}
+      <h1 class="text-center">Update your AD </h1>
 
-  <div class="progress_indicator">
-    <div class="progress_stage progress-active ">
-      <div
-        class="progress_stage_inner  {%if progress_step <= 1%} progress-inner-active{%endif%}  {%if progress_step > 1 or is_updatable %} progress_stage_complect{%endif%}">
-        {%if progress_step > 1 or is_updatable %}
-        <a style="color:inherit" href="{%url 'main:update_adpost' slug=myslug%}">1</a>
-        {%else%}
-        1
-        {%endif%}
-      </div>
-    </div>
-    <div class="progress_stage {%if progress_step >= 2 %} progress-active{%endif%}">
-      <div
-        class="progress_stage_inner {%if progress_step == 2 %} progress-inner-active{%endif%}  {%if progress_step > 2 or is_updatable%} progress_stage_complect{%endif%}">
+      {%else%}
+      <h1 class="text-center">Create an AD </h1>
+      {%endif%}
 
-        {%if progress_step > 2 or is_updatable %}
-        <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_p2' slug=myslug%}">2</a>
-        {%else%}
-        2
-        {%endif%}
-
-      </div>
-    </div>
-    <div class="progress_stage {%if progress_step >= 3 %} progress-active{%endif%} ">
-      <div
-        class="progress_stage_inner  {%if progress_step >= 3 or is_updatable%} progress_stage_complect{%endif%} {%if  progress_step == 3 %} progress-inner-active{%endif%}">
-        {%if progress_step > 3 or is_updatable %}
-        <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_images' slug=myslug%}">3</a>
-        {%else%}
-        3
-        {%endif%}
-      </div>
-    </div>
-  </div>
-
-  <form method="post" novalidate>
-
-    {% load widget_tweaks %}
-
-    {% csrf_token %}
-
-    {% for hidden_field in form.hidden_fields %}
-    {{ hidden_field }}
-    {% endfor %}
-
-    {% if form.non_field_errors %}
-    <div class="alert alert-danger" role="alert">
-      {% for error in form.non_field_errors %}
-      {{ error }}
-      {% endfor %}
-    </div>
-    {% endif %}
-
-    {% for field in form.visible_fields %}
-    <div class="form-group">
-
-
-
-      <label class="form-label" for="{{ field.id_for_label }}">{{field.label}}</label>
-
-
-
-      {% if field.errors %}
-      <!-- if error happend show the error  -->
-
-
-      {% render_field field class="form-control is-invalid" %}
-      <!-- after error checking invalid field render hrere -->
-      {% for error in field.errors %}
-      <div class="invalid-feedback">
-        {{ error }}
-      </div>
-      {% endfor %}
-
-
-
-      {% else %}
-      <!-- if no error  -->
-
-      <!-- if the field is checkbox type then  -->
-      {%if field.field.widget.input_type == 'checkbox' %}
-      {%if field|length > 1%}
-
-      <div class="selector-groups">
-        {%for checkboxfield in field%}
-        <div class="selector">
-          {{checkboxfield}}
-          <!-- here we cant access the the lable or other property of the  nested field   -->
+      <div class="progress_indicator">
+        <div class="progress_stage progress-active ">
+          <div
+            class="progress_stage_inner  {%if progress_step <= 1%} progress-inner-active{%endif%}  {%if progress_step > 1 or is_updatable %} progress_stage_complect{%endif%}">
+            {%if progress_step > 1 or is_updatable %}
+            <a style="color:inherit" href="{%url 'main:update_adpost' slug=myslug%}">1</a>
+            {%else%}
+            1
+            {%endif%}
+          </div>
         </div>
-        {%endfor%}
+        <div class="progress_stage {%if progress_step >= 2 %} progress-active{%endif%}">
+          <div
+            class="progress_stage_inner {%if progress_step == 2 %} progress-inner-active{%endif%}  {%if progress_step > 2 or is_updatable%} progress_stage_complect{%endif%}">
+
+            {%if progress_step > 2 or is_updatable %}
+            <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_p2' slug=myslug%}">2</a>
+            {%else%}
+            2
+            {%endif%}
+
+          </div>
+        </div>
+        <div class="progress_stage {%if progress_step >= 3 %} progress-active{%endif%} ">
+          <div
+            class="progress_stage_inner  {%if progress_step >= 3 or is_updatable%} progress_stage_complect{%endif%} {%if  progress_step == 3 %} progress-inner-active{%endif%}">
+            {%if progress_step > 3 or is_updatable %}
+            <a style="color:inherit" href="{%url 'main:createAndupdate_adpost_images' slug=myslug%}">3</a>
+            {%else%}
+            3
+            {%endif%}
+          </div>
+        </div>
       </div>
 
-      {%else%}
-      {{field}}
-      {%endif%}
+      <form method="post" novalidate>
+
+        {% load widget_tweaks %}
+
+        {% csrf_token %}
+
+        {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field }}
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          {% for error in form.non_field_errors %}
+          {{ error }}
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% for field in form.visible_fields %}
+        <div class="form-group">
 
 
-      <!-- if field type not an checkbox type  -->
-      {%else%}
-      <!-- if its select type  -->
-      {%if field.field.widget.input_type == "select"%}
-      {% render_field field class="form-select" %}
-      {%else%}
-      <!-- other wise -->
-      {%if field.name == 'mymap' %}
-      <div id="mapid" style=" height: 256px;"></div>
-      <div class="btn btn-primary mt-1" onclick="setMarker()">set Marker</div>
-      <div hidden>
-        {{field}}
-      </div>
-      {%else%}
-      {%if field.name == 'description' %}
-      {% render_field field class="form-control" %}
 
-      {%else%}
-      {% render_field field class="form-control" %}
-      {%endif%}
+          <label class="form-label" for="{{ field.id_for_label }}">{{field.label}}</label>
 
 
-      {%endif%}
-      {%endif%}
 
-      {%endif%}
+          {% if field.errors %}
+          <!-- if error happend show the error  -->
 
 
-      {% endif %}
-      <!-- check error/no error condition  end -->
+          {% render_field field class="form-control is-invalid" %}
+          <!-- after error checking invalid field render hrere -->
+          {% for error in field.errors %}
+          <div class="invalid-feedback">
+            {{ error }}
+          </div>
+          {% endfor %}
 
-      {% if field.help_text %}
-      <small class="form-text text-muted">{{ field.help_text|safe }}</small>
-      {% endif %}
+
+
+          {% else %}
+          <!-- if no error  -->
+
+          <!-- if the field is checkbox type then  -->
+          {%if field.field.widget.input_type == 'checkbox' %}
+          {%if field|length > 1%}
+
+          <div class="selector-groups">
+            {%for checkboxfield in field%}
+            <div class="selector">
+              {{checkboxfield}}
+              <!-- here we cant access the the lable or other property of the  nested field   -->
+            </div>
+            {%endfor%}
+          </div>
+
+          {%else%}
+          {{field}}
+          {%endif%}
+
+
+          <!-- if field type not an checkbox type  -->
+          {%else%}
+          <!-- if its select type  -->
+          {%if field.field.widget.input_type == "select"%}
+          {% render_field field class="form-select" %}
+          {%else%}
+          <!-- other wise -->
+          {%if field.name == 'mymap' %}
+          <div id="mapid" style=" height: 256px;"></div>
+          <div class="btn btn-primary mt-1" onclick="setMarker()">set Marker</div>
+          <div hidden>
+            {{field}}
+          </div>
+          {%else%}
+          {%if field.name == 'description' %}
+          {% render_field field class="form-control" %}
+
+          {%else%}
+          {% render_field field class="form-control" %}
+          {%endif%}
+
+
+          {%endif%}
+          {%endif%}
+
+          {%endif%}
+
+
+          {% endif %}
+          <!-- check error/no error condition  end -->
+
+          {% if field.help_text %}
+          <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+          {% endif %}
+
+        </div>
+        {% endfor %}
+
+        <br>
+
+        <button type="submit" class="btn create_AD_btn">
+          {%if submit_btn_value%}
+          {{submit_btn_value}}
+          {%else%}
+          Submit
+          {%endif%}</button>
+
+      </form>
 
     </div>
-    {% endfor %}
 
-    <br>
 
-    <button type="submit" class="btn create_AD_btn">
-      {%if submit_btn_value%}
-        {{submit_btn_value}}
-      {%else%}
-        Submit
-      {%endif%}</button>
-
-  </form>
-
+  </div>
+  <div class="col-sm-2"></div>
 </div>
-</div>
+
 
 <div class="mb-5"></div>
 <div class="mb-5"></div>
@@ -403,8 +412,8 @@
 <script>
   var simplemde = new SimpleMDE({
     styleSelectedText: true,
-    toolbar: ["bold", "italic", "heading-3", "unordered-list","|", "quote","link","|","preview","guide"],
-    element: document.getElementById("id_description"), 
+    toolbar: ["bold", "italic", "heading-3", "unordered-list", "|", "quote", "link", "|", "preview", "guide"],
+    element: document.getElementById("id_description"),
     renderingConfig: {
       singleLineBreaks: false,
       codeSyntaxHighlighting: true,

@@ -205,19 +205,34 @@
 
         <div class="card-body ps-4">
 
+
+
           {%if user.is_authenticated%}
           {%if property.user == user%}
           <div class="editBtn-2">
 
-            <span data-bs-toggle="tooltip" data-bs-placement="top"
-              title="{%if property.publish%}Publish{%else%}Arcive{%endif%}">
+            {%if property.varified%}
+            <samp data-bs-toggle="tooltip" data-bs-placement="top" title="varified">
+
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-check2-circle {%if property.publish%}post_publish {%else%}post_arcive{%endif%}"
+                class="bi bi-check2-circle post_publish "
                 viewBox="0 0 16 16">
                 <path
                   d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
                 <path
                   d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+              </svg>
+            </samp>
+            {%endif%}
+
+            <span data-bs-toggle="tooltip" data-bs-placement="top"
+              title="{%if property.publish%}Publish{%else%}Arcive{%endif%}">
+              
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill {%if property.publish%}post_publish {%else%}post_arcive{%endif%}" viewBox="0 0 16 16">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
               </svg>
             </span>
 
