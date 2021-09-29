@@ -20,7 +20,7 @@ class PropertyListApiView(ListAPIView):
     # city=Chattogram&property_type=Flat&price=5000,10000&bedroom=5&bathroom=4&features=play%20gound,24/7%20security
 
     def get_queryset(self):
-        qs=Property.objects.all()
+        qs=Property.objects.filter(varified=True,publish=True)
         id=self.getData('id')
         slug=self.getData('slug')
         title=self.getData('title')

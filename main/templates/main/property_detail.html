@@ -207,16 +207,14 @@
 
 
 
-          {%if user.is_authenticated%}
-          {%if property.user == user%}
+
           <div class="editBtn-2">
 
             {%if property.varified%}
             <samp data-bs-toggle="tooltip" data-bs-placement="top" title="varified">
 
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-check2-circle post_publish "
-                viewBox="0 0 16 16">
+                class="bi bi-check2-circle post_publish " viewBox="0 0 16 16">
                 <path
                   d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
                 <path
@@ -225,19 +223,22 @@
             </samp>
             {%endif%}
 
+            {%if user.is_authenticated%}
+            {%if property.user == user%}
+
             <span data-bs-toggle="tooltip" data-bs-placement="top"
               title="{%if property.publish%}Publish{%else%}Arcive{%endif%}">
-              
 
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill {%if property.publish%}post_publish {%else%}post_arcive{%endif%}" viewBox="0 0 16 16">
-                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
-                <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-people-fill {%if property.publish%}post_publish {%else%}post_arcive{%endif%}"
+                viewBox="0 0 16 16">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                <path fill-rule="evenodd"
+                  d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+                <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
               </svg>
             </span>
-
-
-
 
             <a href="{%url 'main:update_adpost' slug=property.slug%}" data-bs-toggle="tooltip" data-bs-placement="top"
               title="Edit">
@@ -247,10 +248,12 @@
                   d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                 <path fill-rule="evenodd"
                   d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-              </svg></a>
+              </svg>
+            </a>
+            {%endif%}
+            {%endif%}
           </div>
-          {%endif%}
-          {%endif%}
+
 
           <h4 id="propertyprice">BDT {{property.price}} tk</h4>
           <h6><i class="fa fa-bed"></i> <span id="bednumber" class="pe-2">{{property.bedroom}} Beds</span><i
@@ -300,7 +303,9 @@
 
             </div>
           </article>
+        </div>
       </article>
+
 
       <!--Additional Details-->
       <article class="card mb-3">
@@ -337,13 +342,6 @@
                 {%endfor%}
               </p>
               {%endif%}
-              <!-- {%if property.youtube_link%}
-                <p>Youtube link: <a target="_blank" href="{{property.youtube_link}}">{{property.youtube_link}}</a> </p>
-                {%endif%} -->
-
-              <!-- <p>Gas Bill: <span class="fw-bold">Included</span></p>
-                <p>Electricity Bill: <span class="fw-bold">Not Included</span></p>
-                <p>Service Charge: <span class="fw-bold">Inlcuded</span></p> -->
             </div>
           </div>
         </div>
@@ -356,7 +354,7 @@
           <div class="row">
             <div class="col-sm-6">
               <h6>Description</h6>
-              <p id="id_description">{{property.description|safe}}</p>
+              <p id="id_description">{{property.description}}</p>
 
             </div>
             <!-- <div class="col-sm-6">
@@ -392,6 +390,7 @@
         </div>
       </article>
     </article>
+
 
     <aside class="col-md-4 ps-2">
 
@@ -518,8 +517,6 @@
               </div>
 
             </a>
-
-
           </div>
           <div class="col-3">
             <!-- Sharingbutton WhatsApp -->
@@ -534,65 +531,10 @@
                 </div>
               </div>
             </a>
-
-
-
           </div>
-
-
-
         </div>
       </div>
     </aside>
-    <!-- <aside class="col-md-3 ps-2 ">
-
-        <div class="card card-body ">
-          <div class="input-group mb-3 ">
-            <input type="text" class="form-control" placeholder="Keywords &#xF002;"
-              style="font-family:Arial, FontAwesome; border: 1px solid black;">
-          </div>
-
-          <div class="input-group mb-3 ">
-            <input type="text" class="form-control" placeholder="Location &#xf041;"
-              style="font-family:Arial, FontAwesome; border: 1px solid black;">
-          </div>
-
-          <button class="btn dropdown-toggle mb-3" type="button" id="status" data-bs-toggle="dropdown"
-            style="border: 1px solid black; width: 100%;">
-            Property Type
-          </button>
-          <button class="btn dropdown-toggle mb-3" type="button" id="status" data-bs-toggle="dropdown"
-            style="border: 1px solid black; width: 100%;">
-            Price
-          </button>
-          <button class="btn dropdown-toggle mb-3" type="button" id="status" data-bs-toggle="dropdown"
-            style="border: 1px solid black; width: 100%;">
-            Bedrooms
-          </button>
-          <button class="btn dropdown-toggle mb-3" type="button" id="status" data-bs-toggle="dropdown"
-            style="border: 1px solid black; width: 100%;">
-            Garage
-          </button>
-          <button class="btn dropdown-toggle mb-3" type="button" id="status" data-bs-toggle="dropdown"
-            style="border: 1px solid black; width: 100%;">
-            Balcony
-          </button>
-
-
-          <div class="input-group mb-3">
-            <input type="number" class="form-control" placeholder="Min Area" style="border: 1px solid black;">
-            <input type="number" class="form-control" placeholder="Max Area" style="border: 1px solid black;">
-          </div>
-
-          <button class="btn sidebarsearchbtn" type="button" id="sidebarsearchbtn" data-bs-toggle="dropdown">
-            Search
-          </button>
-
-        </div>
-      </aside> -->
-
-
-
   </div>
 </main>
 
@@ -643,6 +585,7 @@
 <script>
 
   const html = SimpleMDE.prototype.markdown(`{{property.description}}`);
+  // console.log(html);
   document.getElementById('id_description').innerHTML = html;
   // console.log(simplemde.value('hdoije '));
   // togglePreview

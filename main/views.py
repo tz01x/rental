@@ -2,7 +2,7 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import  reverse
 from django.http import HttpResponse,HttpResponseBadRequest
-
+from django.contrib.auth.mixins import UserPassesTestMixin
 from .forms import PropertyForm,PropertyFormPart2,PropertyImgForm
 
 
@@ -173,7 +173,7 @@ def imageUpload(request,slug):
 class  PropertyListView(ListView):
     model=Property
     def get_queryset(self,*args,**kwargs):
-        qs=Property.objects.all()
+        qs=Property.objects.filter(varified=True,publish=True)
         ptype=self.request.GET.get("properyt_type",None)
         city=self.request.GET.get("city",None)
         
@@ -192,7 +192,7 @@ class  PropertyListView(ListView):
             
         return qs
 
-class PropertyDetailsView(DetailView):
+class PropertyDetailsView(UserPassesTestMixin,DetailView):
     model=Property
     queryset=Property.objects.all()
     # template_name="main/property_detail.html"
@@ -203,6 +203,14 @@ class PropertyDetailsView(DetailView):
         ctx['msgform']=MessageForm(initial={"user":self.get_object().user})
 
         return ctx
+    def test_func(self):
+        
+        obj=self.get_object()
+        if obj.varified:
+            return True
+        else:
+            return self.request.user.is_superuser or self.request.user == obj.user
+        # return self.request.user.email.endswith('@example.com')
 
 from user.sendMail import MailCls
 

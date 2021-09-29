@@ -294,7 +294,7 @@ function App() {
       <Container className="propertys_list">
         <div
           className=""
-          style={{ marginBottom: "10px", marginTop: "10px", fontSize: "25px",textAlign:'center', }}
+          style={{ marginBottom: "10px", marginTop: "10px", fontSize: "25px", textAlign: 'center', }}
         >
           Our Featured Properties
         </div>
