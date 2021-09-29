@@ -2,15 +2,15 @@
 {%load static%}
 
 {%block metadata%}
-<meta name="description" content="{{property.title}}.... BDT {{property.price}} tk ... in {{property.area}},{{property.city}}  ">
-<meta name="keywords" content="rent , barattia,Contact ">
+<meta name="description" content=" {{property.property_types}} BDT {{property.price}} tk rental price... in {{property.area}},{{property.city}}  ">
+<meta name="keywords" content="rent , barattia, {{property.price}} ">
 <meta name="author" content="barattia">
 {%endblock metadata%}
 
 
 {%block title%}
 <title>
-  Contact
+  {{property.title}}
 </title>
 {%endblock%}
 
