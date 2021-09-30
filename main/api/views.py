@@ -46,10 +46,10 @@ class PropertyListApiView(ListAPIView):
         if price:
             qs=qs.filter(price__range=(price.split(",")))
         if bedroom:
-            if("+" in bedroom):
-                qs=qs.filter(bedroom__gte=bedroom[0])
-            else:
+            if int(bedroom)<5:
                 qs=qs.filter(bedroom=bedroom)
+            else:
+                qs=qs.filter(bedroom__gte=bedroom)
         
         
 
