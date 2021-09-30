@@ -3,7 +3,7 @@ from main.models import Property,PropertyType,FeatureType
 from rest_framework.generics import ListAPIView
 from  rest_framework.pagination import PageNumberPagination
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-
+from main.models import PropertyType
 from django.db.models import Q
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -43,6 +43,8 @@ class PropertyListApiView(ListAPIView):
             qs=qs.filter(title__icontains=title)
         if city:
             qs=qs.filter(city__icontains=city)
+        if property_type :
+            qs=qs.filter(property_type__in=PropertyType.objects.filter(name__icontains=property_type))
         if price:
             qs=qs.filter(price__range=(price.split(",")))
         if bedroom:
