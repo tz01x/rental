@@ -44,7 +44,7 @@ class PropertyListApiView(ListAPIView):
         if city:
             qs=qs.filter(city__icontains=city)
         if property_type :
-            qs=qs.filter(property_type__in=PropertyType.objects.filter(name__icontains=property_type))
+            qs=qs.filter(property_types__in=PropertyType.objects.filter(name__icontains=property_type))
         if price:
             qs=qs.filter(price__range=(price.split(",")))
         if bedroom:
